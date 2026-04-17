@@ -4,318 +4,306 @@
   <link rel="icon" type="image/png" href="/favicon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Social Tennis Manager — Run Your Club With Ease</title>
-  <meta name="description" content="The app for tennis club organisers. Manage sessions, rosters, draws and payments — all in one place.">
+  <title>Features — Social Tennis Manager</title>
+  <meta name="description" content="Everything your tennis club needs. Session booking, match draws, player rosters, membership, push notifications, payment tracking and more.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --blue-deep:   #0d1f4e;
-      --blue-mid:    #1a3fa0;
-      --blue-bright: #2471a3;
-      --green:       #b2e51a;
-      --white:       #ffffff;
-      --muted:       rgba(255,255,255,0.55);
-    }
+    :root { --blue-deep:#0d1f4e; --blue-mid:#1a3fa0; --blue-bright:#2471a3; --green:#b2e51a; --purple:#7c6ff7; --white:#ffffff; --muted:rgba(255,255,255,0.55); }
     html { scroll-behavior: smooth; }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--blue-deep);
-      color: var(--white);
-      min-height: 100vh;
-      overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-    .bg-mesh {
-      position: fixed; inset: 0; z-index: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 70% 40%, rgba(26,63,160,0.5) 0%, transparent 70%),
-        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(36,113,163,0.3) 0%, transparent 60%),
-        linear-gradient(160deg, #0d1f4e 0%, #122060 50%, #0d1f4e 100%);
-      pointer-events: none;
-    }
-    #canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.6; }
-    .hero {
-      position: relative; z-index: 1; flex: 1;
-      display: grid; grid-template-columns: 1fr 1fr;
-      align-items: center; max-width: 1100px;
-      margin: 0 auto; padding: 60px 40px; gap: 40px; width: 100%;
-    }
-    .hero-left { display: flex; flex-direction: column; gap: 20px; }
-    .free-badge {
-      display: inline-flex; align-items: center; gap: 7px;
-      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
-      border-radius: 50px; padding: 7px 16px; width: fit-content;
-      animation: fadeLeft 0.6s ease both;
-    }
-    .free-badge-dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--green); box-shadow: 0 0 8px rgba(178,229,26,0.7);
-      animation: pulse 2s ease-in-out infinite;
-    }
-    .free-badge-text { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--white); opacity: 0.8; }
-    @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.3); opacity: 0.7; } }
-    .hero-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(72px, 10vw, 120px);
-      line-height: 0.92; letter-spacing: 2px;
-      animation: fadeLeft 0.6s 0.1s ease both;
-    }
-    .hero-title .line1 { color: var(--white); display: block; }
-    .hero-title .line2 { color: var(--green); display: block; }
-    .download-row {
-      display: flex; gap: 14px; flex-wrap: wrap;
-      animation: fadeLeft 0.6s 0.2s ease both;
-    }
-    .dl-btn {
-      display: flex; align-items: center; gap: 12px;
-      padding: 13px 24px; border-radius: 14px;
-      text-decoration: none;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      min-width: 170px;
-    }
-    .dl-btn:hover { transform: translateY(-3px); }
-    .dl-btn.ios { background: var(--green); box-shadow: 0 8px 28px rgba(178,229,26,0.3); }
-    .dl-btn.ios:hover { box-shadow: 0 14px 36px rgba(178,229,26,0.45); }
-    .dl-btn.android { background: var(--green); border: 1px solid var(--green); box-shadow: 0 8px 28px rgba(178,229,26,0.3); }
-    .dl-btn.android:hover { box-shadow: 0 14px 36px rgba(178,229,26,0.45); }
-    .dl-store-icon { width: 26px; height: 26px; flex-shrink: 0; }
-    .dl-text-wrap { text-align: left; }
-    .dl-sub { font-size: 9px; font-weight: 500; letter-spacing: 0.8px; text-transform: uppercase; display: block; margin-bottom: 2px; }
-    .dl-label { font-size: 15px; font-weight: 700; line-height: 1; display: block; }
-    .dl-btn.ios .dl-sub, .dl-btn.ios .dl-label { color: var(--blue-deep); }
-    .dl-btn.android .dl-sub, .dl-btn.android .dl-label { color: var(--blue-deep); }
-    .hero-sub {
-      font-size: 16px; font-weight: 300; color: var(--muted);
-      line-height: 1.7; max-width: 460px;
-      animation: fadeLeft 0.6s 0.3s ease both;
-    }
-
-    /* ── Feature rows ─────────────────────────────────────── */
-    .feature-rows {
-      display: flex; flex-direction: column; gap: 12px;
-      animation: fadeLeft 0.6s 0.35s ease both;
-    }
-    .feature-row-block {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.09);
-      border-radius: 16px;
-      padding: 14px 18px;
-    }
-    .feature-row-label {
-      font-size: 10px; font-weight: 700; letter-spacing: 2px;
-      text-transform: uppercase; color: rgba(255,255,255,0.4);
-      margin-bottom: 10px;
-    }
-    .feature-row-pills {
-      display: flex; flex-wrap: wrap; gap: 7px;
-    }
-    .frpill {
-      display: inline-flex; align-items: center;
-      padding: 5px 12px; border-radius: 50px;
-      font-size: 12px; font-weight: 600; letter-spacing: 0.2px;
-    }
-    .frpill.organiser {
-      background: rgba(178,229,26,0.1);
-      border: 1px solid rgba(178,229,26,0.25);
-      color: rgba(178,229,26,0.9);
-    }
-    .frpill.player {
-      background: rgba(36,113,163,0.2);
-      border: 1px solid rgba(36,113,163,0.35);
-      color: rgba(174,214,241,0.9);
-    }
-
-    .apply-pill {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 8px 16px; border-radius: 50px;
-      font-size: 13px; font-weight: 600;
-      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
-      color: rgba(255,255,255,0.6); text-decoration: none;
-      transition: background 0.2s, color 0.2s;
-      width: fit-content;
-      animation: fadeLeft 0.6s 0.4s ease both;
-    }
-    .apply-pill:hover { background: rgba(255,255,255,0.10); color: rgba(255,255,255,0.85); }
-
-    .more-features-link {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 12px; font-weight: 700; letter-spacing: 0.3px;
-      color: rgba(178,229,26,0.8); text-decoration: none;
-      background: rgba(178,229,26,0.08);
-      border: 1px solid rgba(178,229,26,0.2);
-      border-radius: 50px; padding: 7px 16px;
-      width: fit-content;
-      transition: background 0.2s, color 0.2s;
-      animation: fadeLeft 0.6s 0.45s ease both;
-    }
-    .more-features-link:hover { background: rgba(178,229,26,0.15); color: var(--green); }
-    .pro-link {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 12px; font-weight: 600;
-      color: rgba(178,229,26,0.7); text-decoration: none;
-      transition: color 0.2s;
-      animation: fadeLeft 0.6s 0.5s ease both;
-    }
-    .pro-link:hover { color: var(--green); }
-
-    /* Tennis ball */
-    .hero-right { display: flex; align-items: center; justify-content: center; animation: fadeRight 0.8s 0.2s ease both; }
-    .ball-wrap { position: relative; width: clamp(220px, 36vw, 400px); height: clamp(220px, 36vw, 400px); }
-    .ball-wrap::before {
-      content: ''; position: absolute; inset: -30px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(178,229,26,0.14) 0%, transparent 65%);
-      animation: glowPulse 3s ease-in-out infinite;
-    }
-    @keyframes glowPulse { 0%, 100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.06); } }
-    .tennis-ball {
-      width: 100%; height: 100%; border-radius: 50%;
-      background: radial-gradient(circle at 32% 32%, #d4f53c, #b2e51a 38%, #8ab514 72%, #6a8f10 100%);
-      box-shadow: 0 0 80px rgba(178,229,26,0.2), 0 40px 100px rgba(0,0,0,0.6), inset 0 -12px 36px rgba(0,0,0,0.25), inset 0 12px 24px rgba(255,255,255,0.18);
-      position: relative; animation: float 4s ease-in-out infinite; overflow: hidden;
-    }
-    @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-18px) rotate(4deg); } }
-    .tennis-ball::before, .tennis-ball::after {
-      content: ''; position: absolute; border: 3px solid rgba(255,255,255,0.35);
-      border-radius: 50%; height: 90%; width: 45%; top: 5%;
-    }
-    .tennis-ball::before { left: 3%; border-right-color: transparent; border-bottom-color: transparent; }
-    .tennis-ball::after { right: 3%; border-left-color: transparent; border-bottom-color: transparent; }
-
-    footer {
-      position: relative; z-index: 1; text-align: center; padding: 24px;
-      font-size: 12px; color: rgba(255,255,255,0.25); font-weight: 500;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-    footer a { color: rgba(255,255,255,0.45); text-decoration: none; font-weight: 600; transition: color 0.2s; }
-    footer a:hover { color: var(--green); }
-
-    @keyframes fadeLeft { from { opacity: 0; transform: translateX(-24px); } to { opacity: 1; transform: translateX(0); } }
-    @keyframes fadeRight { from { opacity: 0; transform: translateX(24px) scale(0.95); } to { opacity: 1; transform: translateX(0) scale(1); } }
-
-    @media (max-width: 720px) {
-      .hero { grid-template-columns: 1fr; text-align: center; padding: 60px 24px 40px; gap: 48px; }
-      .hero-right { order: -1; }
-      .ball-wrap { width: 180px; height: 180px; }
-      .free-badge, .download-row, .apply-pill, .pro-link { justify-content: center; }
-      .hero-sub { margin: 0 auto; }
-      .feature-row-pills { justify-content: center; }
-      .feature-row-label { text-align: center; }
-    }
-    @media (max-width: 400px) {
-      .download-row { flex-direction: column; align-items: center; }
-      .dl-btn { width: 100%; max-width: 260px; }
-    }
+    body { font-family:'DM Sans',sans-serif; background:var(--blue-deep); color:var(--white); min-height:100vh; overflow-x:hidden; }
+    .bg-mesh { position:fixed; inset:0; z-index:0; background: radial-gradient(ellipse 80% 60% at 70% 40%,rgba(26,63,160,0.5) 0%,transparent 70%), radial-gradient(ellipse 60% 50% at 20% 80%,rgba(36,113,163,0.3) 0%,transparent 60%), linear-gradient(160deg,#0d1f4e 0%,#122060 50%,#0d1f4e 100%); pointer-events:none; }
+    #canvas { position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.6; }
+    .page-header { position:relative; z-index:1; max-width:1100px; margin:0 auto; padding:48px 40px 0; display:flex; align-items:center; justify-content:space-between; }
+    .back-link { display:inline-flex; align-items:center; gap:8px; color:rgba(255,255,255,0.5); text-decoration:none; font-size:13px; font-weight:600; transition:color 0.2s; }
+    .back-link:hover { color:var(--green); }
+    .back-arrow { width:28px; height:28px; border-radius:8px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; font-size:14px; }
+    .header-store-btns { display:inline-flex; gap:8px; align-items:center; }
+    .header-store-btn { display:inline-flex; align-items:center; gap:7px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:50px; padding:7px 14px; text-decoration:none; font-size:11px; font-weight:700; color:rgba(255,255,255,0.85); transition:background 0.2s,transform 0.2s,border-color 0.2s; }
+    .header-store-btn:hover { background:rgba(255,255,255,0.12); border-color:rgba(178,229,26,0.3); color:var(--green); transform:translateY(-2px); }
+    .features-hero { position:relative; z-index:1; max-width:1100px; margin:0 auto; padding:52px 40px 48px; animation:fadeUp 0.5s ease both; }
+    .features-eyebrow { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--green); opacity:0.8; margin-bottom:14px; }
+    .features-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(48px,7vw,84px); line-height:0.92; letter-spacing:2px; margin-bottom:18px; }
+    .features-title .t1 { color:var(--white); } .features-title .t2 { color:var(--green); }
+    .features-sub { font-size:15px; font-weight:300; color:var(--muted); line-height:1.7; max-width:500px; }
+    .features-content { position:relative; z-index:1; max-width:1100px; margin:0 auto; padding:0 40px 80px; }
+    .features-section-label { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.25); margin-bottom:20px; padding-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.06); }
+    .features-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:48px; }
+    .feature-card { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:26px 24px; transition:transform 0.2s ease,background 0.2s ease,border-color 0.2s ease; animation:fadeUp 0.5s ease both; }
+    .feature-card:hover { transform:translateY(-4px); background:rgba(255,255,255,0.07); border-color:rgba(178,229,26,0.2); }
+    .feature-card.members-card { border-color:rgba(124,111,247,0.25); }
+    .feature-card.members-card:hover { border-color:rgba(124,111,247,0.45); }
+    .feature-card:nth-child(1){animation-delay:0.05s} .feature-card:nth-child(2){animation-delay:0.08s} .feature-card:nth-child(3){animation-delay:0.11s} .feature-card:nth-child(4){animation-delay:0.14s} .feature-card:nth-child(5){animation-delay:0.17s} .feature-card:nth-child(6){animation-delay:0.20s} .feature-card:nth-child(7){animation-delay:0.23s} .feature-card:nth-child(8){animation-delay:0.26s} .feature-card:nth-child(9){animation-delay:0.29s}
+    .feature-icon { font-size:22px; margin-bottom:14px; display:block; }
+    .feature-title { font-size:14px; font-weight:700; color:var(--white); margin-bottom:8px; letter-spacing:0.2px; }
+    .feature-desc { font-size:12px; font-weight:300; color:rgba(255,255,255,0.45); line-height:1.65; }
+    .feature-tag { display:inline-block; margin-top:12px; font-size:9px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--green); opacity:0.7; }
+    .feature-tag.pro { color:var(--purple); opacity:1; }
+    .cta-bar { position:relative; z-index:1; background:rgba(178,229,26,0.06); border-top:1px solid rgba(178,229,26,0.12); border-bottom:1px solid rgba(178,229,26,0.12); padding:36px 40px; }
+    .cta-inner { max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; }
+    .cta-text h3 { font-family:'Bebas Neue',sans-serif; font-size:28px; letter-spacing:1.5px; color:var(--white); margin-bottom:4px; }
+    .cta-text p { font-size:13px; font-weight:300; color:var(--muted); }
+    .cta-buttons { display:flex; gap:12px; flex-wrap:wrap; }
+    .dl-btn { display:flex; align-items:center; gap:10px; padding:11px 20px; border-radius:12px; text-decoration:none; transition:transform 0.2s ease,box-shadow 0.2s ease; }
+    .dl-btn:hover { transform:translateY(-2px); }
+    .dl-btn.ios { background:var(--green); box-shadow:0 6px 20px rgba(178,229,26,0.3); }
+    .dl-btn.ios:hover { box-shadow:0 10px 28px rgba(178,229,26,0.45); }
+    .dl-btn.android { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); }
+    .dl-btn.android:hover { background:rgba(255,255,255,0.13); }
+    .dl-store-icon { width:22px; height:22px; flex-shrink:0; }
+    .dl-text-wrap { text-align:left; }
+    .dl-sub { font-size:8px; font-weight:500; letter-spacing:0.8px; text-transform:uppercase; display:block; margin-bottom:2px; }
+    .dl-label { font-size:13px; font-weight:700; line-height:1; display:block; }
+    .dl-btn.ios .dl-sub,.dl-btn.ios .dl-label { color:var(--blue-deep); }
+    .dl-btn.android .dl-sub { color:var(--muted); } .dl-btn.android .dl-label { color:var(--white); }
+    footer { position:relative; z-index:1; text-align:center; padding:24px; font-size:12px; color:rgba(255,255,255,0.25); font-weight:500; border-top:1px solid rgba(255,255,255,0.06); }
+    footer a { color:rgba(255,255,255,0.45); text-decoration:none; font-weight:600; transition:color 0.2s; }
+    footer a:hover { color:var(--green); }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+    @media (max-width:860px) { .features-grid { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:720px) { .page-header{padding:32px 24px 0} .features-hero{padding:36px 24px 36px} .features-content{padding:0 24px 60px} .cta-bar{padding:28px 24px} .cta-inner{flex-direction:column;align-items:flex-start} }
+    @media (max-width:520px) { .features-grid{grid-template-columns:1fr} .cta-buttons{flex-direction:column;width:100%} .dl-btn{justify-content:center} }
   </style>
 </head>
 <body>
 <div class="bg-mesh"></div>
 <canvas id="canvas"></canvas>
-<section class="hero">
-  <div class="hero-left">
-    <div class="free-badge">
-      <div class="free-badge-dot"></div>
-      <span class="free-badge-text">Free App</span>
-    </div>
-    <h1 class="hero-title">
-      <span class="line1">Social</span>
-      <span class="line2">Tennis</span>
-    </h1>
-    <div class="download-row">
-      <a href="https://apps.apple.com/app/id6759812658" class="dl-btn ios" target="_blank" rel="noopener">
-        <svg class="dl-store-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" fill="#0d1f4e"/>
-        </svg>
-        <div class="dl-text-wrap">
-          <span class="dl-sub">Download on the</span>
-          <span class="dl-label">App Store</span>
-        </div>
-      </a>
-      <a href="https://play.google.com/store/apps/details?id=com.berno1976.socialtennis" class="dl-btn android" target="_blank" rel="noopener">
-        <svg class="dl-store-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M3.18 23.76c.3.17.65.19.97.07l11.48-6.63-2.5-2.5-9.95 9.06zM.5 1.4C.19 1.73 0 2.22 0 2.85v18.3c0 .63.19 1.12.51 1.45l.07.07 10.25-10.25v-.24L.57 1.33.5 1.4zM20.37 9.9l-2.93-1.7-2.8 2.8 2.8 2.8 2.95-1.7c.84-.49.84-1.28-.02-1.2zM3.18.24L14.65 6.8l-2.5 2.5L2.2.24C2.52.12 2.87.14 3.18.24z" fill="#0d1f4e"/>
-        </svg>
-        <div class="dl-text-wrap">
-          <span class="dl-sub">Get it on</span>
-          <span class="dl-label">Google Play</span>
-        </div>
-      </a>
-    </div>
 
-    <a href="/apply" class="apply-pill">✦ Apply to manage your club →</a>
-
-    <p class="hero-sub">Session &amp; Draw Manager — built for tennis club organisers who want things to just work. In-app payments, member credits, match draws and more.</p>
-
-    <!-- Two-row feature summary -->
-    <div class="feature-rows">
-      <div class="feature-row-block">
-        <div class="feature-row-label">🛠 For Organisers</div>
-        <div class="feature-row-pills">
-          <span class="frpill organiser">📅 Create &amp; manage sessions</span>
-          <span class="frpill organiser">🎾 Build &amp; publish draws</span>
-          <span class="frpill organiser">💳 Stripe in-app payments</span>
-          <span class="frpill organiser">👥 Member management</span>
-          <span class="frpill organiser">💰 Member &amp; guest pricing</span>
-          <span class="frpill organiser">🪙 Credit management</span>
-          <span class="frpill organiser">📍 Locations &amp; notifications</span>
-        </div>
-      </div>
-      <div class="feature-row-block">
-        <div class="feature-row-label">👤 For Players</div>
-        <div class="feature-row-pills">
-          <span class="frpill player">✅ Join in seconds — no account needed</span>
-          <span class="frpill player">💳 Pay online via Stripe</span>
-          <span class="frpill player">⭐ Member discounts &amp; credits</span>
-          <span class="frpill player">🎾 View match draw</span>
-          <span class="frpill player">🤝 Request a partner</span>
-          <span class="frpill player">⏳ Waitlist &amp; auto-promote</span>
-          <span class="frpill player">👨‍👩‍👧 Add guests</span>
-        </div>
-      </div>
-    </div>
-
-    <a href="/features" class="more-features-link">✦ See all features →</a>
-
-    <a href="https://buy.stripe.com/00w7sE3cQ9yX3bS63n9MY00" target="_blank" rel="noopener" class="pro-link">
-      ✦ Already an organiser? Upgrade to Pro →
+<div class="page-header">
+  <a href="/" class="back-link"><span class="back-arrow">←</span> Back</a>
+  <div class="header-store-btns">
+    <a href="https://apps.apple.com/app/id6759812658" class="header-store-btn" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      App Store
+    </a>
+    <a href="https://play.google.com/store/apps/details?id=com.berno1976.socialtennis" class="header-store-btn" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px"><path d="M3.18 23.76c.3.17.65.19.97.07l11.48-6.63-2.5-2.5-9.95 9.06zM.5 1.4C.19 1.73 0 2.22 0 2.85v18.3c0 .63.19 1.12.51 1.45l.07.07 10.25-10.25v-.24L.57 1.33.5 1.4zM20.37 9.9l-2.93-1.7-2.8 2.8 2.8 2.8 2.95-1.7c.84-.49.84-1.28-.02-1.2zM3.18.24L14.65 6.8l-2.5 2.5L2.2.24C2.52.12 2.87.14 3.18.24z"/></svg>
+      Google Play
     </a>
   </div>
-  <div class="hero-right">
-    <div class="ball-wrap">
-      <div class="tennis-ball"></div>
+</div>
+
+<div class="features-hero">
+  <p class="features-eyebrow">Social Tennis Manager</p>
+  <h1 class="features-title">
+    <span class="t1">Built for</span><br>
+    <span class="t2">Organisers.</span>
+  </h1>
+  <p class="features-sub">Everything you need to run a tennis club session — from signup to draw to payment to membership — without the admin headache.</p>
+</div>
+
+<div class="features-content">
+
+  <p class="features-section-label">For Players</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <span class="feature-icon">📅</span>
+      <div class="feature-title">Session Booking</div>
+      <div class="feature-desc">Join sessions in seconds. Enter your name, pick your level, and you're in. No account required.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔁</span>
+      <div class="feature-title">Waitlist &amp; Auto-Promote</div>
+      <div class="feature-desc">Session full? Join the waitlist and get automatically promoted when a spot opens — with a push notification.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">👨‍👩‍👧</span>
+      <div class="feature-title">Guest &amp; Family Join</div>
+      <div class="feature-desc">Bring guests along. Add up to 2 guests when joining a session, managed under your name.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">💳</span>
+      <div class="feature-title">Flexible Payments</div>
+      <div class="feature-desc">Pay via Stripe in-app and get auto-confirmed instantly — or declare payment manually. Three modes: Standard, Trust, or Online.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔔</span>
+      <div class="feature-title">Push Notifications</div>
+      <div class="feature-desc">Get notified when payment is confirmed, spots open, draws are published, or sessions are cancelled.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📊</span>
+      <div class="feature-title">Live Session Status</div>
+      <div class="feature-desc">See spots remaining, who's on the list, and real-time capacity as players join and leave.</div>
     </div>
   </div>
-</section>
+
+  <p class="features-section-label">For Organisers</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <span class="feature-icon">🎾</span>
+      <div class="feature-title">Match Draws</div>
+      <div class="feature-desc">Generate doubles or singles draws automatically or assign courts manually. Publish to players with one tap.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">⚙️</span>
+      <div class="feature-title">Session Controls</div>
+      <div class="feature-desc">Create sessions with custom capacity, location, pricing and timing. Auto-promote, no-refund policy, guest joining — all configurable.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🏅</span>
+      <div class="feature-title">Custom Skill Levels</div>
+      <div class="feature-desc">Define your own skill level labels to match how your club works. Players select from your custom list when joining.</div>
+      <span class="feature-tag pro">✦ Pro</span>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">✅</span>
+      <div class="feature-title">Payment Confirmation</div>
+      <div class="feature-desc">See who's paid, who's pending, and confirm payments with one tap. No spreadsheets, no chasing on the day.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📣</span>
+      <div class="feature-title">Admin Notifications</div>
+      <div class="feature-desc">Push alerts when players join, sessions fill, payments are submitted, or players are auto-promoted from the waitlist.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📍</span>
+      <div class="feature-title">Location Management</div>
+      <div class="feature-desc">Save your club's courts and locations. Assign them to sessions so players always know where to show up.</div>
+    </div>
+  </div>
+
+  <p class="features-section-label">In-App Payments — Stripe Connect</p>
+
+  <!-- Stripe payments hero strip -->
+  <div style="background:linear-gradient(135deg,#1a1060 0%,#3730a3 55%,#635BFF 100%);border-radius:20px;padding:28px 32px;margin-bottom:14px;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:-50px;right:-50px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,0.05);pointer-events:none;"></div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:8px;">Powered by Stripe</div>
+    <div style="font-size:17px;font-weight:700;color:#fff;margin-bottom:6px;">Players pay directly into the organiser's bank account</div>
+    <div style="font-size:12.5px;font-weight:300;color:rgba(255,255,255,0.65);line-height:1.6;max-width:560px;">STM never holds funds. Money flows straight to the club's connected Stripe account. A $0.50 platform fee applies per booking — Stripe's standard processing fee is deducted automatically from takings.</div>
+    <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;">
+      <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:8px;padding:5px 13px;font-size:11.5px;font-weight:600;color:rgba(255,255,255,0.85);">Standard Join</span>
+      <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:8px;padding:5px 13px;font-size:11.5px;font-weight:600;color:rgba(255,255,255,0.85);">Trust Mode</span>
+      <span style="background:rgba(255,255,255,0.22);border:1px solid rgba(255,255,255,0.35);border-radius:8px;padding:5px 13px;font-size:11.5px;font-weight:700;color:#fff;">⚡ Online Payment (Stripe)</span>
+    </div>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card" style="border-color:rgba(99,91,255,0.25);">
+      <span class="feature-icon">🔗</span>
+      <div class="feature-title">Stripe Connect Onboarding</div>
+      <div class="feature-desc">Organisers connect their Stripe account in ~5 minutes via Stripe's hosted flow. Link an existing account or create a new one.</div>
+      <span class="feature-tag pro">✦ Pro</span>
+    </div>
+    <div class="feature-card" style="border-color:rgba(99,91,255,0.25);">
+      <span class="feature-icon">⚡</span>
+      <div class="feature-title">Instant Auto-Confirmation</div>
+      <div class="feature-desc">Player taps Join, pays via Stripe Checkout, and is automatically added to the session roster. No admin action needed.</div>
+      <span class="feature-tag pro">✦ Pro</span>
+    </div>
+    <div class="feature-card" style="border-color:rgba(99,91,255,0.25);">
+      <span class="feature-icon">💰</span>
+      <div class="feature-title">Member &amp; Guest Pricing</div>
+      <div class="feature-desc">Set a guest price per session and a member price club-wide. The correct price is applied automatically based on membership status.</div>
+      <span class="feature-tag pro">✦ Pro</span>
+    </div>
+  </div>
+
+  <p class="features-section-label">Members Programme — Pro</p>
+  <div class="features-grid">
+    <div class="feature-card members-card">
+      <span class="feature-icon">🪪</span>
+      <div class="feature-title">Email-Verified Membership</div>
+      <div class="feature-desc">Players request membership via email OTP — verified identity, no spam. Auto-confirmed if the organiser already added them.</div>
+      <span class="feature-tag pro">✦ Pro</span>
+    </div>
+    <div class="feature-card members-card">
+      <span class="feature-icon">★</span>
+      <div class="feature-title">Member Privileges</div>
+      <div class="feature-desc">Members get pre-filled name and level, member pricing, priority joining, and access to members-only sessions.</div>
+      <span class="feature-tag pro">✦ Pro</span>
+    </div>
+    <div class="feature-card members-card">
+      <span class="feature-icon">📋</span>
+      <div class="feature-title">Member Roster</div>
+      <div class="feature-desc">Admin manages a full member list — add, edit, approve requests, set inactive. Sortable and filterable. No deletions, status only.</div>
+      <span class="feature-tag pro">✦ Pro</span>
+    </div>
+    <div class="feature-card members-card">
+      <span class="feature-icon">💰</span>
+      <div class="feature-title">Member Pricing</div>
+      <div class="feature-desc">Set a flat members price across all sessions. Members see their price; visitors see the standard rate.</div>
+      <span class="feature-tag pro">✦ Pro</span>
+    </div>
+    <div class="feature-card members-card">
+      <span class="feature-icon">🔐</span>
+      <div class="feature-title">Members-Only Sessions</div>
+      <div class="feature-desc">Mark sessions as members-only. Visible to all with an M badge, but entry is restricted to active members.</div>
+      <span class="feature-tag pro">✦ Pro</span>
+    </div>
+    <div class="feature-card members-card">
+      <span class="feature-icon">⬆️</span>
+      <div class="feature-title">Priority Joining</div>
+      <div class="feature-desc">Members are placed ahead of visitors on the waitlist when priority joining is enabled.</div>
+      <span class="feature-tag pro">✦ Pro</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- Coming Soon -->
+<div style="position:relative;z-index:1;max-width:1100px;margin:0 auto 0;padding:0 40px 48px;">
+  <p class="features-section-label" style="margin-bottom:20px;">Coming Soon</p>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+    <div style="background:rgba(200,131,26,0.07);border:1px solid rgba(200,131,26,0.2);border-radius:20px;padding:24px 22px;">
+      <span style="font-size:22px;display:block;margin-bottom:12px;">💳</span>
+      <div style="font-size:14px;font-weight:700;color:#f0a830;margin-bottom:7px;">Member Session Credits</div>
+      <div style="font-size:12px;font-weight:300;color:rgba(255,255,255,0.45);line-height:1.65;">Paid members who can't attend request a credit — applied automatically to their next session. Admin sets the cutoff window.</div>
+    </div>
+    <div style="background:rgba(200,131,26,0.07);border:1px solid rgba(200,131,26,0.2);border-radius:20px;padding:24px 22px;">
+      <span style="font-size:22px;display:block;margin-bottom:12px;">🤖</span>
+      <div style="font-size:14px;font-weight:700;color:#f0a830;margin-bottom:7px;">Automatic Draw Generator</div>
+      <div style="font-size:12px;font-weight:300;color:rgba(255,255,255,0.45);line-height:1.65;">AI-assisted draw creation based on player skill levels and match history. Balanced courts every time.</div>
+    </div>
+    <div style="background:rgba(200,131,26,0.07);border:1px solid rgba(200,131,26,0.2);border-radius:20px;padding:24px 22px;">
+      <span style="font-size:22px;display:block;margin-bottom:12px;">📋</span>
+      <div style="font-size:14px;font-weight:700;color:#f0a830;margin-bottom:7px;">Session Templates</div>
+      <div style="font-size:12px;font-weight:300;color:rgba(255,255,255,0.45);line-height:1.65;">Save recurring session setups and launch them in one tap — with your member list pre-populated automatically.</div>
+    </div>
+  </div>
+</div>
+
+
+<div style="position:relative;z-index:1;max-width:1100px;margin:0 auto 48px;padding:0 40px;">
+  <div style="background:linear-gradient(135deg,rgba(178,229,26,0.08) 0%,rgba(26,63,160,0.3) 100%);border:1px solid rgba(178,229,26,0.2);border-radius:24px;padding:36px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--green);opacity:0.8;margin-bottom:10px;">Upgrade</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:1.5px;color:var(--white);margin-bottom:6px;">Go Pro — A$9.99<span style="font-size:18px;opacity:0.6">/month</span></div>
+      <div style="font-size:13px;font-weight:300;color:rgba(255,255,255,0.5);">Unlimited sessions, players &amp; courts. Custom skill levels, push notifications, draws, member programme &amp; more.</div>
+    </div>
+    <a href="https://buy.stripe.com/00w7sE3cQ9yX3bS63n9MY00" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;background:var(--green);color:#0d1f4e;font-weight:800;font-size:15px;padding:14px 28px;border-radius:14px;text-decoration:none;white-space:nowrap;box-shadow:0 8px 28px rgba(178,229,26,0.3);transition:transform 0.2s,box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 14px 36px rgba(178,229,26,0.45)'" onmouseout="this.style.transform='';this.style.boxShadow='0 8px 28px rgba(178,229,26,0.3)'">✦ Upgrade to Pro</a>
+  </div>
+</div>
+
+<div class="cta-bar">
+  <div class="cta-inner">
+    <div class="cta-text">
+      <h3>Free to download.</h3>
+      <p>Available on iOS and Android — no account needed to join a session.</p>
+    </div>
+    <div class="cta-buttons">
+      <a href="https://apps.apple.com/app/id6759812658" class="dl-btn ios" target="_blank" rel="noopener">
+        <svg class="dl-store-icon" viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" fill="#0d1f4e"/></svg>
+        <div class="dl-text-wrap"><span class="dl-sub">Download on the</span><span class="dl-label">App Store</span></div>
+      </a>
+      <a href="https://play.google.com/store/apps/details?id=com.berno1976.socialtennis" class="dl-btn android" target="_blank" rel="noopener">
+        <svg class="dl-store-icon" viewBox="0 0 24 24"><path d="M3.18 23.76c.3.17.65.19.97.07l11.48-6.63-2.5-2.5-9.95 9.06zM.5 1.4C.19 1.73 0 2.22 0 2.85v18.3c0 .63.19 1.12.51 1.45l.07.07 10.25-10.25v-.24L.57 1.33.5 1.4zM20.37 9.9l-2.93-1.7-2.8 2.8 2.8 2.8 2.95-1.7c.84-.49.84-1.28-.02-1.2zM3.18.24L14.65 6.8l-2.5 2.5L2.2.24C2.52.12 2.87.14 3.18.24z" fill="rgba(255,255,255,0.75)"/></svg>
+        <div class="dl-text-wrap"><span class="dl-sub">Get it on</span><span class="dl-label">Google Play</span></div>
+      </a>
+    </div>
+  </div>
+</div>
+
 <footer>
-  <p>© 2026 Social Tennis Manager &nbsp;·&nbsp; <a href="/features">Features</a> &nbsp;·&nbsp; <a href="/privacy">Privacy Policy</a> &nbsp;·&nbsp; <a href="/cdn-cgi/l/email-protection#85f6eae6ece4e9f1e0ebebecf6e8e4ebe4e2e0f7b7b5b7b3c5e2e8e4ece9abe6eae8">Contact</a></p>
+  <p>© 2026 Social Tennis Manager &nbsp;·&nbsp; <a href="/">Home</a> &nbsp;·&nbsp; <a href="/privacy">Privacy Policy</a> &nbsp;·&nbsp; <a href="/cdn-cgi/l/email-protection#acdfc3cfc5cdc0d8c9c2c2c5dfc1cdc2cdcbc9de9e9c9e9aeccbc1cdc5c082cfc3c1">Contact</a></p>
 </footer>
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  const canvas = document.getElementById('canvas');
-  const ctx = canvas.getContext('2d');
-  let W, H, bubbles = [];
-  const COLORS = ['rgba(26,63,160,0.14)','rgba(46,134,193,0.08)','rgba(178,229,26,0.05)','rgba(255,255,255,0.03)'];
-  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-  function makeBubble() {
-    const r = 60 + Math.random() * 180;
-    return { x: Math.random()*W, y: Math.random()*H, r, dx:(Math.random()-0.5)*0.3, dy:(Math.random()-0.5)*0.3, color:COLORS[Math.floor(Math.random()*COLORS.length)] };
-  }
-  function init() { resize(); bubbles = Array.from({length:12}, makeBubble); }
-  function draw() {
-    ctx.clearRect(0,0,W,H);
-    bubbles.forEach(b => {
-      ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
-      ctx.fillStyle=b.color; ctx.fill();
-      b.x+=b.dx; b.y+=b.dy;
-      if(b.x<-b.r) b.x=W+b.r; if(b.x>W+b.r) b.x=-b.r;
-      if(b.y<-b.r) b.y=H+b.r; if(b.y>H+b.r) b.y=-b.r;
-    });
-    requestAnimationFrame(draw);
-  }
-  window.addEventListener('resize', resize);
-  init(); draw();
-</script>
-</body>
-</html>
+  const canvas=document.getElementById('canvas'),ctx=canvas.getContext('2d');
+  let W,H,bubbles=[];
+  const COLORS=['rgba(26,63,160,0.14)','rgba(46,134,193,0.08)','rgba(178,229,26,0.05)','rgba(255,255,255,0.03)'];
+  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+  function makeBubble(){const r=60+Math.random()*180;return{x:Math.random()*W,y:Math.random()*H,r,dx:(Math.random()-0.5)*0.3,dy:(Math.random()-0.5)*0.3,color:COLORS[Math.floor(Math.random()*COLORS.length)]};}
+  function init(){resize();bubbles=Array.from({length:12},makeBubble);}
+  function draw(){ctx.clearRect(0,0,W,H);bubbles.forEach(b=>{ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fillStyle=b.color;ctx.fill();b.x+=b.dx;b.y+=b.dy;if(b.x<-b.r)b.x=W+b.r;if(b.x>W+b.r)b.x=-b
