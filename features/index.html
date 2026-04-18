@@ -163,6 +163,12 @@
       <div class="feature-title">Location Management</div>
       <div class="feature-desc">Save your club's courts and locations. Assign them to sessions so players always know where to show up.</div>
     </div>
+    <div class="feature-card">
+      <span class="feature-icon">📋</span>
+      <div class="feature-title">Session Templates</div>
+      <div class="feature-desc">Save recurring session setups and launch them in one tap — with your member list pre-populated automatically.</div>
+      <span class="feature-tag pro">✦ Pro</span>
+    </div>
   </div>
 
   <p class="features-section-label">In-App Payments — Stripe Connect</p>
@@ -239,6 +245,12 @@
       <div class="feature-desc">Members are placed ahead of visitors on the waitlist when priority joining is enabled.</div>
       <span class="feature-tag pro">✦ Pro</span>
     </div>
+    <div class="feature-card members-card">
+      <span class="feature-icon">🪙</span>
+      <div class="feature-title">Member Session Credits</div>
+      <div class="feature-desc">Paid members who can't attend request a credit — applied automatically to their next session. Admin sets the cutoff window.</div>
+      <span class="feature-tag pro">✦ Pro</span>
+    </div>
   </div>
 
 </div>
@@ -246,21 +258,18 @@
 <!-- Coming Soon -->
 <div style="position:relative;z-index:1;max-width:1100px;margin:0 auto 0;padding:0 40px 48px;">
   <p class="features-section-label" style="margin-bottom:20px;">Coming Soon</p>
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
-    <div style="background:rgba(200,131,26,0.07);border:1px solid rgba(200,131,26,0.2);border-radius:20px;padding:24px 22px;">
-      <span style="font-size:22px;display:block;margin-bottom:12px;">💳</span>
-      <div style="font-size:14px;font-weight:700;color:#f0a830;margin-bottom:7px;">Member Session Credits</div>
-      <div style="font-size:12px;font-weight:300;color:rgba(255,255,255,0.45);line-height:1.65;">Paid members who can't attend request a credit — applied automatically to their next session. Admin sets the cutoff window.</div>
-    </div>
-    <div style="background:rgba(200,131,26,0.07);border:1px solid rgba(200,131,26,0.2);border-radius:20px;padding:24px 22px;">
-      <span style="font-size:22px;display:block;margin-bottom:12px;">🤖</span>
-      <div style="font-size:14px;font-weight:700;color:#f0a830;margin-bottom:7px;">Automatic Draw Generator</div>
-      <div style="font-size:12px;font-weight:300;color:rgba(255,255,255,0.45);line-height:1.65;">AI-assisted draw creation based on player skill levels and match history. Balanced courts every time.</div>
-    </div>
-    <div style="background:rgba(200,131,26,0.07);border:1px solid rgba(200,131,26,0.2);border-radius:20px;padding:24px 22px;">
-      <span style="font-size:22px;display:block;margin-bottom:12px;">📋</span>
-      <div style="font-size:14px;font-weight:700;color:#f0a830;margin-bottom:7px;">Session Templates</div>
-      <div style="font-size:12px;font-weight:300;color:rgba(255,255,255,0.45);line-height:1.65;">Save recurring session setups and launch them in one tap — with your member list pre-populated automatically.</div>
+  <div style="background:linear-gradient(135deg,rgba(200,131,26,0.1) 0%,rgba(255,179,26,0.06) 100%);border:1px solid rgba(200,131,26,0.25);border-radius:24px;padding:36px 40px;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(240,168,48,0.06);pointer-events:none;"></div>
+    <div style="position:absolute;bottom:-60px;right:80px;width:120px;height:120px;border-radius:50%;background:rgba(240,168,48,0.04);pointer-events:none;"></div>
+    <div style="display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap;">
+      <span style="font-size:36px;display:block;">🤖</span>
+      <div style="flex:1;min-width:260px;">
+        <div style="display:inline-flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <span style="font-size:20px;font-weight:700;color:#f0a830;">Automatic Draw Generator</span>
+          <span style="background:rgba(240,168,48,0.2);border:1px solid rgba(240,168,48,0.35);border-radius:50px;padding:3px 10px;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#f0a830;">Coming Soon</span>
+        </div>
+        <div style="font-size:13px;font-weight:300;color:rgba(255,255,255,0.55);line-height:1.7;max-width:520px;">AI-assisted draw creation based on player skill levels and match history. Balanced courts every time — no more manual shuffling. Set your preferences and let the algorithm do the work.</div>
+      </div>
     </div>
   </div>
 </div>
@@ -297,9 +306,9 @@
 </div>
 
 <footer>
-  <p>© 2026 Social Tennis Manager &nbsp;·&nbsp; <a href="/">Home</a> &nbsp;·&nbsp; <a href="/privacy">Privacy Policy</a> &nbsp;·&nbsp; <a href="/cdn-cgi/l/email-protection#acdfc3cfc5cdc0d8c9c2c2c5dfc1cdc2cdcbc9de9e9c9e9aeccbc1cdc5c082cfc3c1">Contact</a></p>
+  <p>© 2026 Social Tennis Manager &nbsp;·&nbsp; <a href="/">Home</a> &nbsp;·&nbsp; <a href="/privacy">Privacy Policy</a> &nbsp;·&nbsp; <a href="mailto:bernardsakran@gmail.com">Contact</a></p>
 </footer>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   const canvas=document.getElementById('canvas'),ctx=canvas.getContext('2d');
   let W,H,bubbles=[];
   const COLORS=['rgba(26,63,160,0.14)','rgba(46,134,193,0.08)','rgba(178,229,26,0.05)','rgba(255,255,255,0.03)'];
