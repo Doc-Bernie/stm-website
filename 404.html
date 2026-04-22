@@ -265,12 +265,15 @@
 
 <script>
   // Extract club and session IDs from URL path: /join/{clubId}/{sessionId}
-  const path = window.location.pathname;
-  if (path.startsWith('/join/')) {
-    const parts = path.split('/').filter(Boolean);
+  const currentPath = window.location.pathname;
+    if (currentPath.startsWith('/join/')) {
+      const parts = currentPath.split('/').filter(Boolean);
     const clubId = parts[1] || '';
     const sessionId = parts[2] || '';
-    const deepLink = `socialtennis://join/${clubId}/${sessionId}`;
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    const deepLink = isAndroid
+  ? `intent://join/${clubId}/${sessionId}#Intent;scheme=socialtennis;package=com.berno1976.socialtennis;end`
+  : `socialtennis://join/${clubId}/${sessionId}`;
     const openBtn = document.getElementById('openApp');
     if (openBtn) openBtn.href = deepLink;
 
