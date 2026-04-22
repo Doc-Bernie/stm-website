@@ -4,8 +4,8 @@
   <link rel="icon" type="image/png" href="/favicon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Apply to Manage a Club — Social Tennis Manager</title>
-  <meta name="description" content="Apply to become a club organiser on Social Tennis Manager. Manage sessions, draws, rosters and payments for your tennis club.">
+  <title>Contact — Social Tennis Manager</title>
+  <meta name="description" content="Get in touch with the Social Tennis Manager team. Questions, feedback, or support.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -40,7 +40,6 @@
     }
     #canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.6; }
 
-    /* Nav */
     nav {
       position: relative; z-index: 2;
       display: flex; align-items: center; justify-content: space-between;
@@ -62,14 +61,12 @@
     .back-link:hover { color: var(--white); }
     .back-arrow { font-size: 16px; }
 
-    /* Page layout */
     main {
       position: relative; z-index: 1; flex: 1;
       display: flex; flex-direction: column; align-items: center;
       padding: 10px 24px 60px;
     }
 
-    /* Header above card */
     .page-header {
       text-align: center; max-width: 540px; margin-bottom: 32px;
       animation: fadeUp 0.6s ease both;
@@ -92,7 +89,6 @@
       font-size: 15px; font-weight: 300; color: var(--muted); line-height: 1.7;
     }
 
-    /* Card */
     .card {
       width: 100%; max-width: 560px;
       background: linear-gradient(145deg, #1e5f91, #1a3fa0, #1a5276);
@@ -100,18 +96,12 @@
       animation: fadeUp 0.6s 0.1s ease both;
     }
 
-    /* Section labels */
     .section-label {
       font-size: 13px; font-weight: 800;
       color: rgba(255,255,255,0.9);
       margin: 20px 0 10px;
     }
-    .section-label-opt {
-      font-size: 12px; font-weight: 600;
-      color: rgba(255,255,255,0.45);
-    }
 
-    /* Inputs */
     .input {
       width: 100%;
       background: rgba(255,255,255,0.10);
@@ -128,36 +118,8 @@
       border-color: rgba(178,229,26,0.5);
       background: rgba(255,255,255,0.14);
     }
-    textarea.input { min-height: 110px; resize: vertical; padding-top: 12px; }
+    textarea.input { min-height: 130px; resize: vertical; padding-top: 12px; }
 
-    /* Club count */
-    .club-count-row {
-      display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
-    }
-    .count-btn {
-      width: 44px; height: 44px; border-radius: 12px;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
-      color: rgba(255,255,255,0.7);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 16px; font-weight: 900; cursor: pointer;
-      transition: background 0.15s, border-color 0.15s, color 0.15s;
-    }
-    .count-btn:hover { background: rgba(255,255,255,0.15); }
-    .count-btn.active {
-      background: var(--green); border-color: var(--green);
-      color: var(--blue-deep);
-    }
-    .count-more {
-      flex: 1; padding: 10px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 12px; text-align: center;
-      font-size: 12px; font-weight: 700;
-      color: rgba(255,255,255,0.45);
-    }
-
-    /* Submit */
     .submit-btn {
       width: 100%; margin-top: 8px;
       padding: 14px;
@@ -174,7 +136,6 @@
     .submit-btn:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
     .submit-arrow { font-size: 16px; }
 
-    /* Success / Error states */
     .toast {
       display: none; margin-top: 16px; padding: 14px 18px;
       border-radius: 14px; font-size: 14px; font-weight: 600;
@@ -189,19 +150,11 @@
       color: #ff8080;
     }
 
-    /* Validation hint */
     .field-error {
       font-size: 12px; color: #ff9090; margin-top: -8px; margin-bottom: 10px;
       padding-left: 4px; display: none;
     }
 
-    /* Divider */
-    .divider {
-      border: none; border-top: 1px solid rgba(255,255,255,0.1);
-      margin: 20px 0;
-    }
-
-    /* Spinner */
     .spinner {
       width: 18px; height: 18px; border-radius: 50%;
       border: 2px solid rgba(13,31,78,0.3);
@@ -244,70 +197,41 @@
 
 <main>
   <div class="page-header">
-    <div class="page-tag">Organiser Application</div>
-    <h1 class="page-title">Admin<br><span>Application</span></h1>
-    <p class="page-sub">Fill in your details below and we'll review your request and be in touch.</p>
+    <div class="page-tag">Get in Touch</div>
+    <h1 class="page-title">Contact<br><span>Us</span></h1>
+    <p class="page-sub">Have a question, feedback, or need help? Drop us a message and we'll get back to you.</p>
   </div>
 
   <div class="card">
-    <!-- Basic info -->
     <input class="input" id="name" type="text" placeholder="Your name" autocomplete="name" />
     <div class="field-error" id="err-name">Please enter your name.</div>
 
     <input class="input" id="email" type="email" placeholder="Your email" autocomplete="email" />
     <div class="field-error" id="err-email">Please enter a valid email address.</div>
 
-    <input class="input" id="club-name" type="text" placeholder="Club / group name" />
-    <div class="field-error" id="err-club">Please enter your club or group name.</div>
-
-    <input class="input" id="location" type="text" placeholder="Location / suburb (optional)" />
-
-    <!-- Club count -->
-    <div class="section-label">How many clubs are you applying for?</div>
-    <div class="club-count-row">
-      <button class="count-btn active" data-n="1">1</button>
-      <button class="count-btn" data-n="2">2</button>
-      <button class="count-btn" data-n="3">3</button>
-      <div class="count-more">3+ → Contact us</div>
-    </div>
-
-    <hr class="divider">
-
-    <!-- Co-organisers -->
-    <div class="section-label">
-      Co-organisers <span class="section-label-opt">(optional — you can add later)</span>
-    </div>
-    <input class="input" id="co1" type="email" placeholder="Co-organiser 1 email" autocomplete="off" />
-    <div class="field-error" id="err-co1">Please enter a valid email.</div>
-
-    <input class="input" id="co2" type="email" placeholder="Co-organiser 2 email" autocomplete="off" />
-    <div class="field-error" id="err-co2">Please enter a valid email.</div>
-
-    <hr class="divider">
-
-    <!-- Notes -->
-    <div class="section-label">Anything else? <span class="section-label-opt">(optional)</span></div>
-    <textarea class="input" id="notes" placeholder="Optional note"></textarea>
+    <div class="section-label">Your message</div>
+    <textarea class="input" id="message" placeholder="How can we help?"></textarea>
+    <div class="field-error" id="err-message">Please enter a message.</div>
 
     <button class="submit-btn" id="submit-btn" onclick="handleSubmit()">
-      <span id="btn-label">Submit application</span>
+      <span id="btn-label">Send message</span>
       <span class="submit-arrow" id="btn-arrow">→</span>
       <div class="spinner" id="spinner"></div>
     </button>
 
-    <div class="toast" id="toast-success">
-      ✓ Application received — Thank you. Please check your email (including your spam folder)..
+    <div class="toast success" id="toast-success">
+      ✓ Message sent — thank you! We'll get back to you as soon as we can.
     </div>
-    <div class="toast" id="toast-error" id="toast-error"></div>
+    <div class="toast error" id="toast-error"></div>
   </div>
 </main>
 
 <footer>
-  <p>© 2026 Social Tennis Manager &nbsp;·&nbsp; <a href="/features">Features</a> &nbsp;·&nbsp; <a href="/privacy">Privacy Policy</a> &nbsp;·&nbsp; <a href="mailto:hello@socialtennis.app">Contact</a></p>
+  <p>© 2026 Social Tennis Manager &nbsp;·&nbsp; <a href="/features">Features</a> &nbsp;·&nbsp; <a href="/privacy">Privacy Policy</a> &nbsp;·&nbsp; <a href="/contact">Contact</a></p>
 </footer>
 
 <script>
-  /* ── Background canvas (same as index.html) ── */
+  /* ── Background canvas ── */
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
   let W, H, bubbles = [];
@@ -332,16 +256,6 @@
   window.addEventListener('resize', resize);
   init(); draw();
 
-  /* ── Club count selector ── */
-  let clubCount = 1;
-  document.querySelectorAll('.count-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.count-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      clubCount = parseInt(btn.dataset.n, 10);
-    });
-  });
-
   /* ── Helpers ── */
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const cleanText = s => s.trim().replace(/\s+/g, ' ');
@@ -360,34 +274,26 @@
 
   /* ── Submit ── */
   const SUPABASE_URL = 'https://sslthlozedfffhyigjgz.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNzbHRobG96ZWRmZmZoeWlnamd6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NDU0NzcsImV4cCI6MjA4NzIyMTQ3N30.NYJBTaf4R_Kqj2rsecsN1PzRqkuLK8U2W1CBkaP_W8c'; // replace with your actual anon key
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNzbHRobG96ZWRmZmZoeWlnamd6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NDU0NzcsImV4cCI6MjA4NzIyMTQ3N30.NYJBTaf4R_Kqj2rsecsN1PzRqkuLK8U2W1CBkaP_W8c';
 
   async function handleSubmit() {
-    ['err-name','err-email','err-club','err-co1','err-co2'].forEach(hideErr);
+    ['err-name','err-email','err-message'].forEach(hideErr);
     document.getElementById('toast-success').style.display = 'none';
     document.getElementById('toast-error').style.display = 'none';
 
-    const name      = cleanText(document.getElementById('name').value);
-    const email     = document.getElementById('email').value.trim().toLowerCase();
-    const clubName  = cleanText(document.getElementById('club-name').value);
-    const location  = cleanText(document.getElementById('location').value);
-    const notes     = cleanText(document.getElementById('notes').value);
-    const co1       = document.getElementById('co1').value.trim().toLowerCase();
-    const co2       = document.getElementById('co2').value.trim().toLowerCase();
+    const name    = cleanText(document.getElementById('name').value);
+    const email   = document.getElementById('email').value.trim().toLowerCase();
+    const message = cleanText(document.getElementById('message').value);
 
     let valid = true;
-    if (!name)                              { showErr('err-name', 'Please enter your name.'); valid = false; }
-    if (!email || !EMAIL_RE.test(email))    { showErr('err-email', 'Please enter a valid email address.'); valid = false; }
-    if (!clubName)                          { showErr('err-club', 'Please enter your club or group name.'); valid = false; }
-    if (co1 && !EMAIL_RE.test(co1))         { showErr('err-co1', 'Please enter a valid email.'); valid = false; }
-    if (co2 && !EMAIL_RE.test(co2))         { showErr('err-co2', 'Please enter a valid email.'); valid = false; }
-    if (co1 === email || co2 === email)     { showErr('err-co1', 'You cannot nominate yourself as a co-organiser.'); valid = false; }
-    if (co1 && co1 === co2)                 { showErr('err-co2', 'Please enter two different co-organiser emails.'); valid = false; }
+    if (!name)                           { showErr('err-name', 'Please enter your name.'); valid = false; }
+    if (!email || !EMAIL_RE.test(email)) { showErr('err-email', 'Please enter a valid email address.'); valid = false; }
+    if (!message)                        { showErr('err-message', 'Please enter a message.'); valid = false; }
     if (!valid) return;
 
     setLoading(true);
     try {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/club_applications`, {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/contact_messages`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -395,39 +301,19 @@
           'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
           'Prefer': 'return=minimal',
         },
-        body: JSON.stringify({
-          name, email,
-          club_name: clubName,
-          location: location || null,
-          notes: notes || null,
-          status: 'new',
-          club_count: clubCount,
-          co_organiser_1: co1 || null,
-          co_organiser_2: co2 || null,
-        }),
+        body: JSON.stringify({ name, email, message }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-      /* Fire-and-forget notify edge function */
-      fetch(`${SUPABASE_URL}/functions/v1/notify-admin-application`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({ name, email, clubName, location, notes, clubCount, coOrganiser1: co1, coOrganiser2: co2 }),
-      }).catch(() => {});
-
-      /* Success */
       document.getElementById('toast-success').style.display = 'block';
       document.getElementById('submit-btn').style.display = 'none';
-      ['name','email','club-name','location','co1','co2','notes'].forEach(id => {
+      ['name','email','message'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.value = '';
       });
     } catch(e) {
       const el = document.getElementById('toast-error');
-      el.textContent = 'Something went wrong — please try again or email us directly.';
+      el.textContent = 'Something went wrong — please try again or email us at socialtennismanager2026@gmail.com';
       el.style.display = 'block';
     } finally {
       setLoading(false);

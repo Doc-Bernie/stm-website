@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Returning to Social Tennis Manager</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f1923;
+      color: #e8edf2;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      text-align: center;
+      padding: 2rem;
+      max-width: 420px;
+    }
+
+    .icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 1.5rem;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pop 0.4s ease-out;
+    }
+
+    .icon.cancelled {
+      background: linear-gradient(135deg, #f97316, #ef4444);
+    }
+
+    .icon svg { width: 36px; height: 36px; fill: white; }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #94a3b8;
+      margin-bottom: 2rem;
+      line-height: 1.5;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      background: #22c55e;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn:hover { background: #16a34a; }
+    .btn.cancelled { background: #6366f1; }
+    .btn.cancelled:hover { background: #4f46e5; }
+
+    .hint {
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+
+    @keyframes pop {
+      0%   { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1);   opacity: 1; }
+    }
+
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="content">
+    <div class="spinner"></div>
+    <p>Redirecting to the app…</p>
+  </div>
+
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var path   = params.get('path') || '(user)';
+      var status = params.get('status') || 'success';
+      var deepLink = 'socialtennis://' + path;
+
+      var isSuccess = status === 'success';
+
+      // Try the deep link immediately
+      window.location.href = deepLink;
+
+      // After a short delay, show manual fallback UI
+      // (if the app opened, the user won't see this)
+      setTimeout(function () {
+        var container = document.getElementById('content');
+        container.innerHTML = isSuccess
+          ? '<div class="icon">'
+            + '<svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>'
+            + '</div>'
+            + '<h1>Payment Successful!</h1>'
+            + '<p>Your spot has been confirmed. Tap below to return to the app.</p>'
+            + '<a class="btn" href="' + deepLink + '">Return to Social Tennis Manager</a>'
+            + '<p class="hint">If the button doesn\'t work, open the app manually — your booking is confirmed.</p>'
+          : '<div class="icon cancelled">'
+            + '<svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>'
+            + '</div>'
+            + '<h1>Payment Cancelled</h1>'
+            + '<p>No worries — you haven\'t been charged. Tap below to go back.</p>'
+            + '<a class="btn cancelled" href="' + deepLink + '">Back to App</a>'
+            + '<p class="hint">If the button doesn\'t work, open the app manually.</p>';
+      }, 1500);
+    })();
+  </script>
+</body>
+</html>

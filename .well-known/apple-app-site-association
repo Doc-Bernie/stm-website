@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "C3Q6Z6B3H8.com.berno1976.socialtennis",
+        "paths": [
+          "/join/*"
+        ]
+      }
+    ]
+  }
+}

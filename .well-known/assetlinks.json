@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.berno1976.socialtennis",
+      "sha256_cert_fingerprints": [
+        "FC:8B:EA:68:73:8B:A9:A0:27:A1:A9:FB:6A:82:0A:26:8E:76:B0:9A:52:96:16:8D:90:C0:2F:9B:FB:44:54:23"
+      ]
+    }
+  }
+]
