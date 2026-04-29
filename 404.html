@@ -3,17 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script>
-    // If the URL is a /join/ deep link, redirect to the join page
-    // GitHub Pages serves 404.html for any path that doesn't match a file
-    const path = window.location.pathname;
-    if (path.startsWith('/join/')) {
-      // Stay on this page — the join content is rendered below
-    } else {
-      // Not a join link — show the 404 content
-      document.documentElement.setAttribute('data-show-404', 'true');
-    }
-  </script>
+ 
   <title>Social Tennis Manager</title>
   <link rel="icon" type="image/png" href="/favicon.png">
   <meta property="og:title" content="You've been invited to a tennis session!">
@@ -50,12 +40,6 @@
         linear-gradient(160deg, #0d1f4e 0%, #122060 50%, #0d1f4e 100%);
       pointer-events: none;
     }
-
-    /* ── Join page content ── */
-    .join-page { display: block; position: relative; z-index: 1; padding: 24px; width: 100%; max-width: 460px; }
-    .not-found-page { display: none; position: relative; z-index: 1; text-align: center; padding: 24px; }
-    html[data-show-404='true'] .join-page { display: none; }
-    html[data-show-404='true'] .not-found-page { display: block; }
 
     /* Card styles (shared) */
     .card {
@@ -192,19 +176,7 @@
     }
 
     /* ── 404 page ── */
-    .not-found-page h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 120px;
-      line-height: 1;
-      color: var(--green);
-      margin-bottom: 8px;
-    }
-    .not-found-page p {
-      font-size: 16px;
-      color: var(--muted);
-      margin-bottom: 24px;
-    }
-    .home-btn {
+     .home-btn {
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -218,30 +190,24 @@
       font-weight: 700;
       text-decoration: none;
       transition: background 0.2s;
-    }
-    .home-btn:hover { background: rgba(255,255,255,0.14); }
+    }    
   </style>
 </head>
 <body>
 <div class="bg-mesh"></div>
 
 <!-- ── Join session content ── -->
-<div class="join-page">
+<div style="position: relative; z-index: 1; padding: 24px; width: 100%; max-width: 460px;">
   <div class="card">
     <div class="card-header">
       <div class="brand">
         <div class="brand-dot"></div>
         <span class="brand-text">SOCIAL TENNIS</span>
       </div>
-      <h1>You've been invited to a session!</h1>
-      <p>Open the app to view session details, check the player list, and join.</p>
+      <h1>You've been invited to play tennis!</h1>
+      <p>Download Social Tennis Manager and enter the Club Code shared with you to find the session and join.</p>
     </div>
-    <div class="card-body">
-      <a id="openApp" href="#" class="open-app-btn">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
-        Open in App
-      </a>
-      <div class="divider">DON'T HAVE THE APP?</div>
+    <div class="card-body">      
       <div class="store-links">
         <a href="https://apps.apple.com/app/id6759812658" class="store-btn">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
@@ -255,36 +221,5 @@
     </div>
   </div>
 </div>
-
-<!-- ── 404 content ── -->
-<div class="not-found-page">
-  <h1>404</h1>
-  <p>This page doesn't exist. Let's get you back on court.</p>
-  <a href="/" class="home-btn">← Back to Home</a>
-</div>
-
-<script>
-  // Extract club and session IDs from URL path: /join/{clubId}/{sessionId}
-  const currentPath = window.location.pathname;
-    if (currentPath.startsWith('/join/')) {
-      const parts = currentPath.split('/').filter(Boolean);
-    const clubId = parts[1] || '';
-    const sessionId = parts[2] || '';
-    const isAndroid = /Android/i.test(navigator.userAgent);
-    const deepLink = isAndroid
-  ? `intent://join/${clubId}/${sessionId}#Intent;scheme=socialtennis;package=com.berno1976.socialtennis;end`
-  : `socialtennis://join/${clubId}/${sessionId}`;
-    const openBtn = document.getElementById('openApp');
-    if (openBtn) openBtn.href = deepLink;
-
-    // Try to open the app automatically on mobile
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    if (isMobile && clubId && sessionId) {
-      setTimeout(() => {
-        window.location.href = deepLink;
-      }, 300);
-    }
-  }
-</script>
 </body>
 </html>
