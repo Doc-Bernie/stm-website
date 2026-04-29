@@ -181,6 +181,20 @@
     footer a { color: rgba(255,255,255,0.45); text-decoration: none; font-weight: 600; transition: color 0.2s; }
     footer a:hover { color: var(--green); }
 
+    /* Social icons */
+    .social-links {
+      display: flex; justify-content: center; gap: 16px; margin-bottom: 12px;
+    }
+    .social-links a {
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+      transition: background 0.2s, transform 0.2s;
+    }
+    .social-links a:hover { background: rgba(178,229,26,0.15); transform: translateY(-2px); }
+    .social-links svg { width: 18px; height: 18px; fill: rgba(255,255,255,0.5); transition: fill 0.2s; }
+    .social-links a:hover svg { fill: var(--green); }
+
     @keyframes fadeLeft { from { opacity: 0; transform: translateX(-24px); } to { opacity: 1; transform: translateX(0); } }
     @keyframes fadeRight { from { opacity: 0; transform: translateX(24px) scale(0.95); } to { opacity: 1; transform: translateX(0) scale(1); } }
 
@@ -235,6 +249,8 @@
 
     <a href="/apply" class="apply-pill">✦ Apply to manage your club →</a>
 
+    <a href="https://www.youtube.com/@SocialTennisManager" target="_blank" rel="noopener" class="apply-pill">🎬 Watch tutorials →</a>
+
     <p class="hero-sub">Session &amp; Draw Manager — built for tennis club organisers who want things to just work. In-app payments, member credits, match draws and more.</p>
 
     <!-- Two-row feature summary -->
@@ -280,6 +296,14 @@
   </div>
 </section>
 <footer>
+  <div class="social-links">
+    <a href="https://www.youtube.com/@SocialTennisManager" target="_blank" rel="noopener" title="YouTube">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.55A3.02 3.02 0 0 0 .5 6.19 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.81 3.02 3.02 0 0 0 2.12 2.14c1.87.55 9.38.55 9.38.55s7.5 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.81zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
+    </a>
+    <a href="https://www.facebook.com/profile.php?id=61570761420128" target="_blank" rel="noopener" title="Facebook">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07c0 6.02 4.39 11.02 10.13 11.93v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.89v2.26h3.33l-.53 3.49h-2.8v8.44C19.61 23.09 24 18.09 24 12.07z"/></svg>
+    </a>
+  </div>
   <p>© 2026 Social Tennis Manager &nbsp;·&nbsp; <a href="/features">Features</a> &nbsp;·&nbsp; <a href="/privacy">Privacy Policy</a> &nbsp;·&nbsp; <a href="/contact">Contact</a></p>
 </footer>
 <script>
