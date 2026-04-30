@@ -93,8 +93,6 @@
       line-height: 1.7; max-width: 460px;
       animation: fadeLeft 0.6s 0.3s ease both;
     }
-
-    /* ── Feature rows ─────────────────────────────────────── */
     .feature-rows {
       display: flex; flex-direction: column; gap: 12px;
       animation: fadeLeft 0.6s 0.35s ease both;
@@ -110,9 +108,7 @@
       text-transform: uppercase; color: rgba(255,255,255,0.4);
       margin-bottom: 10px;
     }
-    .feature-row-pills {
-      display: flex; flex-wrap: wrap; gap: 7px;
-    }
+    .feature-row-pills { display: flex; flex-wrap: wrap; gap: 7px; }
     .frpill {
       display: inline-flex; align-items: center;
       padding: 5px 12px; border-radius: 50px;
@@ -128,7 +124,6 @@
       border: 1px solid rgba(36,113,163,0.35);
       color: rgba(174,214,241,0.9);
     }
-
     .apply-pill {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 8px 16px; border-radius: 50px;
@@ -140,7 +135,6 @@
       animation: fadeLeft 0.6s 0.4s ease both;
     }
     .apply-pill:hover { background: rgba(255,255,255,0.10); color: rgba(255,255,255,0.85); }
-
     .pro-link {
       display: inline-flex; align-items: center; gap: 6px;
       font-size: 12px; font-weight: 600;
@@ -149,6 +143,117 @@
       animation: fadeLeft 0.6s 0.5s ease both;
     }
     .pro-link:hover { color: var(--green); }
+
+    /* ── Credit feature section ── */
+    .credit-section {
+      position: relative; z-index: 1;
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 40px 80px; width: 100%;
+      animation: fadeLeft 0.6s 0.5s ease both;
+    }
+    .credit-card {
+      background: rgba(178,229,26,0.04);
+      border: 1px solid rgba(178,229,26,0.18);
+      border-radius: 24px;
+      overflow: hidden;
+    }
+    .credit-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      align-items: stretch;
+    }
+    .credit-copy {
+      padding: 48px 44px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      justify-content: center;
+    }
+    .credit-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(178,229,26,0.1);
+      border: 1px solid rgba(178,229,26,0.25);
+      border-radius: 50px; padding: 5px 14px; width: fit-content;
+    }
+    .credit-eyebrow-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green);
+    }
+    .credit-eyebrow-text {
+      font-size: 10px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--green);
+    }
+    .credit-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(32px, 4vw, 52px);
+      line-height: 1; letter-spacing: 1px;
+      color: var(--white);
+    }
+    .credit-headline span { color: var(--green); }
+    .credit-body {
+      font-size: 15px; font-weight: 300;
+      color: var(--muted); line-height: 1.75;
+      max-width: 400px;
+    }
+    .credit-points {
+      display: flex; flex-direction: column; gap: 10px;
+      list-style: none;
+    }
+    .credit-points li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 13px; font-weight: 500;
+      color: rgba(255,255,255,0.75); line-height: 1.5;
+    }
+    .credit-points li::before {
+      content: '';
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green); flex-shrink: 0; margin-top: 6px;
+    }
+    .credit-watch {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 50px;
+      background: var(--green);
+      color: var(--blue-deep);
+      font-size: 13px; font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      width: fit-content;
+      box-shadow: 0 6px 20px rgba(178,229,26,0.25);
+    }
+    .credit-watch:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(178,229,26,0.4); }
+    .credit-watch svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .credit-video {
+      position: relative;
+      background: rgba(0,0,0,0.3);
+      border-left: 1px solid rgba(178,229,26,0.1);
+      display: flex; align-items: center; justify-content: center;
+      min-height: 320px;
+      overflow: hidden;
+    }
+    .credit-video iframe {
+      width: 100%; height: 100%;
+      position: absolute; inset: 0;
+      border: none;
+    }
+    .credit-video-placeholder {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 16px; padding: 40px;
+      text-align: center;
+    }
+    .play-circle {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: rgba(178,229,26,0.15);
+      border: 1.5px solid rgba(178,229,26,0.3);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .play-circle svg { width: 24px; height: 24px; margin-left: 4px; }
+    .credit-video-label {
+      font-size: 12px; font-weight: 500;
+      color: rgba(255,255,255,0.4); letter-spacing: 0.5px;
+    }
 
     /* Tennis ball */
     .hero-right { display: flex; align-items: center; justify-content: center; animation: fadeRight 0.8s 0.2s ease both; }
@@ -180,8 +285,6 @@
     }
     footer a { color: rgba(255,255,255,0.45); text-decoration: none; font-weight: 600; transition: color 0.2s; }
     footer a:hover { color: var(--green); }
-
-    /* Social icons */
     .social-links {
       display: flex; justify-content: center; gap: 16px; margin-bottom: 12px;
     }
@@ -206,6 +309,11 @@
       .hero-sub { margin: 0 auto; }
       .feature-row-pills { justify-content: center; }
       .feature-row-label { text-align: center; }
+      .credit-section { padding: 0 24px 60px; }
+      .credit-inner { grid-template-columns: 1fr; }
+      .credit-video { min-height: 420px; border-left: none; border-top: 1px solid rgba(178,229,26,0.1); }
+      .credit-copy { padding: 32px 28px; }
+      .credit-watch { align-self: center; }
     }
     @media (max-width: 400px) {
       .download-row { flex-direction: column; align-items: center; }
@@ -248,12 +356,10 @@
     </div>
 
     <a href="/apply" class="apply-pill">✦ Apply to manage your club →</a>
-
     <a href="https://www.youtube.com/@SocialTennisManager" target="_blank" rel="noopener" class="apply-pill">🎬 Watch tutorials →</a>
 
     <p class="hero-sub">Session &amp; Draw Manager — built for tennis club organisers who want things to just work. In-app payments, member credits, match draws and more.</p>
 
-    <!-- Two-row feature summary -->
     <div class="feature-rows">
       <div class="feature-row-block">
         <div class="feature-row-label">🛠 For Organisers</div>
@@ -282,16 +388,46 @@
     </div>
 
     <a href="/features" class="apply-pill">✦ See all features →</a>
-
-    <a href="https://buy.stripe.com/00w7sE3cQ9yX3bS63n9MY00" target="_blank" rel="noopener" class="pro-link">
-      ✦ Already an organiser? Upgrade to Pro →
-    </a>
-
+    <a href="https://buy.stripe.com/00w7sE3cQ9yX3bS63n9MY00" target="_blank" rel="noopener" class="pro-link">✦ Already an organiser? Upgrade to Pro →</a>
     <a href="/contact" class="apply-pill">✦ Get in touch →</a>
   </div>
   <div class="hero-right">
     <div class="ball-wrap">
       <div class="tennis-ball"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Session Credits Feature Section ── -->
+<section class="credit-section">
+  <div class="credit-card">
+    <div class="credit-inner">
+      <div class="credit-copy">
+        <div class="credit-eyebrow">
+          <div class="credit-eyebrow-dot"></div>
+          <span class="credit-eyebrow-text">New Feature</span>
+        </div>
+        <h2 class="credit-headline">The solution to<br><span>cancelled sessions</span><br>is here.</h2>
+        <p class="credit-body">When a session gets cancelled, STM automatically credits every member what they paid — tracked in the app, zero manual work.</p>
+        <ul class="credit-points">
+          <li>The organiser keeps the funds. Members keep their credit.</li>
+          <li>No refund requests, no awkward messages, no spreadsheets.</li>
+          <li>Credit is ready and waiting for the member's next session.</li>
+          <li>The money in your account after a cancellation is legitimately yours.</li>
+        </ul>
+        <a href="https://www.youtube.com/@SocialTennisManager" target="_blank" rel="noopener" class="credit-watch">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.55A3.02 3.02 0 0 0 .5 6.19 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.81 3.02 3.02 0 0 0 2.12 2.14c1.87.55 9.38.55 9.38.55s7.5 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.81zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
+          Watch how it works
+        </a>
+      </div>
+      <div class="credit-video">
+        <iframe
+          src="https://www.youtube.com/embed/Q2I6f78IL3k"
+          title="Session Credits — Social Tennis Manager"
+          allowfullscreen
+          style="position:absolute;inset:0;width:100%;height:100%;border:none;">
+        </iframe>
+      </div>
     </div>
   </div>
 </section>
