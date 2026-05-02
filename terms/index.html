@@ -1,1 +1,545 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms & Conditions – Social Tennis Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,500;0,700;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-deep:   #1a5276;
+      --blue-mid:    #2471a3;
+      --blue-bright: #2e86c1;
+      --blue-light:  #aed6f1;
+      --green:       #b2e51a;
+      --bg:          #d5eaf3;
+      --white:       #ffffff;
+      --text-dark:   #0d2137;
+      --text-mid:    #1a4a6b;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text-dark);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    #canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ── Header ── */
+    header {
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(135deg, var(--blue-deep), var(--blue-mid), var(--blue-bright));
+      padding: 40px 24px 48px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .header-arc1 {
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.07);
+    }
+
+    .header-arc2 {
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.04);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: var(--white); }
+
+    .logo-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50px;
+      padding: 8px 18px;
+      margin-bottom: 20px;
+    }
+
+    .tennis-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px rgba(178,229,26,0.6);
+    }
+
+    .logo-text {
+      color: var(--white);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px;
+      letter-spacing: 2px;
+    }
+
+    header h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(36px, 8vw, 64px);
+      color: var(--white);
+      letter-spacing: 2px;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    header p {
+      color: rgba(255,255,255,0.6);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    /* ── Content ── */
+    .content {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    .section-card {
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(46,134,193,0.12);
+      box-shadow: 0 4px 20px rgba(26,82,118,0.06);
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .section-card:nth-child(1)  { animation-delay: 0.05s; }
+    .section-card:nth-child(2)  { animation-delay: 0.10s; }
+    .section-card:nth-child(3)  { animation-delay: 0.15s; }
+    .section-card:nth-child(4)  { animation-delay: 0.20s; }
+    .section-card:nth-child(5)  { animation-delay: 0.25s; }
+    .section-card:nth-child(6)  { animation-delay: 0.30s; }
+    .section-card:nth-child(7)  { animation-delay: 0.35s; }
+    .section-card:nth-child(8)  { animation-delay: 0.40s; }
+    .section-card:nth-child(9)  { animation-delay: 0.45s; }
+    .section-card:nth-child(10) { animation-delay: 0.50s; }
+    .section-card:nth-child(11) { animation-delay: 0.55s; }
+    .section-card:nth-child(12) { animation-delay: 0.60s; }
+    .section-card:nth-child(13) { animation-delay: 0.65s; }
+    .section-card:nth-child(14) { animation-delay: 0.70s; }
+    .section-card:nth-child(15) { animation-delay: 0.75s; }
+
+    .section-number {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--blue-bright);
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      color: var(--blue-deep);
+      letter-spacing: 1px;
+      margin-bottom: 14px;
+    }
+
+    p {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-mid);
+      line-height: 1.75;
+      margin-bottom: 10px;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    strong {
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    ul {
+      list-style: none;
+      margin-top: 8px;
+      margin-bottom: 10px;
+    }
+
+    ul li {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-mid);
+      line-height: 1.75;
+      padding-left: 18px;
+      position: relative;
+      margin-bottom: 6px;
+    }
+
+    ul li::before {
+      content: '·';
+      position: absolute;
+      left: 4px;
+      color: var(--blue-bright);
+      font-weight: 700;
+    }
+
+    .contact-card {
+      background: linear-gradient(135deg, var(--blue-deep), var(--blue-mid));
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 16px;
+      text-align: center;
+      animation: fadeUp 0.5s 0.8s ease both;
+    }
+
+    .contact-card h2 { color: var(--white); }
+    .contact-card p { color: rgba(255,255,255,0.7); }
+
+    .contact-link {
+      display: inline-block;
+      margin-top: 14px;
+      background: var(--green);
+      color: var(--blue-deep);
+      font-weight: 700;
+      font-size: 14px;
+      padding: 10px 24px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .contact-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(178,229,26,0.4);
+    }
+
+    /* ── Footer ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 24px;
+      font-size: 12px;
+      color: rgba(26,74,107,0.5);
+      font-weight: 500;
+    }
+
+    footer a {
+      color: var(--blue-mid);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<header>
+  <div class="header-arc1"></div>
+  <div class="header-arc2"></div>
+  <a href="/" class="back-link">← Back to Social Tennis Manager</a>
+  <div>
+    <div class="logo-pill">
+      <div class="tennis-dot"></div>
+      <span class="logo-text">Social Tennis Manager</span>
+    </div>
+  </div>
+  <h1>Terms &amp; Conditions</h1>
+  <p>Last updated: May 2026 (v1)</p>
+</header>
+
+<div class="content">
+
+  <div class="section-card">
+    <p>Welcome to <strong>Social Tennis Manager</strong> ("STM", "the App", "we", "us", "our"), an application developed and operated by Bernard Sakran in Queensland, Australia.</p>
+    <p>By downloading, accessing, or using the App, you agree to be bound by these Terms and Conditions ("Terms"). If you do not agree, please do not use the App.</p>
+    <p>These Terms work alongside our <a href="/privacy" style="color:var(--blue-bright); font-weight:700;">Privacy Policy</a>, which explains how we handle your personal information.</p>
+  </div>
+
+  <div class="section-card">
+    <div class="section-number">Section 01</div>
+    <h2>About Social Tennis Manager</h2>
+    <p>STM is a session management application designed to help tennis organisers, coaches and clubs run their sessions more efficiently. The App enables organisers to:</p>
+    <ul>
+      <li>Create and manage tennis sessions</li>
+      <li>Manage player rosters, waitlists and member records</li>
+      <li>Build and publish match draws</li>
+      <li>Collect payments from players via Stripe Connect</li>
+      <li>Issue session credits when sessions are cancelled</li>
+      <li>Communicate with players through push notifications</li>
+    </ul>
+    <p>STM is a software platform. We facilitate the connection between organisers and players but do not organise, supervise, insure, endorse or guarantee any tennis session, match or interaction between users.</p>
+  </div>
+
+  <div class="section-card">
+    <div class="section-number">Section 02</div>
+    <h2>User Roles</h2>
+    <p>The App supports three primary user roles, each with different responsibilities:</p>
+    <ul>
+      <li><strong>Organisers (Admins)</strong> — operators of clubs or session groups who create and manage sessions, set pricing, and receive payments.</li>
+      <li><strong>Members</strong> — registered players associated with a specific club, with verified accounts and access to member-specific features.</li>
+      <li><strong>Players (Guests)</strong> — non-registered participants who join individual sessions without creating a member account.</li>
+    </ul>
+    <p>Organisers are independent operators of their own tennis activities. STM is not a party to the relationship between an organiser and their players, and is not responsible for the conduct, decisions or services provided by organisers.</p>
+  </div>
+
+  <div class="section-card">
+    <div class="section-number">Section 03</div>
+    <h2>Eligibility</h2>
+    <p>To use the App as an organiser, you must:</p>
+    <ul>
+      <li>Be at least 18 years old</li>
+      <li>Be legally able to enter into a binding agreement</li>
+      <li>Provide accurate and up-to-date account information</li>
+      <li>If collecting payments, comply with the Stripe Connect terms of service</li>
+    </ul>
+    <p>Players and members under 18 may use the App only with the consent and supervision of a parent or legal guardian. Organisers running junior sessions are responsible for obtaining appropriate parental consent.</p>
+  </div>
+
+  <div class="section-card">
+    <div class="section-number">Section 04</div>
+    <h2>Accounts</h2>
+    <p>Organiser accounts are created via email with a verification step. Member accounts are created via email verification when a player joins a club. You agree to:</p>
+    <ul>
+      <li>Provide accurate and current information</li>
+      <li>Keep your login credentials secure</li>
+      <li>Be responsible for all activity under your account</li>
+      <li>Notify us promptly of any unauthorised use</li>
+    </ul>
+    <p>You must not share your account, impersonate another person, or create accounts on behalf of others without authorisation.</p>
+  </div>
+
+  <div class="section-card">
+    <div class="section-number">Section 05</div>
+    <h2>Subscriptions and Pricing</h2>
+    <p>STM offers a free tier and a paid Pro tier. Pricing details, features and any free trial periods are disclosed within the App and on our website at the time of subscription.</p>
+    <ul>
+      <li><strong>Free trial</strong> — new organisers may receive a free trial period. No payment method is required to start the trial.</li>
+      <li><strong>Pro subscription</strong> — billed via Stripe at the rates disclosed at signup. Subscriptions auto-renew unless cancelled before the renewal date.</li>
+      <li><strong>Cancellation</strong> — you may cancel a Pro subscription at any time. Your subscription will remain active until the end of the current billing period.</li>
+      <li><strong>Refunds</strong> — subscription fees are generally non-refundable except as required by Australian Consumer Law. We may issue discretionary refunds in exceptional circumstances.</li>
+    </ul>
+    <p>We reserve the right to change pricing or introduce new paid features. Material changes will be communicated reasonably in advance.</p>
+  </div>
+
+  <div class="section-card">
+    <div class="section-number">Section 06</div>
+    <h2>Player Payments and Stripe Connect</h2>
+    <p>Where an organiser enables in-app payments, players pay session fees through Stripe. Funds are processed by Stripe and transferred directly to the organiser's connected Stripe account.</p>
+    <ul>
+      <li><strong>Organisers are the merchants of record</strong> — the organiser is responsible for delivering the session, providing receipts where required, and complying with their tax and legal obligations.</li>
+      <li><strong>STM is the platform</strong> — we facilitate payments via Stripe Connect but do not hold player funds or act as a financial institution.</li>
+      <li><strong>Platform fee</strong> — STM charges a small platform fee per transaction, disclosed at the point of payment.</li>
+      <li><strong>Stripe terms apply</strong> — payments are subject to Stripe's terms of service and acceptable use policy.</li>
+      <li><strong>Disputes and chargebacks</strong> — payment disputes are governed by Stripe's processes. STM is not responsible for chargebacks, disputes or fraud arising from organiser-player transactions.</li>
+    </ul>
+  </div>
+
+  <div class="section-card">
+    <div class="section-number">Section 07</div>
+    <h2>Session Credits and Cancellations</h2>
+    <p>STM includes a session credit feature that automatically converts paid session fees into credits when a session is cancelled by the organiser.</p>
+    <ul>
+      <li><strong>Credits are not refunds</strong> — when a session is cancelled, the organiser retains the funds and the player receives a credit equal to what they paid, redeemable against future sessions in the same club.</li>
+      <li><strong>Organiser responsibility</strong> — by using this feature, organisers commit to honouring credits in good faith for future sessions.</li>
+      <li><strong>Player rights</strong> — players who believe a credit has been improperly withheld should first contact the organiser. STM may assist in resolving disputes but is not a party to the underlying transaction.</li>
+      <li><strong>Statutory rights</strong> — nothing in this section limits any rights players or organisers may have under Australian Consumer Law.</li>
+    </ul>
+  </div>
+
+  <div class="section-card">
+    <div class="section-number">Section 08</div>
+    <h2>User Conduct</h2>
+    <p>You agree not to use the App to:</p>
+    <ul>
+      <li>Harass, threaten, intimidate or abuse other users</li>
+      <li>Share false, misleading or fraudulent information</li>
+      <li>Impersonate another person or misrepresent your identity</li>
+      <li>Post offensive, hateful or unlawful content</li>
+      <li>Collect, scrape or misuse another user's personal information</li>
+      <li>Attempt to access systems or data not intended for you</li>
+      <li>Interfere with the security, stability or operation of the App</li>
+      <li>Use the App for unlawful or unauthorised purposes</li>
+    </ul>
+    <p>We may suspend, restrict or terminate accounts that violate these conduct rules, with or without notice.</p>
+  </div>
+
+  <div class="section-card">
+    <div class="section-number">Section 09</div>
+    <h2>Sessions, Meetings and Safety</h2>
+    <p>STM helps organisers and players coordinate tennis sessions, but participants are solely responsible for their own decisions, conduct and safety.</p>
+    <p>STM:</p>
+    <ul>
+      <li>Does not verify player identity, skill level or behaviour</li>
+      <li>Does not supervise sessions or in-person meetings</li>
+      <li>Is not responsible for injuries, disputes, losses or damages arising from sessions or user interactions</li>
+    </ul>
+    <p>You participate in tennis sessions at your own risk. We recommend organisers carry appropriate insurance for their sessions and that all participants follow standard safety precautions.</p>
+    <p>STM is not an emergency service. If you are in immediate danger or need urgent help, contact local emergency services immediately.</p>
+  </div>
+
+  <div class="section-card">
+    <div class="section-number">Section 10</div>
+    <h2>Content You Provide</h2>
+    <p>You retain ownership of content you submit to the App, including session details, member information, profile data and communications.</p>
+    <p>By using STM, you grant us a non-exclusive, worldwide, royalty-free licence to host, store, process, display and reproduce that content solely for the purposes of:</p>
+    <ul>
+      <li>Operating and improving the App</li>
+      <li>Enabling session, payment and notification features</li>
+      <li>Providing customer support</li>
+      <li>Complying with legal obligations</li>
+    </ul>
+    <p>You are responsible for ensuring your content does not violate these Terms, the rights of others, or applicable law.</p>
+  </div>
+
+  <div class="section-card">
+    <div class="section-number">Section 11</div>
+    <h2>Intellectual Property</h2>
+    <p>All trademarks, logos, branding, designs, software, text, graphics and other content associated with Social Tennis Manager — other than user-provided content — are owned by us or our licensors.</p>
+    <p>You may not copy, reproduce, distribute, modify, reverse engineer or otherwise use STM intellectual property without prior written permission, except as permitted by law.</p>
+  </div>
+
+  <div class="section-card">
+    <div class="section-number">Section 12</div>
+    <h2>App Availability and Changes</h2>
+    <p>We may, at any time and without liability:</p>
+    <ul>
+      <li>Modify, improve, limit or remove features</li>
+      <li>Suspend or discontinue part or all of the App</li>
+      <li>Perform maintenance or release updates</li>
+      <li>Update these Terms</li>
+    </ul>
+    <p>If we make material changes to these Terms, we will provide reasonable notice through the App, by email, or by other reasonable means. Continued use of the App after changes take effect constitutes acceptance of the updated Terms.</p>
+  </div>
+
+  <div class="section-card">
+    <div class="section-number">Section 13</div>
+    <h2>Account Deletion and Termination</h2>
+    <p>You may request deletion of your account at any time through the App or by contacting us. When your account is deleted, we will delete or de-identify your personal data except where retention is reasonably necessary for:</p>
+    <ul>
+      <li>Legal or tax compliance</li>
+      <li>Fraud prevention</li>
+      <li>Resolving disputes or enforcing these Terms</li>
+      <li>Maintaining transaction records required by Stripe or applicable law</li>
+    </ul>
+    <p>We may suspend or terminate your account if you breach these Terms, create risk for other users, or misuse the App. Where reasonable, we will provide notice before terminating an account.</p>
+  </div>
+
+  <div class="section-card">
+    <div class="section-number">Section 14</div>
+    <h2>Disclaimer and Limitation of Liability</h2>
+    <p>The App is provided on an "as is" and "as available" basis. To the maximum extent permitted by law, STM disclaims all warranties, whether express, implied or statutory, including warranties of merchantability, fitness for a particular purpose and uninterrupted availability.</p>
+    <p>We do not guarantee that:</p>
+    <ul>
+      <li>The App will always be available, secure or error-free</li>
+      <li>Sessions, payments or interactions will lead to any particular outcome</li>
+      <li>Other users will behave safely, lawfully or honestly</li>
+    </ul>
+    <p>To the maximum extent permitted by law, STM and its operators will not be liable for any:</p>
+    <ul>
+      <li>Personal injury or property damage arising from sessions</li>
+      <li>Loss of data, profits, goodwill or opportunity</li>
+      <li>Disputes or incidents between organisers and players</li>
+      <li>Indirect, incidental, special or consequential damages</li>
+    </ul>
+    <p>Nothing in these Terms excludes or limits any consumer guarantees, rights or remedies that cannot be excluded or limited under the <strong>Australian Consumer Law</strong> or other applicable law.</p>
+  </div>
+
+  <div class="section-card">
+    <div class="section-number">Section 15</div>
+    <h2>Governing Law</h2>
+    <p>These Terms are governed by the laws of <strong>Queensland, Australia</strong>. Any dispute arising from these Terms or your use of the App will be subject to the exclusive jurisdiction of the courts of Queensland, unless applicable law requires otherwise.</p>
+  </div>
+
+  <div class="contact-card">
+    <div class="section-number" style="color:rgba(255,255,255,0.5)">Section 16</div>
+    <h2>Contact Us</h2>
+    <p>If you have questions about these Terms or need support, please get in touch.</p>
+    <a href="mailto:socialtennismanager2026@gmail.com" class="contact-link">socialtennismanager2026@gmail.com</a>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Social Tennis Manager &nbsp;·&nbsp; <a href="/">Home</a> &nbsp;·&nbsp; <a href="/privacy">Privacy Policy</a> &nbsp;·&nbsp; <a href="mailto:socialtennismanager2026@gmail.com">Contact</a></p>
+</footer>
+
+<script>
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, bubbles = [];
+  const COLORS = [
+    'rgba(26,82,118,0.05)',
+    'rgba(46,134,193,0.06)',
+    'rgba(178,229,26,0.06)',
+    'rgba(174,214,241,0.08)',
+  ];
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  function makeBubble() {
+    const r = 40 + Math.random() * 120;
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r,
+      dx: (Math.random() - 0.5) * 0.2,
+      dy: (Math.random() - 0.5) * 0.2,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)]
+    };
+  }
+  function init() { resize(); bubbles = Array.from({ length: 10 }, makeBubble); }
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    bubbles.forEach(b => {
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+      ctx.fillStyle = b.color;
+      ctx.fill();
+      b.x += b.dx; b.y += b.dy;
+      if (b.x < -b.r) b.x = W + b.r;
+      if (b.x > W + b.r) b.x = -b.r;
+      if (b.y < -b.r) b.y = H + b.r;
+      if (b.y > H + b.r) b.y = -b.r;
+    });
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize);
+  init(); draw();
+</script>
+
+</body>
+</html>
