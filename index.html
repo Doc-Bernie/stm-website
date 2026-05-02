@@ -4,8 +4,16 @@
   <link rel="icon" type="image/png" href="/favicon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Social Tennis Manager — Run Your Club With Ease</title>
-  <meta name="description" content="The app for tennis club organisers. Manage sessions, rosters, draws and payments — all in one place.">
+  <title>Social Tennis Manager — Less Admin. More Tennis.</title>
+  <meta name="description" content="The app that runs your tennis sessions — from sign-ups and payments to draws and cancellations. Built for tennis organisers and coaches.">
+  <meta property="og:title" content="Social Tennis Manager — Less Admin. More Tennis.">
+  <meta property="og:description" content="The app that runs your tennis sessions — from sign-ups and payments to draws and cancellations.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://socialtennismanager.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Social Tennis Manager — Less Admin. More Tennis.">
+  <meta name="twitter:description" content="The app that runs your tennis sessions. Built for organisers and coaches.">
+  <meta name="theme-color" content="#0d1f4e">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -39,7 +47,7 @@
     }
     #canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.6; }
     .hero {
-      position: relative; z-index: 1; flex: 1;
+      position: relative; z-index: 1;
       display: grid; grid-template-columns: 1fr 1fr;
       align-items: center; max-width: 1100px;
       margin: 0 auto; padding: 60px 40px; gap: 40px; width: 100%;
@@ -60,12 +68,13 @@
     @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.3); opacity: 0.7; } }
     .hero-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(72px, 10vw, 120px);
+      font-size: clamp(64px, 9vw, 110px);
       line-height: 0.92; letter-spacing: 2px;
       animation: fadeLeft 0.6s 0.1s ease both;
     }
     .hero-title .line1 { color: var(--white); display: block; }
     .hero-title .line2 { color: var(--green); display: block; }
+    .hero-title .line3 { color: var(--white); display: block; font-size: 0.55em; letter-spacing: 4px; opacity: 0.85; }
     .download-row {
       display: flex; gap: 14px; flex-wrap: wrap;
       animation: fadeLeft 0.6s 0.2s ease both;
@@ -89,10 +98,16 @@
     .dl-btn.ios .dl-sub, .dl-btn.ios .dl-label { color: var(--blue-deep); }
     .dl-btn.android .dl-sub, .dl-btn.android .dl-label { color: var(--blue-deep); }
     .hero-sub {
-      font-size: 16px; font-weight: 300; color: var(--muted);
-      line-height: 1.7; max-width: 460px;
+      font-size: 17px; font-weight: 400; color: rgba(255,255,255,0.92);
+      line-height: 1.65; max-width: 480px;
       animation: fadeLeft 0.6s 0.3s ease both;
     }
+    .hero-sub strong {
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    /* ── Feature rows ─────────────────────────────────────── */
     .feature-rows {
       display: flex; flex-direction: column; gap: 12px;
       animation: fadeLeft 0.6s 0.35s ease both;
@@ -108,7 +123,9 @@
       text-transform: uppercase; color: rgba(255,255,255,0.4);
       margin-bottom: 10px;
     }
-    .feature-row-pills { display: flex; flex-wrap: wrap; gap: 7px; }
+    .feature-row-pills {
+      display: flex; flex-wrap: wrap; gap: 7px;
+    }
     .frpill {
       display: inline-flex; align-items: center;
       padding: 5px 12px; border-radius: 50px;
@@ -124,6 +141,7 @@
       border: 1px solid rgba(36,113,163,0.35);
       color: rgba(174,214,241,0.9);
     }
+
     .apply-pill {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 8px 16px; border-radius: 50px;
@@ -135,6 +153,7 @@
       animation: fadeLeft 0.6s 0.4s ease both;
     }
     .apply-pill:hover { background: rgba(255,255,255,0.10); color: rgba(255,255,255,0.85); }
+
     .pro-link {
       display: inline-flex; align-items: center; gap: 6px;
       font-size: 12px; font-weight: 600;
@@ -143,6 +162,55 @@
       animation: fadeLeft 0.6s 0.5s ease both;
     }
     .pro-link:hover { color: var(--green); }
+
+    /* Tennis ball */
+    .hero-right { display: flex; align-items: center; justify-content: center; animation: fadeRight 0.8s 0.2s ease both; }
+    .ball-wrap { position: relative; width: clamp(220px, 36vw, 400px); height: clamp(220px, 36vw, 400px); }
+    .ball-wrap::before {
+      content: ''; position: absolute; inset: -30px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(178,229,26,0.14) 0%, transparent 65%);
+      animation: glowPulse 3s ease-in-out infinite;
+    }
+    @keyframes glowPulse { 0%, 100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.06); } }
+    .tennis-ball {
+      width: 100%; height: 100%; border-radius: 50%;
+      background: radial-gradient(circle at 32% 32%, #d4f53c, #b2e51a 38%, #8ab514 72%, #6a8f10 100%);
+      box-shadow: 0 0 80px rgba(178,229,26,0.2), 0 40px 100px rgba(0,0,0,0.6), inset 0 -12px 36px rgba(0,0,0,0.25), inset 0 12px 24px rgba(255,255,255,0.18);
+      position: relative; animation: float 4s ease-in-out infinite; overflow: hidden;
+    }
+    @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-18px) rotate(4deg); } }
+    .tennis-ball::before, .tennis-ball::after {
+      content: ''; position: absolute; border: 3px solid rgba(255,255,255,0.35);
+      border-radius: 50%; height: 90%; width: 45%; top: 5%;
+    }
+    .tennis-ball::before { left: 3%; border-right-color: transparent; border-bottom-color: transparent; }
+    .tennis-ball::after { right: 3%; border-left-color: transparent; border-bottom-color: transparent; }
+
+    footer {
+      position: relative; z-index: 1; text-align: center; padding: 24px;
+      font-size: 12px; color: rgba(255,255,255,0.25); font-weight: 500;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    footer a { color: rgba(255,255,255,0.45); text-decoration: none; font-weight: 600; transition: color 0.2s; }
+    footer a:hover { color: var(--green); }
+
+    /* Social icons */
+    .social-links {
+      display: flex; justify-content: center; gap: 16px; margin-bottom: 12px;
+    }
+    .social-links a {
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+      transition: background 0.2s, transform 0.2s;
+    }
+    .social-links a:hover { background: rgba(178,229,26,0.15); transform: translateY(-2px); }
+    .social-links svg { width: 18px; height: 18px; fill: rgba(255,255,255,0.5); transition: fill 0.2s; }
+    .social-links a:hover svg { fill: var(--green); }
+
+    @keyframes fadeLeft { from { opacity: 0; transform: translateX(-24px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes fadeRight { from { opacity: 0; transform: translateX(24px) scale(0.95); } to { opacity: 1; transform: translateX(0) scale(1); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
     /* ── Credit feature section ── */
     .credit-section {
@@ -236,70 +304,98 @@
       position: absolute; inset: 0;
       border: none;
     }
-    .credit-video-placeholder {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 16px; padding: 40px;
-      text-align: center;
+
+    /* ── Why STM Section ─────────────────────────────────── */
+    .why-stm {
+      position: relative; z-index: 1;
+      max-width: 1200px; margin: 0 auto;
+      padding: 80px 40px 60px;
     }
-    .play-circle {
-      width: 64px; height: 64px; border-radius: 50%;
-      background: rgba(178,229,26,0.15);
-      border: 1.5px solid rgba(178,229,26,0.3);
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s;
+    .why-header {
+      text-align: center; margin-bottom: 60px;
     }
-    .play-circle svg { width: 24px; height: 24px; margin-left: 4px; }
-    .credit-video-label {
-      font-size: 12px; font-weight: 500;
-      color: rgba(255,255,255,0.4); letter-spacing: 0.5px;
+    .why-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(48px, 6vw, 72px);
+      line-height: 1; letter-spacing: 2px;
+      color: var(--white); margin-bottom: 14px;
+    }
+    .why-tagline {
+      font-size: clamp(20px, 2.4vw, 28px);
+      font-weight: 300; color: var(--muted);
+      margin-bottom: 22px; letter-spacing: 0.3px;
+    }
+    .why-tagline strong {
+      color: var(--green); font-weight: 700;
+    }
+    .why-intro {
+      font-size: 16px; font-weight: 300;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.7; max-width: 720px;
+      margin: 0 auto;
+    }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .why-card {
+      position: relative;
+      background: linear-gradient(160deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 22px;
+      padding: 32px 26px 28px;
+      overflow: hidden;
+      transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+      animation: fadeUp 0.6s ease both;
+    }
+    .why-card:nth-child(1) { animation-delay: 0.05s; }
+    .why-card:nth-child(2) { animation-delay: 0.15s; }
+    .why-card:nth-child(3) { animation-delay: 0.25s; }
+    .why-card:nth-child(4) { animation-delay: 0.35s; }
+    .why-card:nth-child(5) { animation-delay: 0.45s; }
+    .why-card:nth-child(6) { animation-delay: 0.55s; }
+    .why-card::before {
+      content: ''; position: absolute;
+      top: -50%; right: -30%;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(178,229,26,0.08) 0%, transparent 70%);
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .why-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(178,229,26,0.3);
+      background: linear-gradient(160deg, rgba(178,229,26,0.04) 0%, rgba(255,255,255,0.02) 100%);
+    }
+    .why-card-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 56px; line-height: 1;
+      color: var(--green);
+      letter-spacing: 1px; margin-bottom: 16px;
+      opacity: 0.9;
+    }
+    .why-card-title {
+      font-size: 17px; font-weight: 700;
+      color: var(--white); margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .why-card-desc {
+      font-size: 14px; font-weight: 300;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
     }
 
-    /* Tennis ball */
-    .hero-right { display: flex; align-items: center; justify-content: center; animation: fadeRight 0.8s 0.2s ease both; }
-    .ball-wrap { position: relative; width: clamp(220px, 36vw, 400px); height: clamp(220px, 36vw, 400px); }
-    .ball-wrap::before {
-      content: ''; position: absolute; inset: -30px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(178,229,26,0.14) 0%, transparent 65%);
-      animation: glowPulse 3s ease-in-out infinite;
+    @media (max-width: 960px) {
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
     }
-    @keyframes glowPulse { 0%, 100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.06); } }
-    .tennis-ball {
-      width: 100%; height: 100%; border-radius: 50%;
-      background: radial-gradient(circle at 32% 32%, #d4f53c, #b2e51a 38%, #8ab514 72%, #6a8f10 100%);
-      box-shadow: 0 0 80px rgba(178,229,26,0.2), 0 40px 100px rgba(0,0,0,0.6), inset 0 -12px 36px rgba(0,0,0,0.25), inset 0 12px 24px rgba(255,255,255,0.18);
-      position: relative; animation: float 4s ease-in-out infinite; overflow: hidden;
+    @media (max-width: 720px) {
+      .why-stm { padding: 60px 24px 40px; }
+      .why-header { margin-bottom: 40px; }
+      .why-grid { grid-template-columns: 1fr; gap: 14px; }
+      .why-card { padding: 24px 22px 22px; }
+      .why-card-num { font-size: 44px; margin-bottom: 12px; }
     }
-    @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-18px) rotate(4deg); } }
-    .tennis-ball::before, .tennis-ball::after {
-      content: ''; position: absolute; border: 3px solid rgba(255,255,255,0.35);
-      border-radius: 50%; height: 90%; width: 45%; top: 5%;
-    }
-    .tennis-ball::before { left: 3%; border-right-color: transparent; border-bottom-color: transparent; }
-    .tennis-ball::after { right: 3%; border-left-color: transparent; border-bottom-color: transparent; }
-
-    footer {
-      position: relative; z-index: 1; text-align: center; padding: 24px;
-      font-size: 12px; color: rgba(255,255,255,0.25); font-weight: 500;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-    footer a { color: rgba(255,255,255,0.45); text-decoration: none; font-weight: 600; transition: color 0.2s; }
-    footer a:hover { color: var(--green); }
-    .social-links {
-      display: flex; justify-content: center; gap: 16px; margin-bottom: 12px;
-    }
-    .social-links a {
-      display: flex; align-items: center; justify-content: center;
-      width: 36px; height: 36px; border-radius: 50%;
-      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
-      transition: background 0.2s, transform 0.2s;
-    }
-    .social-links a:hover { background: rgba(178,229,26,0.15); transform: translateY(-2px); }
-    .social-links svg { width: 18px; height: 18px; fill: rgba(255,255,255,0.5); transition: fill 0.2s; }
-    .social-links a:hover svg { fill: var(--green); }
-
-    @keyframes fadeLeft { from { opacity: 0; transform: translateX(-24px); } to { opacity: 1; transform: translateX(0); } }
-    @keyframes fadeRight { from { opacity: 0; transform: translateX(24px) scale(0.95); } to { opacity: 1; transform: translateX(0) scale(1); } }
 
     @media (max-width: 720px) {
       .hero { grid-template-columns: 1fr; text-align: center; padding: 60px 24px 40px; gap: 48px; }
@@ -333,6 +429,7 @@
     <h1 class="hero-title">
       <span class="line1">Social</span>
       <span class="line2">Tennis</span>
+      <span class="line3">Manager</span>
     </h1>
     <div class="download-row">
       <a href="https://apps.apple.com/app/id6759812658" class="dl-btn ios" target="_blank" rel="noopener">
@@ -356,10 +453,12 @@
     </div>
 
     <a href="/apply" class="apply-pill">✦ Apply to manage your club →</a>
+
     <a href="https://www.youtube.com/@SocialTennisManager" target="_blank" rel="noopener" class="apply-pill">🎬 Watch tutorials →</a>
 
-    <p class="hero-sub">Session &amp; Draw Manager — built for tennis club organisers who want things to just work. In-app payments, member credits, match draws and more.</p>
+    <p class="hero-sub">The app that runs your tennis sessions — from sign-ups and payments to draws and cancellations.<br>Built for organisers and coaches who want <strong>less admin and more tennis</strong>.</p>
 
+    <!-- Two-row feature summary -->
     <div class="feature-rows">
       <div class="feature-row-block">
         <div class="feature-row-label">🛠 For Organisers</div>
@@ -388,12 +487,57 @@
     </div>
 
     <a href="/features" class="apply-pill">✦ See all features →</a>
-    <a href="https://buy.stripe.com/00w7sE3cQ9yX3bS63n9MY00" target="_blank" rel="noopener" class="pro-link">✦ Already an organiser? Upgrade to Pro →</a>
+
+    <a href="https://buy.stripe.com/00w7sE3cQ9yX3bS63n9MY00" target="_blank" rel="noopener" class="pro-link">
+      ✦ Already an organiser? Upgrade to Pro →
+    </a>
+
     <a href="/contact" class="apply-pill">✦ Get in touch →</a>
   </div>
   <div class="hero-right">
     <div class="ball-wrap">
       <div class="tennis-ball"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Why Social Tennis Manager Section ──────────────────── -->
+<section class="why-stm">
+  <div class="why-header">
+    <h2 class="why-title">Why Social Tennis Manager?</h2>
+    <p class="why-tagline">Less admin. <strong>More tennis.</strong></p>
+    <p class="why-intro">STM helps you move from WhatsApp chaos and payment headaches — to fully managed sessions with players confirmed, payments collected and draws ready to go.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-card-num">01</div>
+      <div class="why-card-title">Set up in minutes</div>
+      <p class="why-card-desc">Organisers and coaches create a session in minutes — recreate from a template each week.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-card-num">02</div>
+      <div class="why-card-title">No more chat group chaos</div>
+      <p class="why-card-desc">Stop chasing replies on WhatsApp. The roster is in the app — clean, current, and visible to everyone.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-card-num">03</div>
+      <div class="why-card-title">Players join with ease</div>
+      <p class="why-card-desc">One tap to join the main list or waitlist. Players see who else is playing and confirm in seconds.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-card-num">04</div>
+      <div class="why-card-title">You're in control</div>
+      <p class="why-card-desc">Choose how you run things — payments, credits, draws, cancellations. Turn features on or off to match your club.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-card-num">05</div>
+      <div class="why-card-title">Built for your club and tennis community</div>
+      <p class="why-card-desc">Customisable session formats, member levels, pricing rules and more. Your club, your way.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-card-num">06</div>
+      <div class="why-card-title">Free to start, free forever</div>
+      <p class="why-card-desc">The free version covers most of what you need to run sessions. Upgrade only if you want the extras.</p>
     </div>
   </div>
 </section>
