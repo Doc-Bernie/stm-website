@@ -423,7 +423,7 @@
       const verifyData = await verifyRes.json();
       if (!verifyData.ok) {
         const el = document.getElementById('toast-error');
-        el.textContent = 'Verification failed. Please refresh the page and try again.';
+        el.textContent = 'Verification failed. Please refresh and try again, or email us at socialtennismanager2026@gmail.com if the problem persists.';
         el.style.display = 'block';
         setLoading(false);
         if (window.turnstile) window.turnstile.reset();
