@@ -320,6 +320,10 @@
 
       document.getElementById('toast-success').style.display = 'block';
       document.getElementById('submit-btn').style.display = 'none';
+      document.getElementById('name').style.display = 'none';
+      document.getElementById('email').style.display = 'none';
+      document.getElementById('message').style.display = 'none';
+      document.querySelector('.section-label').style.display = 'none';
       ['name','email','message'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.value = '';
