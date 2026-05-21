@@ -595,12 +595,13 @@
     el.style.display = 'block';
   }
   function hideErr(id) { document.getElementById(id).style.display = 'none'; }
-  function setLoading(on) {
-    document.getElementById('submit-btn').disabled = on;
-    document.getElementById('btn-label').style.display = on ? 'none' : '';
-    document.getElementById('btn-arrow').style.display = on ? 'none' : '';
-    document.getElementById('spinner').style.display = on ? 'block' : 'none';
-  }
+ function setLoading(on) {
+  document.getElementById('submit-btn').disabled = on;
+  document.getElementById('btn-label').textContent = on ? 'Generating your Club ID…' : 'Submit application';
+  document.getElementById('btn-label').style.display = on ? '' : '';  // always visible, text changes
+  document.getElementById('btn-arrow').style.display = on ? 'none' : '';
+  document.getElementById('spinner').style.display = on ? 'block' : 'none';
+}
 
   /* ── Submit ── */
   const SUPABASE_URL = 'https://sslthlozedfffhyigjgz.supabase.co';
@@ -684,19 +685,34 @@
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-      /* Fire-and-forget notify edge function */
-      fetch(`${SUPABASE_URL}/functions/v1/notify-admin-application`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({ name, email, clubName, country, location, notes, clubCount, coOrganiser1: co1, coOrganiser2: co2 }),
-      }).catch(() => {});
+      /* Await notify + provision, capture Club ID */
+let clubId = null;
+try {
+  const notifyRes = await fetch(`${SUPABASE_URL}/functions/v1/notify-admin-application`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+    },
+    body: JSON.stringify({ name, email, clubName, country, location, notes, clubCount, coOrganiser1: co1, coOrganiser2: co2 }),
+  });
+  const notifyData = await notifyRes.json().catch(() => ({}));
+  clubId = notifyData.club_code || notifyData.clubCode || null;
+} catch (_) {}
 
-      /* Success */
-      document.getElementById('toast-success').style.display = 'block';
-      document.getElementById('submit-btn').style.display = 'none';
+/* Success */
+const successToast = document.getElementById('toast-success');
+if (clubId) {
+  successToast.innerHTML = `
+    ✓ Your Club ID is <strong style="font-size:1.2em;letter-spacing:1px;">${clubId}</strong><br><br>
+    Download the app, tap <em>"I have a Club ID"</em> and enter it to get started.<br>
+    <span style="opacity:0.75;font-size:13px;">We've also emailed it to you for safekeeping.</span>
+  `;
+} else {
+  successToast.textContent = '✓ Application received — check your email (including spam) for your Club ID.';
+}
+successToast.style.display = 'block';
+document.getElementById('submit-btn').style.display = 'none';
       ['name','email','club-name','location','co1','co2','notes'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.value = '';
