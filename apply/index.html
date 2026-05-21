@@ -630,7 +630,11 @@
     if (co2 && !EMAIL_RE.test(co2))         { showErr('err-co2', 'Please enter a valid email.'); valid = false; }
     if (co1 === email || co2 === email)     { showErr('err-co1', 'You cannot nominate yourself as a co-organiser.'); valid = false; }
     if (co1 && co1 === co2)                 { showErr('err-co2', 'Please enter two different co-organiser emails.'); valid = false; }
-    if (!valid) return;
+    if (!valid) {
+  const firstErr = document.querySelector('.field-error[style*="block"]');
+  if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  return;
+}
 
     setLoading(true);
     try {
