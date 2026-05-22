@@ -158,33 +158,6 @@
     }
     select.input:invalid { color: rgba(255,255,255,0.4); }
 
-    /* Club count */
-    .club-count-row {
-      display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
-    }
-    .count-btn {
-      width: 44px; height: 44px; border-radius: 12px;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
-      color: rgba(255,255,255,0.7);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 16px; font-weight: 900; cursor: pointer;
-      transition: background 0.15s, border-color 0.15s, color 0.15s;
-    }
-    .count-btn:hover { background: rgba(255,255,255,0.15); }
-    .count-btn.active {
-      background: var(--green); border-color: var(--green);
-      color: var(--blue-deep);
-    }
-    .count-more {
-      flex: 1; padding: 10px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 12px; text-align: center;
-      font-size: 12px; font-weight: 700;
-      color: rgba(255,255,255,0.45);
-    }
-
     /* Submit */
     .submit-btn {
       width: 100%; margin-top: 8px;
@@ -275,6 +248,19 @@
     <div class="page-tag">Organiser Application</div>
     <h1 class="page-title">Admin<br><span>Application</span></h1>
     <p class="page-sub">Fill in your details below and we'll review your request and be in touch.</p>
+  </div>
+
+  <div style="
+    width:100%; max-width:560px; margin-bottom:16px;
+    background: rgba(255,160,0,0.12);
+    border: 1px solid rgba(255,160,0,0.35);
+    border-radius: 16px; padding: 14px 18px;
+    font-size: 13px; font-weight: 600; line-height: 1.6;
+    color: #ffd080;
+    animation: fadeUp 0.5s ease both;
+  ">
+    ⚠️ <strong>For organisers only.</strong> This application is for people who want to <strong>create and manage tennis sessions</strong> for a club or group.<br>
+    If you are a <strong>player looking to join a club</strong>, do not apply here — ask your organiser for their Club ID and enter it in the app.
   </div>
 
   <div class="card">
@@ -503,27 +489,6 @@
 
     <input class="input" id="location" type="text" placeholder="City / suburb (optional)" />
 
-    <!-- Club count -->
-    <div class="section-label">How many clubs are you applying for?</div>
-    <div class="club-count-row">
-      <button class="count-btn active" data-n="1">1</button>
-      <button class="count-btn" data-n="2">2</button>
-      <button class="count-btn" data-n="3">3</button>
-      <div class="count-more">3+ → Contact us</div>
-    </div>
-
-    <hr class="divider">
-
-    <!-- Co-organisers -->
-    <div class="section-label">
-      Co-organisers <span class="section-label-opt">(optional — you can add later)</span>
-    </div>
-    <input class="input" id="co1" type="email" placeholder="Co-organiser 1 email" autocomplete="off" />
-    <div class="field-error" id="err-co1">Please enter a valid email.</div>
-
-    <input class="input" id="co2" type="email" placeholder="Co-organiser 2 email" autocomplete="off" />
-    <div class="field-error" id="err-co2">Please enter a valid email.</div>
-
     <hr class="divider">
 
     <!-- Notes -->
@@ -576,16 +541,6 @@
   window.addEventListener('resize', resize);
   init(); draw();
 
-  /* ── Club count selector ── */
-  let clubCount = 1;
-  document.querySelectorAll('.count-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.count-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      clubCount = parseInt(btn.dataset.n, 10);
-    });
-  });
-
   /* ── Helpers ── */
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const cleanText = s => s.trim().replace(/\s+/g, ' ');
@@ -608,7 +563,7 @@
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNzbHRobG96ZWRmZmZoeWlnamd6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NDU0NzcsImV4cCI6MjA4NzIyMTQ3N30.NYJBTaf4R_Kqj2rsecsN1PzRqkuLK8U2W1CBkaP_W8c';
 
   async function handleSubmit() {
-    ['err-name','err-email','err-club','err-country','err-co1','err-co2'].forEach(hideErr);
+    ['err-name','err-email','err-club','err-country'].forEach(hideErr);
     document.getElementById('toast-success').style.display = 'none';
     document.getElementById('toast-error').style.display = 'none';
 
@@ -618,26 +573,32 @@
     const country   = document.getElementById('country').value;
     const location  = cleanText(document.getElementById('location').value);
     const notes     = cleanText(document.getElementById('notes').value);
-    const co1       = document.getElementById('co1').value.trim().toLowerCase();
-    const co2       = document.getElementById('co2').value.trim().toLowerCase();
 
     let valid = true;
     if (!name)                              { showErr('err-name', 'Please enter your name.'); valid = false; }
     if (!email || !EMAIL_RE.test(email))    { showErr('err-email', 'Please enter a valid email address.'); valid = false; }
     if (!clubName)                          { showErr('err-club', 'Please enter your club or group name.'); valid = false; }
     if (!country)                           { showErr('err-country', 'Please select your country.'); valid = false; }
-    if (co1 && !EMAIL_RE.test(co1))         { showErr('err-co1', 'Please enter a valid email.'); valid = false; }
-    if (co2 && !EMAIL_RE.test(co2))         { showErr('err-co2', 'Please enter a valid email.'); valid = false; }
-    if (co1 === email || co2 === email)     { showErr('err-co1', 'You cannot nominate yourself as a co-organiser.'); valid = false; }
-    if (co1 && co1 === co2)                 { showErr('err-co2', 'Please enter two different co-organiser emails.'); valid = false; }
-    if (!valid) {
-  const firstErr = document.querySelector('.field-error[style*="block"]');
-  if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  return;
-}
+    if (!valid) return;
 
     setLoading(true);
     try {
+      /* ── Check for duplicate email ────────────────────────────────────── */
+      const dupRes = await fetch(`${SUPABASE_URL}/rest/v1/club_applications?email=eq.${encodeURIComponent(email)}&select=id&limit=1`, {
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        },
+      });
+      const dupData = await dupRes.json().catch(() => []);
+      if (Array.isArray(dupData) && dupData.length > 0) {
+        const el = document.getElementById('toast-error');
+        el.textContent = 'An application with this email already exists. If you need help, please contact us directly.';
+        el.style.display = 'block';
+        setLoading(false);
+        return;
+      }
+
       /* ── Verify Turnstile token first ─────────────────────────────────── */
       const turnstileToken = window.turnstile && window.turnstile.getResponse();
       if (!turnstileToken) {
@@ -682,9 +643,7 @@
           location: location || null,
           notes: notes || null,
           status: 'new',
-          club_count: clubCount,
-          co_organiser_1: co1 || null,
-          co_organiser_2: co2 || null,
+          club_count: 1,
         }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -698,7 +657,7 @@ try {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
     },
-    body: JSON.stringify({ name, email, clubName, country, location, notes, clubCount, coOrganiser1: co1, coOrganiser2: co2 }),
+    body: JSON.stringify({ name, email, clubName, country, location, notes }),
   });
   const notifyData = await notifyRes.json().catch(() => ({}));
   clubId = notifyData.club_code || notifyData.clubCode || null;
@@ -717,7 +676,7 @@ if (clubId) {
 }
 successToast.style.display = 'block';
 document.getElementById('submit-btn').style.display = 'none';
-      ['name','email','club-name','location','co1','co2','notes'].forEach(id => {
+      ['name','email','club-name','location','notes'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.value = '';
       });
