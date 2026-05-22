@@ -593,8 +593,7 @@
       const dupData = await dupRes.json().catch(() => []);
       if (Array.isArray(dupData) && dupData.length > 0) {
         const el = document.getElementById('toast-error');
-        el.textContent = 'An application with this email already exists. If you need help, please contact us directly.';
-        el.style.display = 'block';
+        el.innerHTML = 'Your email is already registered as an organiser. If you are looking to start a new club, please <a href="https://socialtennismanager.com/contact/" style="color:#ff8080;font-weight:900;">email us directly</a>.';        el.style.display = 'block';
         setLoading(false);
         return;
       }
