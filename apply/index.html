@@ -620,9 +620,8 @@
        if (dupData.isDuplicate) {
           const el = document.getElementById('toast-error');
           el.innerHTML = `Your email is already registered as an organiser. 
-            <a href="#" onclick="resendClubId('${email}'); return false;" style="color:#ff8080;font-weight:900;">Email me my Club ID</a> 
-            &nbsp;·&nbsp; 
-            <a href="https://socialtennismanager.com/contact/" style="color:#ff8080;font-weight:900;">Contact us</a>`;
+  <a href="#" onclick="resendClubId('${email}'); return false;" style="color:#ff8080;font-weight:900;">Click here</a> if you have forgotten your Club ID and we'll email it to you. 
+  If you are looking to start a new club, please <a href="https://socialtennismanager.com/contact/" style="color:#ff8080;font-weight:900;">email us directly</a>.`;
           el.style.display = 'block';
           setLoading(false);
           return;
