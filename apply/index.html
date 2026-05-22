@@ -584,7 +584,7 @@
     setLoading(true);
     try {
       /* ── Check for duplicate email ────────────────────────────────────── */
-     try {
+      try {
         const dupRes = await fetch(`${SUPABASE_URL}/functions/v1/check-duplicate-applicant`, {
           method: 'POST',
           headers: {
@@ -647,6 +647,7 @@
           location: location || null,
           notes: notes || null,
           status: 'new',
+          club_count: 1,
         }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
