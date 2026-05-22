@@ -562,6 +562,29 @@
   const SUPABASE_URL = 'https://sslthlozedfffhyigjgz.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNzbHRobG96ZWRmZmZoeWlnamd6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NDU0NzcsImV4cCI6MjA4NzIyMTQ3N30.NYJBTaf4R_Kqj2rsecsN1PzRqkuLK8U2W1CBkaP_W8c';
 
+  async function resendClubId(email) {
+  const el = document.getElementById('toast-error');
+  el.textContent = 'Sending your Club ID...';
+  try {
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/resend-club-id`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+      },
+      body: JSON.stringify({ email }),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      el.textContent = `✓ Your Club ID has been emailed to ${email}.`;
+    } else {
+      el.textContent = 'Could not send — please contact us directly.';
+    }
+  } catch (_) {
+    el.textContent = 'Could not send — please contact us directly.';
+  }
+}
+
   async function handleSubmit() {
     ['err-name','err-email','err-club','err-country'].forEach(hideErr);
     document.getElementById('toast-success').style.display = 'none';
@@ -594,9 +617,12 @@
           body: JSON.stringify({ email }),
         });
         const dupData = await dupRes.json().catch(() => ({}));
-        if (dupData.isDuplicate) {
+       if (dupData.isDuplicate) {
           const el = document.getElementById('toast-error');
-          el.innerHTML = 'Your email is already registered as an organiser. If you are looking to start a new club, please <a href="https://socialtennismanager.com/contact/" style="color:#ff8080;font-weight:900;">email us directly</a>.';
+          el.innerHTML = `Your email is already registered as an organiser. 
+            <a href="#" onclick="resendClubId('${email}'); return false;" style="color:#ff8080;font-weight:900;">Email me my Club ID</a> 
+            &nbsp;·&nbsp; 
+            <a href="https://socialtennismanager.com/contact/" style="color:#ff8080;font-weight:900;">Contact us</a>`;
           el.style.display = 'block';
           setLoading(false);
           return;
