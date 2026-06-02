@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/favicon.png">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6ZB4XYGWSV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6ZB4XYGWSV');
+  </script>
+
+  <title>FAQ — Social Tennis Manager</title>
+  <meta name="description" content="Frequently asked questions about Social Tennis Manager — the app for tennis organisers, coaches, and players.">
+  <meta property="og:title" content="FAQ — Social Tennis Manager">
+  <meta property="og:description" content="Everything you need to know about running tennis sessions with STM.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://socialtennismanager.com/faq">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0d1f4e">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue-deep:   #0d1f4e;
+      --blue-mid:    #1a3fa0;
+      --blue-bright: #2471a3;
+      --green:       #b2e51a;
+      --amber:       #f39c12;
+      --white:       #ffffff;
+      --muted:       rgba(255,255,255,0.55);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--blue-deep);
+      color: var(--white);
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .bg-mesh {
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 40%, rgba(26,63,160,0.5) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(36,113,163,0.3) 0%, transparent 60%),
+        linear-gradient(160deg, #0d1f4e 0%, #122060 50%, #0d1f4e 100%);
+      pointer-events: none;
+    }
+    #canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.6; }
+
+    /* ── Nav ── */
+    .nav {
+      position: relative; z-index: 10;
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1100px; margin: 0 auto; padding: 24px 40px; width: 100%;
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px; letter-spacing: 2px;
+      color: var(--white); text-decoration: none;
+    }
+    .nav-logo span { color: var(--green); }
+    .nav-links { display: flex; align-items: center; gap: 24px; }
+    .nav-links a {
+      font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.55);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--green); }
+
+    /* ── Language switcher ── */
+    .lang-switcher {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 50px; padding: 5px 12px;
+    }
+    .lang-switcher select {
+      background: transparent; border: none; outline: none;
+      color: rgba(255,255,255,0.7); font-family: 'DM Sans', sans-serif;
+      font-size: 12px; font-weight: 600; cursor: pointer;
+      appearance: none; -webkit-appearance: none;
+      padding-right: 4px;
+    }
+    .lang-switcher select option { background: #0d1f4e; color: var(--white); }
+    .lang-globe { font-size: 14px; }
+    .lang-flag { font-size: 15px; line-height: 1; }
+
+    /* ── Page header ── */
+    .faq-header {
+      position: relative; z-index: 1;
+      max-width: 1100px; margin: 0 auto;
+      padding: 60px 40px 48px; width: 100%;
+      text-align: center;
+    }
+    .faq-eyebrow {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 50px; padding: 6px 16px; margin-bottom: 24px;
+      font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+    .faq-eyebrow-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green); box-shadow: 0 0 8px rgba(178,229,26,0.7);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.3); opacity: 0.7; } }
+    .faq-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(52px, 8vw, 88px);
+      line-height: 0.95; letter-spacing: 2px;
+      color: var(--white); margin-bottom: 20px;
+    }
+    .faq-title span { color: var(--green); }
+    .faq-subtitle {
+      font-size: 16px; font-weight: 300; color: var(--muted);
+      line-height: 1.7; max-width: 520px; margin: 0 auto;
+    }
+
+    /* ── FAQ list ── */
+    .faq-wrap {
+      position: relative; z-index: 1;
+      max-width: 760px; margin: 0 auto;
+      padding: 0 40px 100px; width: 100%;
+    }
+    .faq-item {
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      animation: fadeUp 0.5s ease both;
+    }
+    .faq-item:first-child { border-top: 1px solid rgba(255,255,255,0.07); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+    .faq-q {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; padding: 22px 4px;
+      cursor: pointer; user-select: none;
+      transition: color 0.2s;
+    }
+    .faq-q:hover .faq-q-text { color: var(--green); }
+    .faq-q-text {
+      font-size: 15px; font-weight: 600; color: var(--white);
+      line-height: 1.45; transition: color 0.2s;
+    }
+    .faq-icon {
+      flex-shrink: 0; width: 22px; height: 22px;
+      border-radius: 50%; border: 1px solid rgba(255,255,255,0.18);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.3s ease, border-color 0.2s, background 0.2s;
+    }
+    .faq-icon svg { width: 10px; height: 10px; fill: none; stroke: rgba(255,255,255,0.5); stroke-width: 2.5; stroke-linecap: round; transition: stroke 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); border-color: var(--green); background: rgba(178,229,26,0.08); }
+    .faq-item.open .faq-icon svg { stroke: var(--green); }
+    .faq-item.open .faq-q-text { color: var(--green); }
+
+    .faq-a {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .faq-a-inner {
+      padding: 0 4px 24px;
+      font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.72);
+      line-height: 1.75;
+    }
+    .faq-a-inner strong { color: var(--white); font-weight: 600; }
+    .faq-a-inner ul {
+      margin-top: 12px; padding-left: 0; list-style: none;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .faq-a-inner ul li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 14px; color: rgba(255,255,255,0.7);
+    }
+    .faq-a-inner ul li::before {
+      content: ''; width: 5px; height: 5px; border-radius: 50%;
+      background: var(--green); flex-shrink: 0; margin-top: 8px;
+    }
+    .faq-a-inner a { color: var(--green); text-decoration: none; font-weight: 600; }
+    .faq-a-inner a:hover { text-decoration: underline; }
+
+    /* ── CTA strip ── */
+    .faq-cta {
+      position: relative; z-index: 1;
+      max-width: 760px; margin: 0 auto;
+      padding: 0 40px 80px; width: 100%;
+      text-align: center;
+    }
+    .faq-cta-card {
+      background: linear-gradient(135deg, rgba(178,229,26,0.06) 0%, rgba(26,63,160,0.08) 100%);
+      border: 1px solid rgba(178,229,26,0.18); border-radius: 22px;
+      padding: 40px 32px;
+    }
+    .faq-cta-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 36px; letter-spacing: 2px; color: var(--white);
+      margin-bottom: 10px;
+    }
+    .faq-cta-sub {
+      font-size: 14px; font-weight: 300; color: var(--muted);
+      margin-bottom: 24px; line-height: 1.6;
+    }
+    .faq-cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .faq-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 22px; border-radius: 50px;
+      font-size: 13px; font-weight: 700; text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .faq-btn:hover { transform: translateY(-2px); }
+    .faq-btn.primary { background: var(--green); color: var(--blue-deep); box-shadow: 0 6px 20px rgba(178,229,26,0.25); }
+    .faq-btn.primary:hover { box-shadow: 0 10px 28px rgba(178,229,26,0.4); }
+    .faq-btn.secondary { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); color: rgba(255,255,255,0.7); }
+    .faq-btn.secondary:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+
+    /* ── Footer ── */
+    footer { position: relative; z-index: 1; text-align: center; padding: 24px; font-size: 12px; color: rgba(255,255,255,0.25); font-weight: 500; border-top: 1px solid rgba(255,255,255,0.06); }
+    footer a { color: rgba(255,255,255,0.45); text-decoration: none; font-weight: 600; transition: color 0.2s; }
+    footer a:hover { color: var(--green); }
+    .social-links { display: flex; justify-content: center; gap: 16px; margin-bottom: 12px; }
+    .social-links a { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); transition: background 0.2s, transform 0.2s; }
+    .social-links a:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+    .social-links svg { width: 18px; height: 18px; fill: rgba(255,255,255,0.5); transition: fill 0.2s; }
+    .social-links a:hover svg { fill: var(--green); }
+
+    /* ── Responsive ── */
+    @media (max-width: 720px) {
+      .nav { padding: 20px 24px; }
+      .nav-links { gap: 16px; }
+      .faq-header { padding: 48px 24px 36px; }
+      .faq-wrap { padding: 0 24px 80px; }
+      .faq-cta { padding: 0 24px 60px; }
+      .lang-switcher { display: none; } /* TODO: mobile lang picker */
+    }
+  </style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+<canvas id="canvas"></canvas>
+
+<!-- ── Nav ── -->
+<nav class="nav">
+  <a href="/" class="nav-logo">Social <span>Tennis</span> Manager</a>
+  <div class="nav-links">
+    <a href="/features">Features</a>
+    <a href="/faq" class="active">FAQ</a>
+    <a href="/contact">Contact</a>
+    <div class="lang-switcher" id="langSwitcher">
+      <span class="lang-flag" id="langFlag">🇦🇺</span>
+      <select id="langSelect" onchange="setLang(this.value)">
+        <option value="en">🇦🇺 English</option>
+        <option value="fr">🇫🇷 Français</option>
+        <option value="it">🇮🇹 Italiano</option>
+        <option value="es">🇪🇸 Español</option>
+        <option value="de">🇩🇪 Deutsch</option>
+        <option value="zh">🇨🇳 中文</option>
+      </select>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Header ── -->
+<div class="faq-header">
+  <div class="faq-eyebrow">
+    <div class="faq-eyebrow-dot"></div>
+    <span data-i18n="eyebrow">Help & FAQ</span>
+  </div>
+  <h1 class="faq-title" data-i18n="title">Frequently Asked <span>Questions</span></h1>
+  <p class="faq-subtitle" data-i18n="subtitle">Everything you need to know about running sessions with STM. Can't find your answer? <a href="/contact" style="color:var(--green);font-weight:600;">Get in touch →</a></p>
+</div>
+
+<!-- ── FAQ Accordion ── -->
+<div class="faq-wrap" id="faqList"></div>
+
+<!-- ── CTA ── -->
+<div class="faq-cta">
+  <div class="faq-cta-card">
+    <div class="faq-cta-title" data-i18n="cta_title">Still have questions?</div>
+    <p class="faq-cta-sub" data-i18n="cta_sub">Watch our short tutorial videos or get in touch — we're happy to help.</p>
+    <div class="faq-cta-btns">
+      <a href="https://www.youtube.com/@SocialTennisManager" target="_blank" rel="noopener" class="faq-btn primary" data-i18n="cta_btn_yt">🎬 Watch tutorials</a>
+      <a href="/contact" class="faq-btn secondary" data-i18n="cta_btn_contact">✉️ Contact us</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="social-links">
+    <a href="https://www.youtube.com/@SocialTennisManager" target="_blank" rel="noopener" title="YouTube">
+      <svg viewBox="0 0 24 24"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.55A3.02 3.02 0 0 0 .5 6.19 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.81 3.02 3.02 0 0 0 2.12 2.14c1.87.55 9.38.55 9.38.55s7.5 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.81zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
+    </a>
+    <a href="https://www.facebook.com/profile.php?id=61570761420128" target="_blank" rel="noopener" title="Facebook">
+      <svg viewBox="0 0 24 24"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07c0 6.02 4.39 11.02 10.13 11.93v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.89v2.26h3.33l-.53 3.49h-2.8v8.44C19.61 23.09 24 18.09 24 12.07z"/></svg>
+    </a>
+  </div>
+  <p>© 2026 Social Tennis Manager &nbsp;·&nbsp; <a href="/features">Features</a> &nbsp;·&nbsp; <a href="/faq">FAQ</a> &nbsp;·&nbsp; <a href="/privacy">Privacy</a> &nbsp;·&nbsp; <a href="/terms">Terms</a> &nbsp;·&nbsp; <a href="/contact">Contact</a></p>
+</footer>
+
+<script>
+  /* ── Animated background (matches index.html) ── */
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, bubbles = [];
+  const COLORS = ['rgba(26,63,160,0.14)','rgba(46,134,193,0.08)','rgba(178,229,26,0.05)','rgba(255,255,255,0.03)'];
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  function makeBubble() {
+    const r = 60 + Math.random() * 180;
+    return { x: Math.random()*W, y: Math.random()*H, r, dx:(Math.random()-0.5)*0.3, dy:(Math.random()-0.5)*0.3, color:COLORS[Math.floor(Math.random()*COLORS.length)] };
+  }
+  function init() { resize(); bubbles = Array.from({length:12}, makeBubble); }
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    bubbles.forEach(b => {
+      ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
+      ctx.fillStyle=b.color; ctx.fill();
+      b.x+=b.dx; b.y+=b.dy;
+      if(b.x<-b.r) b.x=W+b.r; if(b.x>W+b.r) b.x=-b.r;
+      if(b.y<-b.r) b.y=H+b.r; if(b.y>H+b.r) b.y=-b.r;
+    });
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize);
+  init(); draw();
+
+  /* ── i18n data ──
+     To add a language: add a key to each question's `a` object and to the `ui` object below.
+     The language switcher will automatically pick it up.
+  ── */
+  const ui = {
+    en: {
+      eyebrow: 'Help & FAQ',
+      title: 'Frequently Asked <span>Questions</span>',
+      subtitle: 'Everything you need to know about running sessions with STM. Can\'t find your answer? <a href="/contact" style="color:var(--green);font-weight:600;">Get in touch →</a>',
+      cta_title: 'Still have questions?',
+      cta_sub: 'Watch our short tutorial videos or get in touch — we\'re happy to help.',
+      cta_btn_yt: '🎬 Watch tutorials',
+      cta_btn_contact: '✉️ Contact us',
+    },
+    // fr: { eyebrow: '...', title: '...', ... },
+    // it: { ... },
+    // es: { ... },
+    // de: { ... },
+    // zh: { ... },
+  };
+
+  const faqs = [
+    {
+      q: { en: 'How does STM work — creating sessions and joining?' },
+      a: { en: 'Organisers have access to an admin dashboard where they can create and manage sessions tailored to their group or club. Players open the app, enter the Club ID, and can see and join available sessions in seconds. Simple as that — just remember to share your Club ID with your group!' }
+    },
+    {
+      q: { en: 'What is the Club ID and how do I get one?' },
+      a: { en: 'Think of the Club ID as the key to your club. Your Club ID is generated automatically when you <a href="/apply" style="color:var(--green);font-weight:600;">submit your application</a>. Share it with your group, your members, or as many people as you like — anyone with the Club ID can find your club in the app and see the sessions you\'ve published.' }
+    },
+    {
+      q: { en: 'Can I choose or change my Club ID?' },
+      a: { en: 'Yes! When filling in your application, add your preferred Club ID in the notes section and we\'ll set it up for you. If you already have a Club ID and want to change it, <a href="/contact" style="color:var(--green);font-weight:600;">contact us</a> and we can update it. Just remember to let your group know the new Club ID so they can continue joining your sessions.' }
+    },
+    {
+      q: { en: 'How do I access the admin dashboard?' },
+      a: { en: 'Once you\'ve entered your Club ID, tap the lock icon on the home screen to access the admin dashboard.' }
+    },
+    {
+      q: { en: 'How do players join and get confirmed?' },
+      a: { en: `That's the organiser's call — STM gives you full control over how players are confirmed:<ul>
+        <li><strong>Standard</strong> — players join and sit as pending until you confirm them. Ideal for bank transfers or manual payment verification.</li>
+        <li><strong>Trust</strong> — players declare they've paid and are automatically confirmed on the roster.</li>
+        <li><strong>Stripe</strong> — players pay by credit card inside the app and are confirmed the moment payment clears.</li>
+        <li><strong>No payment</strong> — players join and are confirmed instantly. Perfect for cardio sessions, free events, or when payment is handled elsewhere.</li>
+      </ul>` }
+    },
+    {
+      q: { en: 'How do players know when a session is published?' },
+      a: { en: 'Encourage your players to tap the bell icon in the app to subscribe to your club\'s notifications. STM will notify them when a new session is published, when the draw is ready, when spots are running low, and more.' }
+    },
+    {
+      q: { en: 'Can I get paid directly when players join a session?' },
+      a: { en: 'Yes! STM integrates with Stripe Connect, which lets you connect your own Stripe account to the app. Once set up, payments from your players go directly into your account — STM never holds your funds.<br><br>For example, if your session costs <strong>$10</strong>: the player\'s card is charged $10, Stripe deducts their processing fee (~$0.47), STM deducts a $0.50 platform fee, and you receive approximately <strong>$9.03</strong> into your Stripe account.' }
+    },
+    {
+      q: { en: 'Will players be charged a booking fee on top of the session price?' },
+      a: { en: 'No — players pay exactly the session price you set. Stripe\'s processing fee (1.7% + 30¢) and the $0.50 STM platform fee are deducted from your takings, not added on top for the player.' }
+    },
+    {
+      q: { en: 'Can I have co-organisers or other admins for my club?' },
+      a: { en: 'Yes — you can add up to 2 co-organisers as admins for your club directly from the admin dashboard. Co-organisers can create and manage sessions on your behalf, but they won\'t have access to your payment settings.' }
+    },
+    {
+      q: { en: 'What is the Auto Draw generator?' },
+      a: { en: 'Imagine 32 players, 7 courts, 6 rounds, all different levels — same partners for the first 3 rounds, then swap for the last 3, plus a few partner requests to honour. Auto Draw handles all of it in one tap. Accurate, fair draws based on your exact requirements — no repeats, no mistakes, no spreadsheets.' }
+    },
+    {
+      q: { en: 'Can I customise skill levels for my club?' },
+      a: { en: 'Yes! You can create your own level system to match your group — add as many levels as you need and even include a short tooltip to describe each one (e.g. <em>Beginner — never played before</em>). You can also customise court names and numbers, set refund timeframes, and toggle a range of other settings to suit how your club runs.' }
+    },
+    {
+      q: { en: 'I run cardio tennis and drills — is STM suitable?' },
+      a: { en: 'Absolutely! STM was designed for all kinds of tennis sessions. Whether you\'re running social tennis, cardio sessions, drills, training, fixtures, beginner programs, squad sessions, or fun social events — STM is fully customisable to suit your group.' }
+    },
+    {
+      q: { en: 'Can I use STM for pickleball or padel?' },
+      a: { en: 'Yes! While the app\'s terminology is primarily tennis-focused, STM works great for managing pickleball sessions, padel sessions, and other racket sports. Session creation, roster management, draws, payments, notifications, and member programs all work exactly the same way. If you\'re looking for a pickleball session manager or padel club organiser app, STM has you covered.' }
+    },
+    {
+      q: { en: 'What\'s the difference between the free, trial, and Pro versions?' },
+      a: { en: 'When you first register as an organiser, you get 30 days of full Pro access — no credit card required. This includes all features: Auto Draw, the Members program, session credits, push notifications, templates, and more. After 30 days you move to the free plan, which still lets you run sessions and manage your group. If you run a larger club, multiple sessions, or want the full feature set, Pro is just $9.99 AUD/month.' }
+    },
+    {
+      q: { en: 'What does Pro cost?' },
+      a: { en: 'Pro is <strong>$9.99 AUD/month</strong>. It unlocks unlimited sessions, unlimited players, the members program, session credits, session templates, push notifications, session history, and more.' }
+    },
+    {
+      q: { en: 'What languages does STM support?' },
+      a: { en: 'STM was developed in Australia but built for the world. The app is fully available in English, French, Italian, Spanish, German, and Chinese (Simplified) — with more languages on the way.' }
+    },
+    {
+      q: { en: 'Where can I get more information on all features?' },
+      a: { en: 'Check out our <a href="https://www.youtube.com/@SocialTennisManager" target="_blank" rel="noopener">YouTube channel</a> and Facebook page for short tutorial videos covering all the key features. If you get stuck on anything, head to our <a href="/contact">Contact page</a> and we\'ll help you out.' }
+    },
+    {
+      q: { en: 'I have an idea for a new feature — can you build it?' },
+      a: { en: 'We\'d love to hear it! Every feature in STM has come from real organiser and player feedback. If you have an idea that would make running or joining sessions easier, <a href="/contact">get in touch</a> — we\'re always looking for ways to make tennis more enjoyable and easier to organise.' }
+    },
+    {
+      q: { en: 'What are you working on next?' },
+      a: { en: 'Our next major feature is <strong>Tournaments</strong>. Stay tuned!' }
+    },
+  ];
+
+  /* ── Render FAQ ── */
+  let currentLang = 'en';
+
+  function renderFAQ(lang) {
+    const list = document.getElementById('faqList');
+    list.innerHTML = '';
+    faqs.forEach((faq, i) => {
+      const q = faq.q[lang] || faq.q['en'];
+      const a = faq.a[lang] || faq.a['en'];
+      const item = document.createElement('div');
+      item.className = 'faq-item';
+      item.style.animationDelay = `${i * 0.04}s`;
+      item.innerHTML = `
+        <div class="faq-q" onclick="toggle(this.parentElement)">
+          <span class="faq-q-text">${q}</span>
+          <span class="faq-icon">
+            <svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+          </span>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">${a}</div></div>
+      `;
+      list.appendChild(item);
+    });
+  }
+
+  function toggle(item) {
+    const answer = item.querySelector('.faq-a');
+    const isOpen = item.classList.contains('open');
+    // close all
+    document.querySelectorAll('.faq-item.open').forEach(el => {
+      el.classList.remove('open');
+      el.querySelector('.faq-a').style.maxHeight = '0';
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  }
+
+  const langFlags = { en: '🇦🇺', fr: '🇫🇷', it: '🇮🇹', es: '🇪🇸', de: '🇩🇪', zh: '🇨🇳' };
+
+  function setLang(lang) {
+    currentLang = lang;
+    renderFAQ(lang);
+    const flag = document.getElementById('langFlag');
+    if (flag) flag.textContent = langFlags[lang] || '🌐';
+    // update static UI strings
+    const strings = ui[lang] || ui['en'];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (strings[key]) el.innerHTML = strings[key];
+    });
+    document.documentElement.lang = lang;
+  }
+
+  renderFAQ('en');
+</script>
+</body>
+</html>
