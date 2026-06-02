@@ -136,6 +136,16 @@
       text-decoration: none; transition: color 0.2s; animation: fadeLeft 0.6s 0.5s ease both;
     }
     .pro-link:hover { color: var(--green); }
+    .faq-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 22px; border-radius: 50px;
+      background: rgba(178,229,26,0.12); border: 1px solid rgba(178,229,26,0.35);
+      color: var(--green); font-size: 13px; font-weight: 700;
+      text-decoration: none; width: fit-content;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+      animation: fadeLeft 0.6s 0.45s ease both;
+    }
+    .faq-pill:hover { background: rgba(178,229,26,0.2); box-shadow: 0 6px 20px rgba(178,229,26,0.2); transform: translateY(-2px); }
 
     /* Tennis ball */
     .hero-right { display: flex; align-items: center; justify-content: center; animation: fadeRight 0.8s 0.2s ease both; }
@@ -318,6 +328,7 @@
     </div>
 
     <a href="/apply" class="apply-pill">✦ Apply to manage your club →</a>
+    <a href="/faq" class="faq-pill">❓ Have questions? Read our FAQ →</a>
     <a href="https://www.youtube.com/@SocialTennisManager" target="_blank" rel="noopener" class="apply-pill">🎬 Watch tutorials →</a>
 
     <p class="hero-sub">The app that runs your tennis sessions — from sign-ups and payments to draws and cancellations.<br>Built for organisers and coaches who want <strong>less admin and more tennis</strong>.</p>
@@ -472,7 +483,7 @@
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07c0 6.02 4.39 11.02 10.13 11.93v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.89v2.26h3.33l-.53 3.49h-2.8v8.44C19.61 23.09 24 18.09 24 12.07z"/></svg>
     </a>
   </div>
-  <p>© 2026 Social Tennis Manager &nbsp;·&nbsp; <a href="/features">Features</a> &nbsp;·&nbsp; <a href="/privacy">Privacy</a> &nbsp;·&nbsp; <a href="/terms">Terms</a> &nbsp;·&nbsp; <a href="/contact">Contact</a></p>
+  <p>© 2026 Social Tennis Manager &nbsp;·&nbsp; <a href="/features">Features</a> &nbsp;·&nbsp; <a href="/faq">FAQ</a> &nbsp;·&nbsp; <a href="/privacy">Privacy</a> &nbsp;·&nbsp; <a href="/terms">Terms</a> &nbsp;·&nbsp; <a href="/contact">Contact</a></p>
 </footer>
 
 <script>
