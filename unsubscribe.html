@@ -48,8 +48,6 @@
         linear-gradient(160deg, #0d1f4e 0%, #122060 50%, #0d1f4e 100%);
       pointer-events: none;
     }
-
-    /* ── Main container ── */
     .page-wrap {
       position: relative; z-index: 1;
       flex: 1;
@@ -58,7 +56,6 @@
       justify-content: center;
       padding: 60px 24px;
     }
-
     .card {
       background: linear-gradient(160deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
       border: 1px solid rgba(255,255,255,0.10);
@@ -68,13 +65,7 @@
       width: 100%;
       text-align: center;
     }
-
-    .icon {
-      font-size: 52px;
-      margin-bottom: 24px;
-      display: block;
-    }
-
+    .icon { font-size: 52px; margin-bottom: 24px; display: block; }
     .card-title {
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(36px, 6vw, 52px);
@@ -83,7 +74,6 @@
       line-height: 1;
       margin-bottom: 16px;
     }
-
     .card-body {
       font-size: 16px;
       font-weight: 300;
@@ -91,109 +81,47 @@
       line-height: 1.7;
       margin-bottom: 36px;
     }
-
-    /* ── Buttons ── */
-    .btn-group {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 32px;
-    }
-
+    .btn-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
     .btn-unsub {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 14px 28px;
-      border-radius: 50px;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 14px 28px; border-radius: 50px;
+      font-size: 15px; font-weight: 700; cursor: pointer;
       border: 1px solid rgba(255,255,255,0.2);
       background: rgba(255,255,255,0.06);
       color: rgba(255,255,255,0.6);
       transition: background 0.2s, color 0.2s, border-color 0.2s;
-      text-decoration: none;
+      text-decoration: none; font-family: 'DM Sans', sans-serif;
     }
-    .btn-unsub:hover {
-      background: rgba(255,255,255,0.12);
-      color: rgba(255,255,255,0.9);
-      border-color: rgba(255,255,255,0.35);
-    }
-
+    .btn-unsub:hover { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.9); border-color: rgba(255,255,255,0.35); }
+    .btn-unsub:disabled { opacity: 0.5; cursor: not-allowed; }
     .btn-keep {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 14px 28px;
-      border-radius: 50px;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      border: none;
-      background: var(--green);
-      color: var(--blue-deep);
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 14px 28px; border-radius: 50px;
+      font-size: 15px; font-weight: 700; cursor: pointer;
+      border: none; background: var(--green); color: var(--blue-deep);
       box-shadow: 0 6px 20px rgba(178,229,26,0.25);
       transition: transform 0.2s, box-shadow 0.2s;
       text-decoration: none;
     }
-    .btn-keep:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 28px rgba(178,229,26,0.4);
-    }
-
-    /* ── FAQ link ── */
-    .faq-hint {
-      font-size: 13px;
-      color: rgba(255,255,255,0.35);
-      line-height: 1.6;
-    }
+    .btn-keep:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(178,229,26,0.4); }
+    .faq-hint { font-size: 13px; color: rgba(255,255,255,0.35); line-height: 1.6; }
     .faq-hint a {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 10px;
-      padding: 9px 20px;
-      border-radius: 50px;
-      background: rgba(178,229,26,0.10);
-      border: 1px solid rgba(178,229,26,0.28);
-      color: var(--green);
-      font-size: 13px;
-      font-weight: 700;
-      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 10px; padding: 9px 20px; border-radius: 50px;
+      background: rgba(178,229,26,0.10); border: 1px solid rgba(178,229,26,0.28);
+      color: var(--green); font-size: 13px; font-weight: 700; text-decoration: none;
       transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
     }
-    .faq-hint a:hover {
-      background: rgba(178,229,26,0.18);
-      box-shadow: 0 4px 16px rgba(178,229,26,0.18);
-      transform: translateY(-1px);
-    }
-
-    /* ── Confirmed state ── */
+    .faq-hint a:hover { background: rgba(178,229,26,0.18); box-shadow: 0 4px 16px rgba(178,229,26,0.18); transform: translateY(-1px); }
     .confirmed { display: none; }
-    .confirmed .icon { filter: grayscale(0); }
-
-    /* ── Footer ── */
     footer {
-      position: relative; z-index: 1;
-      text-align: center;
-      padding: 20px 24px;
-      font-size: 12px;
-      color: rgba(255,255,255,0.25);
-      font-weight: 500;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      position: relative; z-index: 1; text-align: center;
+      padding: 20px 24px; font-size: 12px; color: rgba(255,255,255,0.25);
+      font-weight: 500; border-top: 1px solid rgba(255,255,255,0.06);
     }
-    footer a {
-      color: rgba(255,255,255,0.45);
-      text-decoration: none;
-      font-weight: 600;
-      transition: color 0.2s;
-    }
+    footer a { color: rgba(255,255,255,0.45); text-decoration: none; font-weight: 600; transition: color 0.2s; }
     footer a:hover { color: var(--green); }
-
-    @media (max-width: 560px) {
-      .card { padding: 36px 24px; }
-    }
+    @media (max-width: 560px) { .card { padding: 36px 24px; } }
   </style>
 </head>
 <body>
@@ -202,7 +130,7 @@
 <div class="page-wrap">
   <div class="card">
 
-    <!-- ── Ask state ── -->
+    <!-- Ask state -->
     <div id="state-ask">
       <span class="icon">📬</span>
       <h1 class="card-title">Before you go...</h1>
@@ -210,26 +138,22 @@
         Are you sure you want to unsubscribe? You'll miss out on new features,
         tips and updates from Social Tennis Manager.
       </p>
-
       <div class="btn-group">
         <a href="https://socialtennismanager.com/faq" class="btn-keep">
           ✦ Keep me in the loop with new features
         </a>
-        <button class="btn-unsub" onclick="confirmUnsub()">
+        <button class="btn-unsub" id="btn-confirm" onclick="confirmUnsub()">
           Yes, unsubscribe me
         </button>
       </div>
-
       <div class="faq-hint">
         Have questions before deciding?
         <br>
-        <a href="https://socialtennismanager.com/faq">
-          ❓ Check out our FAQ page →
-        </a>
+        <a href="https://socialtennismanager.com/faq">❓ Check out our FAQ page →</a>
       </div>
     </div>
 
-    <!-- ── Confirmed state ── -->
+    <!-- Confirmed state -->
     <div id="state-confirmed" class="confirmed">
       <span class="icon">✅</span>
       <h1 class="card-title">You're unsubscribed</h1>
@@ -240,9 +164,7 @@
       <div class="faq-hint">
         Curious about what STM can do?
         <br>
-        <a href="https://socialtennismanager.com/faq">
-          ❓ Read our FAQ page →
-        </a>
+        <a href="https://socialtennismanager.com/faq">❓ Read our FAQ page →</a>
       </div>
     </div>
 
@@ -259,20 +181,39 @@
 </footer>
 
 <script>
-  function confirmUnsub() {
-    // Read email from URL param if present (e.g. ?email=bernie@example.com)
-    const params = new URLSearchParams(window.location.search);
-    const email = params.get('email');
+  const SUPABASE_URL = 'https://sslthlozedfffhyigjgz.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNzbHRobG96ZWRmZmZoeWlnamd6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NDU0NzcsImV4cCI6MjA4NzIyMTQ3N30.NYJBTaf4R_Kqj2rsecsN1PzRqkuLK8U2W1CBkaP_W8c';
 
-    // Fire a Google Analytics event so you can see who unsubscribed in GA4
-    if (typeof gtag !== 'undefined') {
-      gtag('event', 'unsubscribe', {
-        event_category: 'email',
-        event_label: email || 'unknown',
+  async function confirmUnsub() {
+    const btn = document.getElementById('btn-confirm');
+    btn.disabled = true;
+    btn.textContent = 'Unsubscribing...';
+
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get('email') || 'unknown';
+
+    // Log to Supabase
+    try {
+      await fetch(`${SUPABASE_URL}/rest/v1/unsubscribe_clicks`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({ email })
       });
+    } catch (e) {
+      // silent fail — still show confirmation
     }
 
-    // Swap visible state
+    // Fire GA event
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'unsubscribe', { event_category: 'email', event_label: email });
+    }
+
+    // Show confirmed state
     document.getElementById('state-ask').style.display = 'none';
     document.getElementById('state-confirmed').style.display = 'block';
   }
