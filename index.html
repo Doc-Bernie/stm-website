@@ -56,11 +56,63 @@
       pointer-events: none;
     }
     #canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.6; }
+
+    /* ── Nav (added for lang switcher) ── */
+    .top-nav {
+      position: relative; z-index: 10;
+      display: flex; align-items: center; justify-content: flex-end;
+      max-width: 1100px; margin: 0 auto; padding: 20px 40px 0; width: 100%;
+    }
+
+    /* ── Language switcher ── */
+    .lang-switcher {
+      position: relative;
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 50px; padding: 6px 14px;
+      cursor: pointer; user-select: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .lang-switcher:hover { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.22); }
+    .lang-current {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.75);
+    }
+    .lang-current-flag { font-size: 16px; line-height: 1; }
+    .lang-current-label { font-size: 12px; }
+    .lang-chevron {
+      width: 10px; height: 10px; margin-left: 2px;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.2s;
+    }
+    .lang-chevron svg { width: 10px; height: 10px; fill: none; stroke: rgba(255,255,255,0.4); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .lang-switcher.open .lang-chevron { transform: rotate(180deg); }
+    .lang-dropdown {
+      display: none; position: absolute; top: calc(100% + 8px); right: 0;
+      background: #0f2660; border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 14px; overflow: hidden; min-width: 160px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+      z-index: 100;
+    }
+    .lang-switcher.open .lang-dropdown { display: block; }
+    .lang-option {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 16px; cursor: pointer;
+      font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.7);
+      transition: background 0.15s, color 0.15s;
+    }
+    .lang-option:hover { background: rgba(255,255,255,0.07); color: var(--white); }
+    .lang-option.active { color: var(--green); background: rgba(178,229,26,0.06); }
+    .lang-option-flag { font-size: 18px; line-height: 1; }
+    .lang-option-name { flex: 1; }
+    .lang-option-check { font-size: 11px; color: var(--green); opacity: 0; }
+    .lang-option.active .lang-option-check { opacity: 1; }
+
     .hero {
       position: relative; z-index: 1;
       display: grid; grid-template-columns: 1fr 1fr;
       align-items: center; max-width: 1100px;
-      margin: 0 auto; padding: 60px 40px; gap: 40px; width: 100%;
+      margin: 0 auto; padding: 40px 40px 60px; gap: 40px; width: 100%;
     }
     .hero-left { display: flex; flex-direction: column; gap: 20px; }
     .free-badge {
@@ -267,7 +319,8 @@
     /* responsive */
     @media (max-width: 960px) { .why-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 720px) {
-      .hero { grid-template-columns: 1fr; text-align: center; padding: 60px 24px 40px; gap: 48px; }
+      .top-nav { justify-content: center; padding: 16px 24px 0; }
+      .hero { grid-template-columns: 1fr; text-align: center; padding: 40px 24px 40px; gap: 48px; }
       .hero-right { order: -1; }
       .ball-wrap { width: 180px; height: 180px; }
       .free-badge, .download-row, .apply-pill, .pro-link { justify-content: center; }
@@ -294,12 +347,33 @@
 <div class="bg-mesh"></div>
 <canvas id="canvas"></canvas>
 
+<!-- ── Top nav (lang switcher) ── -->
+<div class="top-nav">
+  <div class="lang-switcher" id="langSwitcher" onclick="toggleLangDropdown()">
+    <div class="lang-current">
+      <span class="lang-current-flag" id="langFlag">🇦🇺</span>
+      <span class="lang-current-label" id="langLabel">English</span>
+    </div>
+    <span class="lang-chevron"><svg viewBox="0 0 10 10"><polyline points="2,3 5,7 8,3"/></svg></span>
+    <div class="lang-dropdown" id="langDropdown">
+      <div class="lang-option active" data-lang="en" onclick="pickLang('en',event)"><span class="lang-option-flag">🇦🇺</span><span class="lang-option-name">English</span><span class="lang-option-check">✓</span></div>
+      <div class="lang-option" data-lang="fr" onclick="pickLang('fr',event)"><span class="lang-option-flag">🇫🇷</span><span class="lang-option-name">Français</span><span class="lang-option-check">✓</span></div>
+      <div class="lang-option" data-lang="it" onclick="pickLang('it',event)"><span class="lang-option-flag">🇮🇹</span><span class="lang-option-name">Italiano</span><span class="lang-option-check">✓</span></div>
+      <div class="lang-option" data-lang="es" onclick="pickLang('es',event)"><span class="lang-option-flag">🇪🇸</span><span class="lang-option-name">Español</span><span class="lang-option-check">✓</span></div>
+      <div class="lang-option" data-lang="de" onclick="pickLang('de',event)"><span class="lang-option-flag">🇩🇪</span><span class="lang-option-name">Deutsch</span><span class="lang-option-check">✓</span></div>
+      <div class="lang-option" data-lang="pt" onclick="pickLang('pt',event)"><span class="lang-option-flag">🇵🇹</span><span class="lang-option-name">Português</span><span class="lang-option-check">✓</span></div>
+      <div class="lang-option" data-lang="ru" onclick="pickLang('ru',event)"><span class="lang-option-flag">🇷🇺</span><span class="lang-option-name">Русский</span><span class="lang-option-check">✓</span></div>
+      <div class="lang-option" data-lang="zh" onclick="pickLang('zh',event)"><span class="lang-option-flag">🇨🇳</span><span class="lang-option-name">中文</span><span class="lang-option-check">✓</span></div>
+    </div>
+  </div>
+</div>
+
 <!-- ── Hero ── -->
 <section class="hero">
   <div class="hero-left">
     <div class="free-badge">
       <div class="free-badge-dot"></div>
-      <span class="free-badge-text">Free App</span>
+      <span class="free-badge-text" data-i18n="free_badge">Free App</span>
     </div>
     <h1 class="hero-title">
       <span class="line1">Social</span>
@@ -312,7 +386,7 @@
           <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" fill="#0d1f4e"/>
         </svg>
         <div class="dl-text-wrap">
-          <span class="dl-sub">Download on the</span>
+          <span class="dl-sub" data-i18n="dl_sub_ios">Download on the</span>
           <span class="dl-label">App Store</span>
         </div>
       </a>
@@ -321,49 +395,49 @@
           <path d="M3.18 23.76c.3.17.65.19.97.07l11.48-6.63-2.5-2.5-9.95 9.06zM.5 1.4C.19 1.73 0 2.22 0 2.85v18.3c0 .63.19 1.12.51 1.45l.07.07 10.25-10.25v-.24L.57 1.33.5 1.4zM20.37 9.9l-2.93-1.7-2.8 2.8 2.8 2.8 2.95-1.7c.84-.49.84-1.28-.02-1.2zM3.18.24L14.65 6.8l-2.5 2.5L2.2.24C2.52.12 2.87.14 3.18.24z" fill="#0d1f4e"/>
         </svg>
         <div class="dl-text-wrap">
-          <span class="dl-sub">Get it on</span>
+          <span class="dl-sub" data-i18n="dl_sub_android">Get it on</span>
           <span class="dl-label">Google Play</span>
         </div>
       </a>
     </div>
 
-    <a href="/apply" class="apply-pill">✦ Apply to manage your club →</a>
-    <a href="/faq" class="faq-pill">❓ Have questions? Read our FAQ →</a>
-    <a href="https://www.youtube.com/@SocialTennisManager" target="_blank" rel="noopener" class="apply-pill">🎬 Watch tutorials →</a>
+    <a href="/apply" class="apply-pill" data-i18n="link_apply">✦ Apply to manage your club →</a>
+    <a href="/faq" class="faq-pill" data-i18n="link_faq">❓ Have questions? Read our FAQ →</a>
+    <a href="https://www.youtube.com/@SocialTennisManager" target="_blank" rel="noopener" class="apply-pill" data-i18n="link_tutorials">🎬 Watch tutorials →</a>
 
-    <p class="hero-sub">The app that runs your tennis sessions — from sign-ups and payments to draws and cancellations.<br>Built for organisers and coaches who want <strong>less admin and more tennis</strong>.</p>
+    <p class="hero-sub" data-i18n="hero_sub">The app that runs your tennis sessions — from sign-ups and payments to draws and cancellations.<br>Built for organisers and coaches who want <strong>less admin and more tennis</strong>.</p>
 
     <div class="feature-rows">
       <div class="feature-row-block">
-        <div class="feature-row-label">🛠 For Organisers</div>
+        <div class="feature-row-label" data-i18n="organisers_label">🛠 For Organisers</div>
         <div class="feature-row-pills">
-          <span class="frpill organiser">📅 Create &amp; manage sessions</span>
-          <span class="frpill organiser">🎾 Build &amp; publish draws</span>
-          <span class="frpill organiser">⚡ Auto Draw</span>
-          <span class="frpill organiser">💳 Stripe in-app payments</span>
-          <span class="frpill organiser">👥 Member management</span>
-          <span class="frpill organiser">💰 Member &amp; guest pricing</span>
-          <span class="frpill organiser">🪙 Credit management</span>
-          <span class="frpill organiser">📍 Locations &amp; notifications</span>
+          <span class="frpill organiser" data-i18n="pill_org_1">📅 Create &amp; manage sessions</span>
+          <span class="frpill organiser" data-i18n="pill_org_2">🎾 Build &amp; publish draws</span>
+          <span class="frpill organiser" data-i18n="pill_org_3">⚡ Auto Draw</span>
+          <span class="frpill organiser" data-i18n="pill_org_4">💳 Stripe in-app payments</span>
+          <span class="frpill organiser" data-i18n="pill_org_5">👥 Member management</span>
+          <span class="frpill organiser" data-i18n="pill_org_6">💰 Member &amp; guest pricing</span>
+          <span class="frpill organiser" data-i18n="pill_org_7">🪙 Credit management</span>
+          <span class="frpill organiser" data-i18n="pill_org_8">📍 Locations &amp; notifications</span>
         </div>
       </div>
       <div class="feature-row-block">
-        <div class="feature-row-label">👤 For Players</div>
+        <div class="feature-row-label" data-i18n="players_label">👤 For Players</div>
         <div class="feature-row-pills">
-          <span class="frpill player">✅ Join in seconds — no account needed</span>
-          <span class="frpill player">💳 Pay online via Stripe</span>
-          <span class="frpill player">⭐ Members features &amp; credits</span>
-          <span class="frpill player">🎾 View match draw</span>
-          <span class="frpill player">🤝 Request a partner</span>
-          <span class="frpill player">⏳ Waitlist &amp; auto-promote</span>
-          <span class="frpill player">👨‍👩‍👧 Add guests</span>
+          <span class="frpill player" data-i18n="pill_pl_1">✅ Join in seconds — no account needed</span>
+          <span class="frpill player" data-i18n="pill_pl_2">💳 Pay online via Stripe</span>
+          <span class="frpill player" data-i18n="pill_pl_3">⭐ Members features &amp; credits</span>
+          <span class="frpill player" data-i18n="pill_pl_4">🎾 View match draw</span>
+          <span class="frpill player" data-i18n="pill_pl_5">🤝 Request a partner</span>
+          <span class="frpill player" data-i18n="pill_pl_6">⏳ Waitlist &amp; auto-promote</span>
+          <span class="frpill player" data-i18n="pill_pl_7">👨‍👩‍👧 Add guests</span>
         </div>
       </div>
     </div>
 
-    <a href="/features" class="apply-pill">✦ See all features →</a>
-    <a href="https://buy.stripe.com/00w7sE3cQ9yX3bS63n9MY00" target="_blank" rel="noopener" class="pro-link">✦ Already an organiser? Upgrade to Pro →</a>
-    <a href="/contact" class="apply-pill">✦ Get in touch →</a>
+    <a href="/features" class="apply-pill" data-i18n="link_features">✦ See all features →</a>
+    <a href="https://buy.stripe.com/00w7sE3cQ9yX3bS63n9MY00" target="_blank" rel="noopener" class="pro-link" data-i18n="link_upgrade">✦ Already an organiser? Upgrade to Pro →</a>
+    <a href="/contact" class="apply-pill" data-i18n="link_contact">✦ Get in touch →</a>
   </div>
   <div class="hero-right">
     <div class="ball-wrap">
@@ -375,40 +449,40 @@
 <!-- ── Why STM ── -->
 <section class="why-stm">
   <div class="why-header">
-    <h2 class="why-title">Why Social Tennis Manager?</h2>
-    <p class="why-tagline">Less admin. <strong>More tennis.</strong></p>
-    <p class="why-intro">STM helps you move from WhatsApp chaos and payment headaches — to fully managed sessions with players confirmed, payments collected and draws ready to go.</p>
+    <h2 class="why-title" data-i18n="why_title">Why Social Tennis Manager?</h2>
+    <p class="why-tagline" data-i18n="why_tagline">Less admin. <strong>More tennis.</strong></p>
+    <p class="why-intro" data-i18n="why_intro">STM helps you move from WhatsApp chaos and payment headaches — to fully managed sessions with players confirmed, payments collected and draws ready to go.</p>
   </div>
   <div class="why-grid">
     <div class="why-card">
       <div class="why-card-num">01</div>
-      <div class="why-card-title">Set up in minutes</div>
-      <p class="why-card-desc">Organisers and coaches create a session in minutes — recreate from a template each week.</p>
+      <div class="why-card-title" data-i18n="why_1_title">Set up in minutes</div>
+      <p class="why-card-desc" data-i18n="why_1_desc">Organisers and coaches create a session in minutes — recreate from a template each week.</p>
     </div>
     <div class="why-card">
       <div class="why-card-num">02</div>
-      <div class="why-card-title">No more chat group chaos</div>
-      <p class="why-card-desc">Stop chasing replies on WhatsApp. The roster is in the app — clean, current, and visible to everyone.</p>
+      <div class="why-card-title" data-i18n="why_2_title">No more chat group chaos</div>
+      <p class="why-card-desc" data-i18n="why_2_desc">Stop chasing replies on WhatsApp. The roster is in the app — clean, current, and visible to everyone.</p>
     </div>
     <div class="why-card">
       <div class="why-card-num">03</div>
-      <div class="why-card-title">Players join with ease</div>
-      <p class="why-card-desc">One tap to join the main list or waitlist. Players see who else is playing and confirm in seconds.</p>
+      <div class="why-card-title" data-i18n="why_3_title">Players join with ease</div>
+      <p class="why-card-desc" data-i18n="why_3_desc">One tap to join the main list or waitlist. Players see who else is playing and confirm in seconds.</p>
     </div>
     <div class="why-card">
       <div class="why-card-num">04</div>
-      <div class="why-card-title">You're in control</div>
-      <p class="why-card-desc">Choose how you run things — payments, credits, draws, cancellations. Turn features on or off to match your club.</p>
+      <div class="why-card-title" data-i18n="why_4_title">You're in control</div>
+      <p class="why-card-desc" data-i18n="why_4_desc">Choose how you run things — payments, credits, draws, cancellations. Turn features on or off to match your club.</p>
     </div>
     <div class="why-card">
       <div class="why-card-num">05</div>
-      <div class="why-card-title">Built for your club and tennis community</div>
-      <p class="why-card-desc">Customisable session formats, member levels, pricing rules and more. Your club, your way.</p>
+      <div class="why-card-title" data-i18n="why_5_title">Built for your club and tennis community</div>
+      <p class="why-card-desc" data-i18n="why_5_desc">Customisable session formats, member levels, pricing rules and more. Your club, your way.</p>
     </div>
     <div class="why-card">
       <div class="why-card-num">06</div>
-      <div class="why-card-title">Free to start, free forever</div>
-      <p class="why-card-desc">The free version covers most of what you need to run sessions. Upgrade only if you want the extras.</p>
+      <div class="why-card-title" data-i18n="why_6_title">Free to start, free forever</div>
+      <p class="why-card-desc" data-i18n="why_6_desc">The free version covers most of what you need to run sessions. Upgrade only if you want the extras.</p>
     </div>
   </div>
 </section>
@@ -420,55 +494,55 @@
       <div class="feature-copy">
         <div class="feature-eyebrow">
           <div class="feature-eyebrow-dot"></div>
-          <span class="feature-eyebrow-text">Pro Feature — New</span>
+          <span class="feature-eyebrow-text" data-i18n="autodraw_eyebrow">Pro Feature — New</span>
         </div>
-        <h2 class="feature-headline">Your draw,<br><span>done in one tap.</span></h2>
-        <p class="feature-body">Auto Draw builds your entire match schedule instantly — grouping players by level, rotating partners and opponents across rounds, and honouring partner requests automatically.</p>
+        <h2 class="feature-headline" data-i18n="autodraw_headline">Your draw,<br><span>done in one tap.</span></h2>
+        <p class="feature-body" data-i18n="autodraw_body">Auto Draw builds your entire match schedule instantly — grouping players by level, rotating partners and opponents across rounds, and honouring partner requests automatically.</p>
         <ul class="feature-points">
-          <li>Players grouped by skill level so matches are competitive</li>
-          <li>Partners and opponents rotate across rounds — no repeats</li>
-          <li>Partner requests honoured automatically every round</li>
-          <li>Tap again to shuffle the starting position for variety</li>
-          <li>Admin can still edit any slot before publishing</li>
+          <li data-i18n="autodraw_pt_1">Players grouped by skill level so matches are competitive</li>
+          <li data-i18n="autodraw_pt_2">Partners and opponents rotate across rounds — no repeats</li>
+          <li data-i18n="autodraw_pt_3">Partner requests honoured automatically every round</li>
+          <li data-i18n="autodraw_pt_4">Tap again to shuffle the starting position for variety</li>
+          <li data-i18n="autodraw_pt_5">Admin can still edit any slot before publishing</li>
         </ul>
-        <div class="pro-tag">⚡ Pro &amp; Trial feature</div>
+        <div class="pro-tag" data-i18n="autodraw_tag">⚡ Pro &amp; Trial feature</div>
       </div>
       <div class="feature-visual" style="background:rgba(0,0,0,0.25);border-left:1px solid rgba(243,156,18,0.1);padding:48px;flex-direction:column;gap:20px;">
         <div style="text-align:center;">
           <div style="font-size:64px;line-height:1;margin-bottom:16px;">⚡</div>
-          <div style="font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:2px;color:rgba(243,156,18,0.9);margin-bottom:8px;">Draw Ready</div>
-          <div style="font-size:13px;font-weight:300;color:rgba(255,255,255,0.4);line-height:1.6;">All courts · All rounds<br>Generated in one tap</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:2px;color:rgba(243,156,18,0.9);margin-bottom:8px;" data-i18n="autodraw_visual_title">Draw Ready</div>
+          <div style="font-size:13px;font-weight:300;color:rgba(255,255,255,0.4);line-height:1.6;" data-i18n="autodraw_visual_sub">All courts · All rounds<br>Generated in one tap</div>
         </div>
-        <a href="/features" style="display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:9px 18px;border-radius:50px;background:rgba(243,156,18,0.12);border:1px solid rgba(243,156,18,0.3);color:rgba(243,156,18,0.9);font-size:12px;font-weight:700;text-decoration:none;align-self:center;transition:background 0.2s;">See it in action →</a>
+        <a href="/features" style="display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:9px 18px;border-radius:50px;background:rgba(243,156,18,0.12);border:1px solid rgba(243,156,18,0.3);color:rgba(243,156,18,0.9);font-size:12px;font-weight:700;text-decoration:none;align-self:center;transition:background 0.2s;" data-i18n="autodraw_cta">See it in action →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── Session Credits Feature Section ── -->
+<!-- ── Getting Started Feature Section ── -->
 <section class="feature-section">
   <div class="feature-card green">
     <div class="feature-inner">
       <div class="feature-copy">
         <div class="feature-eyebrow">
           <div class="feature-eyebrow-dot"></div>
-          <span class="feature-eyebrow-text">New Feature</span>
+          <span class="feature-eyebrow-text" data-i18n="getstarted_eyebrow">Getting Started</span>
         </div>
-        <h2 class="feature-headline">The solution to<br><span>cancelled sessions</span><br>is here.</h2>
-        <p class="feature-body">When a session gets cancelled, STM automatically credits every member what they paid — tracked in the app, zero manual work.</p>
+        <h2 class="feature-headline" data-i18n="getstarted_headline">Create your<br><span>first session</span><br>in minutes.</h2>
+        <p class="feature-body" data-i18n="getstarted_body">New to STM? This 2-minute walkthrough shows you exactly how to set up your first session, from opening the admin dashboard to sharing your Club ID with players.</p>
         <ul class="feature-points">
-          <li>The organiser keeps the funds. Members keep their credit.</li>
-          <li>No refund requests, no awkward messages, no spreadsheets.</li>
-          <li>Credit is ready and waiting for the member's next session.</li>
-          <li>The money in your account after a cancellation is legitimately yours.</li>
+          <li data-i18n="getstarted_pt_1">Open your Admin Dashboard and tap Create Session</li>
+          <li data-i18n="getstarted_pt_2">Fill in the name, date, time and venue</li>
+          <li data-i18n="getstarted_pt_3">Set spots, price, and toggle player level &amp; payment options</li>
+          <li data-i18n="getstarted_pt_4">Hit Save — your session is instantly live for players</li>
         </ul>
         <a href="https://www.youtube.com/@SocialTennisManager" target="_blank" rel="noopener" class="feature-cta">
           <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;flex-shrink:0"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.55A3.02 3.02 0 0 0 .5 6.19 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.81 3.02 3.02 0 0 0 2.12 2.14c1.87.55 9.38.55 9.38.55s7.5 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.81zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
-          Watch how it works
+          <span data-i18n="getstarted_cta">Watch more tutorials</span>
         </a>
       </div>
       <div class="feature-visual" style="background:rgba(0,0,0,0.3);border-left:1px solid rgba(178,229,26,0.1);">
-        <iframe src="https://www.youtube.com/embed/Q2I6f78IL3k" title="Session Credits — Social Tennis Manager" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/FDa1Dve6PGg" title="Create Your First Session — Social Tennis Manager" allowfullscreen></iframe>
       </div>
     </div>
   </div>
@@ -510,6 +584,551 @@
   }
   window.addEventListener('resize', resize);
   init(); draw();
+
+  /* ── i18n ── */
+  const ui = {
+    en: {
+      free_badge: 'Free App',
+      dl_sub_ios: 'Download on the',
+      dl_sub_android: 'Get it on',
+      link_apply: '✦ Apply to manage your club →',
+      link_faq: '❓ Have questions? Read our FAQ →',
+      link_tutorials: '🎬 Watch tutorials →',
+      hero_sub: 'The app that runs your tennis sessions — from sign-ups and payments to draws and cancellations.<br>Built for organisers and coaches who want <strong>less admin and more tennis</strong>.',
+      organisers_label: '🛠 For Organisers',
+      pill_org_1: '📅 Create &amp; manage sessions',
+      pill_org_2: '🎾 Build &amp; publish draws',
+      pill_org_3: '⚡ Auto Draw',
+      pill_org_4: '💳 Stripe in-app payments',
+      pill_org_5: '👥 Member management',
+      pill_org_6: '💰 Member &amp; guest pricing',
+      pill_org_7: '🪙 Credit management',
+      pill_org_8: '📍 Locations &amp; notifications',
+      players_label: '👤 For Players',
+      pill_pl_1: '✅ Join in seconds — no account needed',
+      pill_pl_2: '💳 Pay online via Stripe',
+      pill_pl_3: '⭐ Members features &amp; credits',
+      pill_pl_4: '🎾 View match draw',
+      pill_pl_5: '🤝 Request a partner',
+      pill_pl_6: '⏳ Waitlist &amp; auto-promote',
+      pill_pl_7: '👨‍👩‍👧 Add guests',
+      link_features: '✦ See all features →',
+      link_upgrade: '✦ Already an organiser? Upgrade to Pro →',
+      link_contact: '✦ Get in touch →',
+      why_title: 'Why Social Tennis Manager?',
+      why_tagline: 'Less admin. <strong>More tennis.</strong>',
+      why_intro: 'STM helps you move from WhatsApp chaos and payment headaches — to fully managed sessions with players confirmed, payments collected and draws ready to go.',
+      why_1_title: 'Set up in minutes',
+      why_1_desc: 'Organisers and coaches create a session in minutes — recreate from a template each week.',
+      why_2_title: 'No more chat group chaos',
+      why_2_desc: 'Stop chasing replies on WhatsApp. The roster is in the app — clean, current, and visible to everyone.',
+      why_3_title: 'Players join with ease',
+      why_3_desc: 'One tap to join the main list or waitlist. Players see who else is playing and confirm in seconds.',
+      why_4_title: "You're in control",
+      why_4_desc: 'Choose how you run things — payments, credits, draws, cancellations. Turn features on or off to match your club.',
+      why_5_title: 'Built for your club and tennis community',
+      why_5_desc: 'Customisable session formats, member levels, pricing rules and more. Your club, your way.',
+      why_6_title: 'Free to start, free forever',
+      why_6_desc: 'The free version covers most of what you need to run sessions. Upgrade only if you want the extras.',
+      autodraw_eyebrow: 'Pro Feature — New',
+      autodraw_headline: 'Your draw,<br><span>done in one tap.</span>',
+      autodraw_body: 'Auto Draw builds your entire match schedule instantly — grouping players by level, rotating partners and opponents across rounds, and honouring partner requests automatically.',
+      autodraw_pt_1: 'Players grouped by skill level so matches are competitive',
+      autodraw_pt_2: 'Partners and opponents rotate across rounds — no repeats',
+      autodraw_pt_3: 'Partner requests honoured automatically every round',
+      autodraw_pt_4: 'Tap again to shuffle the starting position for variety',
+      autodraw_pt_5: 'Admin can still edit any slot before publishing',
+      autodraw_tag: '⚡ Pro &amp; Trial feature',
+      autodraw_visual_title: 'Draw Ready',
+      autodraw_visual_sub: 'All courts · All rounds<br>Generated in one tap',
+      autodraw_cta: 'See it in action →',
+      getstarted_eyebrow: 'Getting Started',
+      getstarted_headline: 'Create your<br><span>first session</span><br>in minutes.',
+      getstarted_body: "New to STM? This 2-minute walkthrough shows you exactly how to set up your first session, from opening the admin dashboard to sharing your Club ID with players.",
+      getstarted_pt_1: 'Open your Admin Dashboard and tap Create Session',
+      getstarted_pt_2: 'Fill in the name, date, time and venue',
+      getstarted_pt_3: 'Set spots, price, and toggle player level &amp; payment options',
+      getstarted_pt_4: 'Hit Save — your session is instantly live for players',
+      getstarted_cta: 'Watch more tutorials',
+    },
+    fr: {
+      free_badge: 'Application gratuite',
+      dl_sub_ios: 'Télécharger sur',
+      dl_sub_android: 'Disponible sur',
+      link_apply: '✦ Postuler pour gérer votre club →',
+      link_faq: '❓ Des questions ? Consultez notre FAQ →',
+      link_tutorials: '🎬 Voir les tutoriels →',
+      hero_sub: 'L\'application qui gère vos séances de tennis — des inscriptions et paiements aux tableaux et annulations.<br>Conçue pour les organisateurs et entraîneurs qui veulent <strong>moins d\'administration et plus de tennis</strong>.',
+      organisers_label: '🛠 Pour les organisateurs',
+      pill_org_1: '📅 Créer et gérer des séances',
+      pill_org_2: '🎾 Créer et publier des tableaux',
+      pill_org_3: '⚡ Auto Draw',
+      pill_org_4: '💳 Paiements Stripe intégrés',
+      pill_org_5: '👥 Gestion des membres',
+      pill_org_6: '💰 Tarifs membres et invités',
+      pill_org_7: '🪙 Gestion des crédits',
+      pill_org_8: '📍 Lieux et notifications',
+      players_label: '👤 Pour les joueurs',
+      pill_pl_1: '✅ Rejoindre en quelques secondes — aucun compte requis',
+      pill_pl_2: '💳 Payer en ligne via Stripe',
+      pill_pl_3: '⭐ Fonctions membres et crédits',
+      pill_pl_4: '🎾 Voir le tableau des matchs',
+      pill_pl_5: '🤝 Demander un partenaire',
+      pill_pl_6: '⏳ Liste d\'attente et promotion automatique',
+      pill_pl_7: '👨‍👩‍👧 Ajouter des invités',
+      link_features: '✦ Voir toutes les fonctionnalités →',
+      link_upgrade: '✦ Déjà organisateur ? Passez au Pro →',
+      link_contact: '✦ Nous contacter →',
+      why_title: 'Pourquoi Social Tennis Manager ?',
+      why_tagline: 'Moins d\'administration. <strong>Plus de tennis.</strong>',
+      why_intro: 'STM vous aide à passer du chaos WhatsApp et des soucis de paiement à des séances entièrement gérées, avec joueurs confirmés, paiements collectés et tableaux prêts.',
+      why_1_title: 'Configuré en quelques minutes',
+      why_1_desc: 'Organisateurs et entraîneurs créent une séance en quelques minutes — recréez-la à partir d\'un modèle chaque semaine.',
+      why_2_title: 'Fini le chaos des groupes de discussion',
+      why_2_desc: 'Arrêtez de courir après les réponses sur WhatsApp. La liste est dans l\'application — claire, à jour et visible par tous.',
+      why_3_title: 'Les joueurs rejoignent facilement',
+      why_3_desc: 'Un seul appui pour rejoindre la liste principale ou d\'attente. Les joueurs voient qui joue et confirment en quelques secondes.',
+      why_4_title: 'Vous gardez le contrôle',
+      why_4_desc: 'Choisissez comment vous gérez les choses — paiements, crédits, tableaux, annulations. Activez ou désactivez les fonctionnalités selon votre club.',
+      why_5_title: 'Conçu pour votre club et votre communauté',
+      why_5_desc: 'Formats de séances personnalisables, niveaux des membres, règles de tarification et plus. Votre club, à votre façon.',
+      why_6_title: 'Gratuit pour commencer, gratuit pour toujours',
+      why_6_desc: 'La version gratuite couvre la plupart de vos besoins pour gérer des séances. Passez au payant seulement si vous voulez les extras.',
+      autodraw_eyebrow: 'Fonction Pro — Nouveau',
+      autodraw_headline: 'Votre tableau,<br><span>prêt en un geste.</span>',
+      autodraw_body: 'Auto Draw génère instantanément tout votre calendrier de matchs — en groupant les joueurs par niveau, en alternant partenaires et adversaires entre les rounds, et en respectant automatiquement les demandes de partenaires.',
+      autodraw_pt_1: 'Joueurs regroupés par niveau pour des matchs équilibrés',
+      autodraw_pt_2: 'Partenaires et adversaires alternent entre les rounds — sans répétition',
+      autodraw_pt_3: 'Demandes de partenaires respectées automatiquement à chaque round',
+      autodraw_pt_4: 'Appuyez à nouveau pour mélanger la position de départ',
+      autodraw_pt_5: 'L\'admin peut toujours modifier un emplacement avant publication',
+      autodraw_tag: '⚡ Fonction Pro et essai',
+      autodraw_visual_title: 'Tableau prêt',
+      autodraw_visual_sub: 'Tous les courts · Tous les rounds<br>Généré en un geste',
+      autodraw_cta: 'Voir en action →',
+      getstarted_eyebrow: 'Pour bien démarrer',
+      getstarted_headline: 'Créez votre<br><span>première séance</span><br>en quelques minutes.',
+      getstarted_body: 'Nouveau sur STM ? Ce tutoriel de 2 minutes vous montre exactement comment configurer votre première séance, de l\'ouverture du tableau admin au partage de votre ID de club avec les joueurs.',
+      getstarted_pt_1: 'Ouvrez votre tableau admin et appuyez sur Créer une séance',
+      getstarted_pt_2: 'Renseignez le nom, la date, l\'heure et le lieu',
+      getstarted_pt_3: 'Définissez les places, le prix, et activez le niveau des joueurs et les options de paiement',
+      getstarted_pt_4: 'Appuyez sur Enregistrer — votre séance est immédiatement visible pour les joueurs',
+      getstarted_cta: 'Voir plus de tutoriels',
+    },
+    it: {
+      free_badge: 'App gratuita',
+      dl_sub_ios: 'Scarica su',
+      dl_sub_android: 'Disponibile su',
+      link_apply: '✦ Candidati per gestire il tuo club →',
+      link_faq: '❓ Domande? Leggi le nostre FAQ →',
+      link_tutorials: '🎬 Guarda i tutorial →',
+      hero_sub: 'L\'app che gestisce le tue sessioni di tennis — da iscrizioni e pagamenti a tabelloni e cancellazioni.<br>Pensata per organizzatori e allenatori che vogliono <strong>meno amministrazione e più tennis</strong>.',
+      organisers_label: '🛠 Per gli organizzatori',
+      pill_org_1: '📅 Crea e gestisci sessioni',
+      pill_org_2: '🎾 Crea e pubblica tabelloni',
+      pill_org_3: '⚡ Auto Draw',
+      pill_org_4: '💳 Pagamenti Stripe in-app',
+      pill_org_5: '👥 Gestione membri',
+      pill_org_6: '💰 Prezzi membri e ospiti',
+      pill_org_7: '🪙 Gestione crediti',
+      pill_org_8: '📍 Sedi e notifiche',
+      players_label: '👤 Per i giocatori',
+      pill_pl_1: '✅ Iscriviti in pochi secondi — nessun account necessario',
+      pill_pl_2: '💳 Paga online con Stripe',
+      pill_pl_3: '⭐ Funzioni membri e crediti',
+      pill_pl_4: '🎾 Visualizza il tabellone',
+      pill_pl_5: '🤝 Richiedi un partner',
+      pill_pl_6: '⏳ Lista d\'attesa e promozione automatica',
+      pill_pl_7: '👨‍👩‍👧 Aggiungi ospiti',
+      link_features: '✦ Vedi tutte le funzionalità →',
+      link_upgrade: '✦ Sei già organizzatore? Passa a Pro →',
+      link_contact: '✦ Contattaci →',
+      why_title: 'Perché Social Tennis Manager?',
+      why_tagline: 'Meno amministrazione. <strong>Più tennis.</strong>',
+      why_intro: 'STM ti aiuta a passare dal caos di WhatsApp e dai problemi di pagamento a sessioni completamente gestite, con giocatori confermati, pagamenti raccolti e tabelloni pronti.',
+      why_1_title: 'Configurazione in pochi minuti',
+      why_1_desc: 'Organizzatori e allenatori creano una sessione in pochi minuti — riutilizza un modello ogni settimana.',
+      why_2_title: 'Basta caos nei gruppi di chat',
+      why_2_desc: 'Smetti di rincorrere risposte su WhatsApp. La lista è nell\'app — chiara, aggiornata e visibile a tutti.',
+      why_3_title: 'I giocatori si uniscono facilmente',
+      why_3_desc: 'Un tocco per unirsi alla lista principale o d\'attesa. I giocatori vedono chi gioca e confermano in pochi secondi.',
+      why_4_title: 'Hai il controllo',
+      why_4_desc: 'Scegli come gestire le cose — pagamenti, crediti, tabelloni, cancellazioni. Attiva o disattiva le funzionalità in base al tuo club.',
+      why_5_title: 'Pensato per il tuo club e la tua community',
+      why_5_desc: 'Formati di sessione personalizzabili, livelli dei membri, regole tariffarie e altro. Il tuo club, come vuoi tu.',
+      why_6_title: 'Gratis per iniziare, gratis per sempre',
+      why_6_desc: 'La versione gratuita coperture quasi tutto ciò che ti serve per gestire le sessioni. Passa a pagamento solo se vuoi gli extra.',
+      autodraw_eyebrow: 'Funzione Pro — Novità',
+      autodraw_headline: 'Il tuo tabellone,<br><span>pronto in un tocco.</span>',
+      autodraw_body: 'Auto Draw genera istantaneamente tutto il calendario delle partite — raggruppando i giocatori per livello, alternando partner e avversari tra i round e rispettando automaticamente le richieste di partner.',
+      autodraw_pt_1: 'Giocatori raggruppati per livello per partite competitive',
+      autodraw_pt_2: 'Partner e avversari alternano tra i round — nessuna ripetizione',
+      autodraw_pt_3: 'Richieste di partner rispettate automaticamente ogni round',
+      autodraw_pt_4: 'Tocca di nuovo per mescolare la posizione di partenza',
+      autodraw_pt_5: 'L\'admin può comunque modificare qualsiasi slot prima della pubblicazione',
+      autodraw_tag: '⚡ Funzione Pro e Trial',
+      autodraw_visual_title: 'Tabellone pronto',
+      autodraw_visual_sub: 'Tutti i campi · Tutti i round<br>Generato in un tocco',
+      autodraw_cta: 'Guardalo in azione →',
+      getstarted_eyebrow: 'Per iniziare',
+      getstarted_headline: 'Crea la tua<br><span>prima sessione</span><br>in pochi minuti.',
+      getstarted_body: 'Nuovo su STM? Questo tutorial di 2 minuti ti mostra esattamente come configurare la tua prima sessione, dall\'apertura della dashboard admin alla condivisione del tuo Club ID con i giocatori.',
+      getstarted_pt_1: 'Apri la dashboard admin e tocca Crea sessione',
+      getstarted_pt_2: 'Inserisci nome, data, ora e luogo',
+      getstarted_pt_3: 'Imposta posti, prezzo e attiva livello giocatore e opzioni di pagamento',
+      getstarted_pt_4: 'Tocca Salva — la tua sessione è immediatamente visibile ai giocatori',
+      getstarted_cta: 'Guarda altri tutorial',
+    },
+    es: {
+      free_badge: 'App gratuita',
+      dl_sub_ios: 'Descárgalo en',
+      dl_sub_android: 'Disponible en',
+      link_apply: '✦ Solicita gestionar tu club →',
+      link_faq: '❓ ¿Tienes preguntas? Lee nuestras FAQ →',
+      link_tutorials: '🎬 Ver tutoriales →',
+      hero_sub: 'La app que gestiona tus sesiones de tenis — desde inscripciones y pagos hasta cuadros y cancelaciones.<br>Creada para organizadores y entrenadores que quieren <strong>menos administración y más tenis</strong>.',
+      organisers_label: '🛠 Para organizadores',
+      pill_org_1: '📅 Crear y gestionar sesiones',
+      pill_org_2: '🎾 Crear y publicar cuadros',
+      pill_org_3: '⚡ Auto Draw',
+      pill_org_4: '💳 Pagos Stripe en la app',
+      pill_org_5: '👥 Gestión de socios',
+      pill_org_6: '💰 Precios para socios e invitados',
+      pill_org_7: '🪙 Gestión de créditos',
+      pill_org_8: '📍 Ubicaciones y notificaciones',
+      players_label: '👤 Para jugadores',
+      pill_pl_1: '✅ Únete en segundos — sin cuenta necesaria',
+      pill_pl_2: '💳 Paga en línea con Stripe',
+      pill_pl_3: '⭐ Funciones de socios y créditos',
+      pill_pl_4: '🎾 Ver el cuadro del partido',
+      pill_pl_5: '🤝 Solicitar un compañero',
+      pill_pl_6: '⏳ Lista de espera y promoción automática',
+      pill_pl_7: '👨‍👩‍👧 Añadir invitados',
+      link_features: '✦ Ver todas las funciones →',
+      link_upgrade: '✦ ¿Ya eres organizador? Mejora a Pro →',
+      link_contact: '✦ Ponte en contacto →',
+      why_title: '¿Por qué Social Tennis Manager?',
+      why_tagline: 'Menos administración. <strong>Más tenis.</strong>',
+      why_intro: 'STM te ayuda a pasar del caos de WhatsApp y los dolores de cabeza con los pagos a sesiones totalmente gestionadas, con jugadores confirmados, pagos cobrados y cuadros listos.',
+      why_1_title: 'Configúralo en minutos',
+      why_1_desc: 'Organizadores y entrenadores crean una sesión en minutos — recréala desde una plantilla cada semana.',
+      why_2_title: 'Se acabó el caos de los grupos de chat',
+      why_2_desc: 'Deja de perseguir respuestas en WhatsApp. La lista está en la app — clara, actualizada y visible para todos.',
+      why_3_title: 'Los jugadores se unen con facilidad',
+      why_3_desc: 'Un toque para unirse a la lista principal o de espera. Los jugadores ven quién juega y confirman en segundos.',
+      why_4_title: 'Tú tienes el control',
+      why_4_desc: 'Elige cómo gestionar todo — pagos, créditos, cuadros, cancelaciones. Activa o desactiva funciones según tu club.',
+      why_5_title: 'Pensado para tu club y tu comunidad',
+      why_5_desc: 'Formatos de sesión personalizables, niveles de socios, reglas de precios y más. Tu club, a tu manera.',
+      why_6_title: 'Gratis para empezar, gratis para siempre',
+      why_6_desc: 'La versión gratuita cubre la mayor parte de lo que necesitas para gestionar sesiones. Mejora solo si quieres los extras.',
+      autodraw_eyebrow: 'Función Pro — Novedad',
+      autodraw_headline: 'Tu cuadro,<br><span>listo en un toque.</span>',
+      autodraw_body: 'Auto Draw genera al instante todo tu calendario de partidos — agrupando jugadores por nivel, rotando compañeros y rivales entre rondas, y respetando automáticamente las solicitudes de compañero.',
+      autodraw_pt_1: 'Jugadores agrupados por nivel para partidos competitivos',
+      autodraw_pt_2: 'Compañeros y rivales rotan entre rondas — sin repeticiones',
+      autodraw_pt_3: 'Solicitudes de compañero respetadas automáticamente cada ronda',
+      autodraw_pt_4: 'Toca de nuevo para mezclar la posición inicial',
+      autodraw_pt_5: 'El admin puede editar cualquier puesto antes de publicar',
+      autodraw_tag: '⚡ Función Pro y de prueba',
+      autodraw_visual_title: 'Cuadro listo',
+      autodraw_visual_sub: 'Todas las pistas · Todas las rondas<br>Generado en un toque',
+      autodraw_cta: 'Verlo en acción →',
+      getstarted_eyebrow: 'Primeros pasos',
+      getstarted_headline: 'Crea tu<br><span>primera sesión</span><br>en minutos.',
+      getstarted_body: '¿Nuevo en STM? Este tutorial de 2 minutos te muestra exactamente cómo configurar tu primera sesión, desde abrir el panel de administración hasta compartir tu Club ID con los jugadores.',
+      getstarted_pt_1: 'Abre tu panel de administración y toca Crear sesión',
+      getstarted_pt_2: 'Rellena el nombre, fecha, hora y lugar',
+      getstarted_pt_3: 'Configura plazas, precio, y activa el nivel de jugador y las opciones de pago',
+      getstarted_pt_4: 'Pulsa Guardar — tu sesión queda visible al instante para los jugadores',
+      getstarted_cta: 'Ver más tutoriales',
+    },
+    de: {
+      free_badge: 'Kostenlose App',
+      dl_sub_ios: 'Laden im',
+      dl_sub_android: 'Erhältlich bei',
+      link_apply: '✦ Bewerben Sie sich für Ihren Club →',
+      link_faq: '❓ Fragen? Lesen Sie unsere FAQ →',
+      link_tutorials: '🎬 Tutorials ansehen →',
+      hero_sub: 'Die App, die Ihre Tennis-Sessions verwaltet — von Anmeldungen und Zahlungen bis zu Auslosungen und Stornierungen.<br>Entwickelt für Organisatoren und Trainer, die <strong>weniger Verwaltung und mehr Tennis</strong> wollen.',
+      organisers_label: '🛠 Für Organisatoren',
+      pill_org_1: '📅 Sessions erstellen &amp; verwalten',
+      pill_org_2: '🎾 Auslosungen erstellen &amp; veröffentlichen',
+      pill_org_3: '⚡ Auto Draw',
+      pill_org_4: '💳 Stripe-Zahlungen in der App',
+      pill_org_5: '👥 Mitgliederverwaltung',
+      pill_org_6: '💰 Mitglieder- &amp; Gastpreise',
+      pill_org_7: '🪙 Credit-Verwaltung',
+      pill_org_8: '📍 Standorte &amp; Benachrichtigungen',
+      players_label: '👤 Für Spieler',
+      pill_pl_1: '✅ In Sekunden beitreten — kein Konto erforderlich',
+      pill_pl_2: '💳 Online bezahlen mit Stripe',
+      pill_pl_3: '⭐ Mitgliederfunktionen &amp; Credits',
+      pill_pl_4: '🎾 Spielplan ansehen',
+      pill_pl_5: '🤝 Partner anfragen',
+      pill_pl_6: '⏳ Warteliste &amp; automatische Beförderung',
+      pill_pl_7: '👨‍👩‍👧 Gäste hinzufügen',
+      link_features: '✦ Alle Funktionen ansehen →',
+      link_upgrade: '✦ Schon Organisator? Auf Pro upgraden →',
+      link_contact: '✦ Kontakt aufnehmen →',
+      why_title: 'Warum Social Tennis Manager?',
+      why_tagline: 'Weniger Verwaltung. <strong>Mehr Tennis.</strong>',
+      why_intro: 'STM hilft Ihnen, vom WhatsApp-Chaos und Zahlungsproblemen zu vollständig verwalteten Sessions zu wechseln — mit bestätigten Spielern, eingezogenen Zahlungen und fertigen Auslosungen.',
+      why_1_title: 'In Minuten eingerichtet',
+      why_1_desc: 'Organisatoren und Trainer erstellen eine Session in Minuten — jede Woche aus einer Vorlage neu erstellen.',
+      why_2_title: 'Kein Chatgruppen-Chaos mehr',
+      why_2_desc: 'Hören Sie auf, Antworten auf WhatsApp nachzujagen. Die Teilnehmerliste ist in der App — klar, aktuell und für alle sichtbar.',
+      why_3_title: 'Spieler treten einfach bei',
+      why_3_desc: 'Ein Tipp, um der Hauptliste oder Warteliste beizutreten. Spieler sehen, wer mitspielt, und bestätigen in Sekunden.',
+      why_4_title: 'Sie haben die Kontrolle',
+      why_4_desc: 'Entscheiden Sie, wie Sie alles handhaben — Zahlungen, Credits, Auslosungen, Stornierungen. Funktionen passend zu Ihrem Club an- oder ausschalten.',
+      why_5_title: 'Gemacht für Ihren Club und Ihre Tennis-Community',
+      why_5_desc: 'Anpassbare Session-Formate, Mitgliederstufen, Preisregeln und mehr. Ihr Club, auf Ihre Art.',
+      why_6_title: 'Kostenlos starten, für immer kostenlos',
+      why_6_desc: 'Die kostenlose Version deckt das meiste ab, was Sie für Sessions brauchen. Upgraden Sie nur, wenn Sie die Extras wollen.',
+      autodraw_eyebrow: 'Pro-Funktion — Neu',
+      autodraw_headline: 'Ihre Auslosung,<br><span>mit einem Tipp fertig.</span>',
+      autodraw_body: 'Auto Draw erstellt sofort Ihren gesamten Spielplan — gruppiert Spieler nach Level, wechselt Partner und Gegner über Runden hinweg und berücksichtigt automatisch Partnerwünsche.',
+      autodraw_pt_1: 'Spieler nach Spielstärke gruppiert für ausgeglichene Matches',
+      autodraw_pt_2: 'Partner und Gegner wechseln über Runden — keine Wiederholungen',
+      autodraw_pt_3: 'Partnerwünsche jede Runde automatisch berücksichtigt',
+      autodraw_pt_4: 'Erneut tippen, um die Startposition zu mischen',
+      autodraw_pt_5: 'Admin kann vor Veröffentlichung jeden Slot bearbeiten',
+      autodraw_tag: '⚡ Pro- &amp; Test-Funktion',
+      autodraw_visual_title: 'Auslosung fertig',
+      autodraw_visual_sub: 'Alle Courts · Alle Runden<br>Mit einem Tipp erstellt',
+      autodraw_cta: 'In Aktion sehen →',
+      getstarted_eyebrow: 'Erste Schritte',
+      getstarted_headline: 'Erstellen Sie Ihre<br><span>erste Session</span><br>in wenigen Minuten.',
+      getstarted_body: 'Neu bei STM? Diese 2-minütige Anleitung zeigt Ihnen genau, wie Sie Ihre erste Session einrichten — vom Öffnen des Admin-Dashboards bis zum Teilen Ihrer Club-ID mit Spielern.',
+      getstarted_pt_1: 'Öffnen Sie Ihr Admin-Dashboard und tippen Sie auf Session erstellen',
+      getstarted_pt_2: 'Geben Sie Name, Datum, Uhrzeit und Ort ein',
+      getstarted_pt_3: 'Legen Sie Plätze, Preis fest und aktivieren Sie Spielstärke- &amp; Zahlungsoptionen',
+      getstarted_pt_4: 'Tippen Sie auf Speichern — Ihre Session ist sofort für Spieler sichtbar',
+      getstarted_cta: 'Weitere Tutorials ansehen',
+    },
+    pt: {
+      free_badge: 'App grátis',
+      dl_sub_ios: 'Baixar na',
+      dl_sub_android: 'Disponível no',
+      link_apply: '✦ Inscreva-se para gerenciar seu clube →',
+      link_faq: '❓ Tem dúvidas? Leia nosso FAQ →',
+      link_tutorials: '🎬 Assistir aos tutoriais →',
+      hero_sub: 'O aplicativo que gerencia suas sessões de tênis — de inscrições e pagamentos a chaves e cancelamentos.<br>Criado para organizadores e treinadores que querem <strong>menos burocracia e mais tênis</strong>.',
+      organisers_label: '🛠 Para Organizadores',
+      pill_org_1: '📅 Criar e gerenciar sessões',
+      pill_org_2: '🎾 Criar e publicar chaves',
+      pill_org_3: '⚡ Chave Automática',
+      pill_org_4: '💳 Pagamentos Stripe no app',
+      pill_org_5: '👥 Gerenciamento de membros',
+      pill_org_6: '💰 Preços para membros e convidados',
+      pill_org_7: '🪙 Gerenciamento de créditos',
+      pill_org_8: '📍 Locais e notificações',
+      players_label: '👤 Para Jogadores',
+      pill_pl_1: '✅ Participe em segundos — sem necessidade de conta',
+      pill_pl_2: '💳 Pague online via Stripe',
+      pill_pl_3: '⭐ Recursos de membros e créditos',
+      pill_pl_4: '🎾 Ver chave da partida',
+      pill_pl_5: '🤝 Solicitar um parceiro',
+      pill_pl_6: '⏳ Lista de espera e promoção automática',
+      pill_pl_7: '👨‍👩‍👧 Adicionar convidados',
+      link_features: '✦ Ver todos os recursos →',
+      link_upgrade: '✦ Já é organizador? Atualize para o Pro →',
+      link_contact: '✦ Entre em contato →',
+      why_title: 'Por que Social Tennis Manager?',
+      why_tagline: 'Menos burocracia. <strong>Mais tênis.</strong>',
+      why_intro: 'O STM ajuda você a passar do caos do WhatsApp e das dores de cabeça com pagamentos para sessões totalmente gerenciadas, com jogadores confirmados, pagamentos coletados e chaves prontas.',
+      why_1_title: 'Configurado em minutos',
+      why_1_desc: 'Organizadores e treinadores criam uma sessão em minutos — recrie a partir de um modelo toda semana.',
+      why_2_title: 'Fim do caos nos grupos de chat',
+      why_2_desc: 'Pare de correr atrás de respostas no WhatsApp. A lista está no aplicativo — limpa, atualizada e visível para todos.',
+      why_3_title: 'Jogadores participam com facilidade',
+      why_3_desc: 'Um toque para entrar na lista principal ou de espera. Os jogadores veem quem está jogando e confirmam em segundos.',
+      why_4_title: 'Você está no controle',
+      why_4_desc: 'Escolha como gerenciar tudo — pagamentos, créditos, chaves, cancelamentos. Ative ou desative recursos para combinar com seu clube.',
+      why_5_title: 'Feito para seu clube e sua comunidade de tênis',
+      why_5_desc: 'Formatos de sessão personalizáveis, níveis de membros, regras de preços e muito mais. Seu clube, do seu jeito.',
+      why_6_title: 'Grátis para começar, grátis para sempre',
+      why_6_desc: 'A versão gratuita cobre a maior parte do que você precisa para gerenciar sessões. Atualize apenas se quiser os extras.',
+      autodraw_eyebrow: 'Recurso Pro — Novo',
+      autodraw_headline: 'Sua chave,<br><span>pronta em um toque.</span>',
+      autodraw_body: 'A Chave Automática cria todo o seu calendário de partidas instantaneamente — agrupando jogadores por nível, alternando parceiros e adversários entre rodadas e respeitando automaticamente os pedidos de parceiro.',
+      autodraw_pt_1: 'Jogadores agrupados por nível para partidas competitivas',
+      autodraw_pt_2: 'Parceiros e adversários alternam entre rodadas — sem repetições',
+      autodraw_pt_3: 'Pedidos de parceiro respeitados automaticamente a cada rodada',
+      autodraw_pt_4: 'Toque novamente para misturar a posição inicial e variar',
+      autodraw_pt_5: 'O administrador ainda pode editar qualquer vaga antes de publicar',
+      autodraw_tag: '⚡ Recurso Pro e de Teste',
+      autodraw_visual_title: 'Chave pronta',
+      autodraw_visual_sub: 'Todas as quadras · Todas as rodadas<br>Gerada em um toque',
+      autodraw_cta: 'Ver em ação →',
+      getstarted_eyebrow: 'Primeiros Passos',
+      getstarted_headline: 'Crie sua<br><span>primeira sessão</span><br>em minutos.',
+      getstarted_body: 'Novo no STM? Este tutorial de 2 minutos mostra exatamente como configurar sua primeira sessão, desde abrir o painel do administrador até compartilhar seu ID do Clube com os jogadores.',
+      getstarted_pt_1: 'Abra seu Painel do Administrador e toque em Criar Sessão',
+      getstarted_pt_2: 'Preencha o nome, data, horário e local',
+      getstarted_pt_3: 'Defina vagas, preço, e ative o nível do jogador e as opções de pagamento',
+      getstarted_pt_4: 'Toque em Salvar — sua sessão fica instantaneamente visível para os jogadores',
+      getstarted_cta: 'Ver mais tutoriais',
+    },
+    ru: {
+      free_badge: 'Бесплатное приложение',
+      dl_sub_ios: 'Загрузить в',
+      dl_sub_android: 'Доступно в',
+      link_apply: '✦ Подать заявку на управление клубом →',
+      link_faq: '❓ Есть вопросы? Прочтите наш FAQ →',
+      link_tutorials: '🎬 Смотреть видеоуроки →',
+      hero_sub: 'Приложение, которое управляет вашими теннисными сессиями — от регистрации и платежей до сеток и отмен.<br>Создано для организаторов и тренеров, которые хотят <strong>меньше администрирования и больше тенниса</strong>.',
+      organisers_label: '🛠 Для организаторов',
+      pill_org_1: '📅 Создание и управление сессиями',
+      pill_org_2: '🎾 Создание и публикация сеток',
+      pill_org_3: '⚡ Автосетка',
+      pill_org_4: '💳 Платежи Stripe в приложении',
+      pill_org_5: '👥 Управление участниками',
+      pill_org_6: '💰 Цены для участников и гостей',
+      pill_org_7: '🪙 Управление кредитами',
+      pill_org_8: '📍 Локации и уведомления',
+      players_label: '👤 Для игроков',
+      pill_pl_1: '✅ Присоединение за секунды — аккаунт не нужен',
+      pill_pl_2: '💳 Онлайн-оплата через Stripe',
+      pill_pl_3: '⭐ Функции участников и кредиты',
+      pill_pl_4: '🎾 Просмотр сетки матча',
+      pill_pl_5: '🤝 Запросить партнёра',
+      pill_pl_6: '⏳ Лист ожидания и автопродвижение',
+      pill_pl_7: '👨‍👩‍👧 Добавить гостей',
+      link_features: '✦ Все функции →',
+      link_upgrade: '✦ Уже организатор? Перейти на Pro →',
+      link_contact: '✦ Связаться с нами →',
+      why_title: 'Почему Social Tennis Manager?',
+      why_tagline: 'Меньше администрирования. <strong>Больше тенниса.</strong>',
+      why_intro: 'STM помогает перейти от хаоса в WhatsApp и проблем с оплатой к полностью управляемым сессиям — с подтверждёнными игроками, собранными платежами и готовыми сетками.',
+      why_1_title: 'Настройка за минуты',
+      why_1_desc: 'Организаторы и тренеры создают сессию за минуты — пересоздавайте из шаблона каждую неделю.',
+      why_2_title: 'Больше никакого хаоса в чатах',
+      why_2_desc: 'Хватит гоняться за ответами в WhatsApp. Список участников в приложении — чёткий, актуальный и виден всем.',
+      why_3_title: 'Игроки легко присоединяются',
+      why_3_desc: 'Одно нажатие, чтобы попасть в основной список или лист ожидания. Игроки видят, кто играет, и подтверждают за секунды.',
+      why_4_title: 'Контроль в ваших руках',
+      why_4_desc: 'Выбирайте, как всё устроено — платежи, кредиты, сетки, отмены. Включайте и выключайте функции под свой клуб.',
+      why_5_title: 'Создано для вашего клуба и теннисного сообщества',
+      why_5_desc: 'Настраиваемые форматы сессий, уровни участников, правила цен и многое другое. Ваш клуб, как вам удобно.',
+      why_6_title: 'Бесплатно для старта, бесплатно навсегда',
+      why_6_desc: 'Бесплатная версия покрывает большинство того, что нужно для проведения сессий. Обновляйтесь только если хотите дополнительные функции.',
+      autodraw_eyebrow: 'Функция Pro — Новинка',
+      autodraw_headline: 'Ваша сетка<br><span>готова в одно касание.</span>',
+      autodraw_body: 'Автосетка мгновенно создаёт весь график матчей — группируя игроков по уровню, меняя партнёров и соперников между раундами и автоматически учитывая запросы на партнёров.',
+      autodraw_pt_1: 'Игроки сгруппированы по уровню для конкурентных матчей',
+      autodraw_pt_2: 'Партнёры и соперники меняются между раундами — без повторов',
+      autodraw_pt_3: 'Запросы на партнёров автоматически учитываются каждый раунд',
+      autodraw_pt_4: 'Нажмите снова, чтобы перемешать стартовую позицию',
+      autodraw_pt_5: 'Администратор может редактировать любой слот перед публикацией',
+      autodraw_tag: '⚡ Функция Pro и пробного периода',
+      autodraw_visual_title: 'Сетка готова',
+      autodraw_visual_sub: 'Все корты · Все раунды<br>Создано в одно касание',
+      autodraw_cta: 'Посмотреть в действии →',
+      getstarted_eyebrow: 'Начало работы',
+      getstarted_headline: 'Создайте свою<br><span>первую сессию</span><br>за минуты.',
+      getstarted_body: 'Новичок в STM? Это 2-минутное руководство показывает, как настроить вашу первую сессию — от открытия панели администратора до того, как поделиться ID клуба с игроками.',
+      getstarted_pt_1: 'Откройте панель администратора и нажмите Создать сессию',
+      getstarted_pt_2: 'Заполните название, дату, время и место',
+      getstarted_pt_3: 'Укажите места, цену и включите уровень игрока и параметры оплаты',
+      getstarted_pt_4: 'Нажмите Сохранить — ваша сессия сразу станет видна игрокам',
+      getstarted_cta: 'Смотреть другие видеоуроки',
+    },
+    zh: {
+      free_badge: '免费应用',
+      dl_sub_ios: '下载于',
+      dl_sub_android: '获取于',
+      link_apply: '✦ 申请管理您的俱乐部 →',
+      link_faq: '❓ 有疑问？查看我们的常见问题 →',
+      link_tutorials: '🎬 观看教程 →',
+      hero_sub: '管理您网球活动的应用——从报名和付款到抽签和取消。<br>专为希望<strong>减少管理、专注网球</strong>的组织者和教练打造。',
+      organisers_label: '🛠 组织者功能',
+      pill_org_1: '📅 创建和管理活动',
+      pill_org_2: '🎾 创建和发布抽签',
+      pill_org_3: '⚡ 自动抽签',
+      pill_org_4: '💳 应用内 Stripe 付款',
+      pill_org_5: '👥 会员管理',
+      pill_org_6: '💰 会员与访客定价',
+      pill_org_7: '🪙 积分管理',
+      pill_org_8: '📍 场地与通知',
+      players_label: '👤 球员功能',
+      pill_pl_1: '✅ 几秒内加入——无需账户',
+      pill_pl_2: '💳 通过 Stripe 在线支付',
+      pill_pl_3: '⭐ 会员功能与积分',
+      pill_pl_4: '🎾 查看比赛抽签',
+      pill_pl_5: '🤝 请求搭档',
+      pill_pl_6: '⏳ 候补名单与自动晋升',
+      pill_pl_7: '👨‍👩‍👧 添加访客',
+      link_features: '✦ 查看所有功能 →',
+      link_upgrade: '✦ 已是组织者？升级到专业版 →',
+      link_contact: '✦ 联系我们 →',
+      why_title: '为什么选择 Social Tennis Manager？',
+      why_tagline: '减少管理。<strong>专注网球。</strong>',
+      why_intro: 'STM 帮助您从 WhatsApp 混乱和付款烦恼中解脱，转向完全托管的活动——球员已确认、付款已收取、抽签已就绪。',
+      why_1_title: '几分钟内设置完成',
+      why_1_desc: '组织者和教练几分钟内即可创建活动——每周可从模板重新创建。',
+      why_2_title: '告别聊天群混乱',
+      why_2_desc: '不再追着 WhatsApp 要回复。名单就在应用中——清晰、实时，所有人都能查看。',
+      why_3_title: '球员轻松加入',
+      why_3_desc: '一键加入主名单或候补名单。球员可以查看谁参加，并在几秒内确认。',
+      why_4_title: '您掌控一切',
+      why_4_desc: '自由选择运营方式——付款、积分、抽签、取消。根据俱乐部需要开启或关闭功能。',
+      why_5_title: '为您的俱乐部和网球社区量身打造',
+      why_5_desc: '可自定义的活动形式、会员等级、定价规则等。您的俱乐部，由您决定。',
+      why_6_title: '免费开始，永久免费',
+      why_6_desc: '免费版已涵盖运营活动所需的大部分功能。只有需要额外功能时才需要升级。',
+      autodraw_eyebrow: '专业版功能——全新',
+      autodraw_headline: '您的抽签，<br><span>一键完成。</span>',
+      autodraw_body: '自动抽签即时生成整个比赛日程——按等级分组球员，在各轮之间轮换搭档和对手，并自动满足搭档请求。',
+      autodraw_pt_1: '按技能等级分组球员，确保比赛具有竞争性',
+      autodraw_pt_2: '搭档和对手在各轮之间轮换——不重复',
+      autodraw_pt_3: '每轮自动满足搭档请求',
+      autodraw_pt_4: '再次点击可打乱起始位置，增加多样性',
+      autodraw_pt_5: '管理员仍可在发布前编辑任意位置',
+      autodraw_tag: '⚡ 专业版与试用版功能',
+      autodraw_visual_title: '抽签已就绪',
+      autodraw_visual_sub: '所有球场 · 所有轮次<br>一键生成',
+      autodraw_cta: '查看实际效果 →',
+      getstarted_eyebrow: '快速入门',
+      getstarted_headline: '几分钟内创建<br><span>您的第一个活动</span>。',
+      getstarted_body: '刚开始使用 STM？这段 2 分钟的教程将准确展示如何设置您的第一个活动——从打开管理员仪表板到与球员分享您的俱乐部 ID。',
+      getstarted_pt_1: '打开您的管理员仪表板并点击创建活动',
+      getstarted_pt_2: '填写名称、日期、时间和场地',
+      getstarted_pt_3: '设置名额、价格，并开启球员等级和付款选项',
+      getstarted_pt_4: '点击保存——您的活动立即对球员可见',
+      getstarted_cta: '观看更多教程',
+    },
+  };
+
+  const langFlags  = { en:'🇦🇺', fr:'🇫🇷', it:'🇮🇹', es:'🇪🇸', de:'🇩🇪', pt:'🇵🇹', ru:'🇷🇺', zh:'🇨🇳' };
+  const langLabels = { en:'English', fr:'Français', it:'Italiano', es:'Español', de:'Deutsch', pt:'Português', ru:'Русский', zh:'中文' };
+
+  function toggleLangDropdown() {
+    document.getElementById('langSwitcher').classList.toggle('open');
+  }
+  document.addEventListener('click', e => {
+    if (!document.getElementById('langSwitcher').contains(e.target))
+      document.getElementById('langSwitcher').classList.remove('open');
+  });
+
+  function pickLang(lang, e) {
+    e.stopPropagation();
+    document.getElementById('langSwitcher').classList.remove('open');
+    document.querySelectorAll('.lang-option').forEach(el => el.classList.toggle('active', el.dataset.lang === lang));
+    document.getElementById('langFlag').textContent  = langFlags[lang]  || '🌐';
+    document.getElementById('langLabel').textContent = langLabels[lang] || lang;
+    setLang(lang);
+  }
+
+  function setLang(lang) {
+    const strings = ui[lang] || ui['en'];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (strings[key]) el.innerHTML = strings[key];
+    });
+    document.documentElement.lang = lang;
+  }
 </script>
 </body>
 </html>
