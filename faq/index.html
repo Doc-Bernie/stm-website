@@ -961,6 +961,7 @@
     document.getElementById('langFlag').textContent  = langFlags[lang]  || '🌐';
     document.getElementById('langLabel').textContent = langLabels[lang] || lang;
     setLang(lang);
+    try { localStorage.setItem('stm_lang', lang); } catch (_) {}
   }
 
   function setLang(lang) {
@@ -974,7 +975,28 @@
     document.documentElement.lang = lang;
   }
 
-  renderFAQ('en');
+  /* ── Apply saved language preference on load (shared across pages via localStorage) ── */
+  let initialLang = 'en';
+  try {
+    const saved = localStorage.getItem('stm_lang');
+    if (saved && ui[saved]) initialLang = saved;
+  } catch (_) {}
+
+  if (initialLang !== 'en') {
+    document.querySelectorAll('.lang-option').forEach(el => el.classList.toggle('active', el.dataset.lang === initialLang));
+    document.getElementById('langFlag').textContent  = langFlags[initialLang]  || '🌐';
+    document.getElementById('langLabel').textContent = langLabels[initialLang] || initialLang;
+  }
+  currentLang = initialLang;
+  renderFAQ(initialLang);
+  if (initialLang !== 'en') {
+    const strings = ui[initialLang] || ui['en'];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (strings[key]) el.innerHTML = strings[key];
+    });
+    document.documentElement.lang = initialLang;
+  }
 </script>
 </body>
 </html>
