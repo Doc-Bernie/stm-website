@@ -894,6 +894,7 @@
     document.getElementById('langFlag').textContent  = langFlags[lang]  || '🌐';
     document.getElementById('langLabel').textContent = langLabels[lang] || lang;
     setLang(lang);
+    try { localStorage.setItem('stm_lang', lang); } catch (_) {}
   }
 
   function setLang(lang) {
@@ -913,6 +914,18 @@
     });
     document.documentElement.lang = lang;
   }
+
+  /* ── Apply saved language preference on load (shared across pages via localStorage) ── */
+  (function initLangFromStorage() {
+    let saved = null;
+    try { saved = localStorage.getItem('stm_lang'); } catch (_) {}
+    if (saved && ui[saved] && saved !== 'en') {
+      document.querySelectorAll('.lang-option').forEach(el => el.classList.toggle('active', el.dataset.lang === saved));
+      document.getElementById('langFlag').textContent  = langFlags[saved]  || '🌐';
+      document.getElementById('langLabel').textContent = langLabels[saved] || saved;
+      setLang(saved);
+    }
+  })();
 
   function t(key, vars) {
     const strings = ui[currentLang] || ui['en'];
