@@ -57,6 +57,7 @@
       position: relative; z-index: 2;
       display: flex; align-items: center; justify-content: space-between;
       max-width: 900px; margin: 0 auto; padding: 20px 24px; width: 100%;
+      gap: 12px;
     }
     .brand-pill {
       display: inline-flex; align-items: center; gap: 8px;
@@ -66,6 +67,7 @@
     }
     .brand-dot { width: 11px; height: 11px; border-radius: 50%; background: var(--green); }
     .brand-text { color: var(--white); font-size: 14px; font-weight: 900; letter-spacing: 0.7px; }
+    .nav-right { display: flex; align-items: center; gap: 14px; }
     .back-link {
       display: flex; align-items: center; gap: 6px;
       color: rgba(255,255,255,0.6); text-decoration: none; font-size: 14px; font-weight: 700;
@@ -73,6 +75,50 @@
     }
     .back-link:hover { color: var(--white); }
     .back-arrow { font-size: 16px; }
+
+    /* ── Language switcher ── */
+    .lang-switcher {
+      position: relative;
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 50px; padding: 6px 14px;
+      cursor: pointer; user-select: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .lang-switcher:hover { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.22); }
+    .lang-current {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.75);
+    }
+    .lang-current-flag { font-size: 16px; line-height: 1; }
+    .lang-current-label { font-size: 12px; }
+    .lang-chevron {
+      width: 10px; height: 10px; margin-left: 2px;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.2s;
+    }
+    .lang-chevron svg { width: 10px; height: 10px; fill: none; stroke: rgba(255,255,255,0.4); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .lang-switcher.open .lang-chevron { transform: rotate(180deg); }
+    .lang-dropdown {
+      display: none; position: absolute; top: calc(100% + 8px); right: 0;
+      background: #0f2660; border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 14px; overflow: hidden; min-width: 160px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+      z-index: 100;
+    }
+    .lang-switcher.open .lang-dropdown { display: block; }
+    .lang-option {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 16px; cursor: pointer;
+      font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.7);
+      transition: background 0.15s, color 0.15s;
+    }
+    .lang-option:hover { background: rgba(255,255,255,0.07); color: var(--white); }
+    .lang-option.active { color: var(--green); background: rgba(178,229,26,0.06); }
+    .lang-option-flag { font-size: 18px; line-height: 1; }
+    .lang-option-name { flex: 1; }
+    .lang-option-check { font-size: 11px; color: var(--green); opacity: 0; }
+    .lang-option.active .lang-option-check { opacity: 1; }
 
     /* Page layout */
     main {
@@ -222,7 +268,7 @@
     footer a:hover { color: var(--green); }
 
     @media (max-width: 600px) {
-      nav { padding: 16px 16px; }
+      nav { padding: 16px 16px; flex-wrap: wrap; }
       main { padding: 8px 16px 50px; }
       .card { padding: 22px 18px 26px; }
       .page-header { margin-bottom: 24px; }
@@ -238,16 +284,35 @@
     <div class="brand-dot"></div>
     <span class="brand-text">SOCIAL TENNIS</span>
   </a>
-  <a href="/" class="back-link">
-    <span class="back-arrow">←</span> Back
-  </a>
+  <div class="nav-right">
+    <div class="lang-switcher" id="langSwitcher" onclick="toggleLangDropdown()">
+      <div class="lang-current">
+        <span class="lang-current-flag" id="langFlag">🇦🇺</span>
+        <span class="lang-current-label" id="langLabel">English</span>
+      </div>
+      <span class="lang-chevron"><svg viewBox="0 0 10 10"><polyline points="2,3 5,7 8,3"/></svg></span>
+      <div class="lang-dropdown" id="langDropdown">
+        <div class="lang-option active" data-lang="en" onclick="pickLang('en',event)"><span class="lang-option-flag">🇦🇺</span><span class="lang-option-name">English</span><span class="lang-option-check">✓</span></div>
+        <div class="lang-option" data-lang="fr" onclick="pickLang('fr',event)"><span class="lang-option-flag">🇫🇷</span><span class="lang-option-name">Français</span><span class="lang-option-check">✓</span></div>
+        <div class="lang-option" data-lang="it" onclick="pickLang('it',event)"><span class="lang-option-flag">🇮🇹</span><span class="lang-option-name">Italiano</span><span class="lang-option-check">✓</span></div>
+        <div class="lang-option" data-lang="es" onclick="pickLang('es',event)"><span class="lang-option-flag">🇪🇸</span><span class="lang-option-name">Español</span><span class="lang-option-check">✓</span></div>
+        <div class="lang-option" data-lang="de" onclick="pickLang('de',event)"><span class="lang-option-flag">🇩🇪</span><span class="lang-option-name">Deutsch</span><span class="lang-option-check">✓</span></div>
+        <div class="lang-option" data-lang="pt" onclick="pickLang('pt',event)"><span class="lang-option-flag">🇵🇹</span><span class="lang-option-name">Português</span><span class="lang-option-check">✓</span></div>
+        <div class="lang-option" data-lang="ru" onclick="pickLang('ru',event)"><span class="lang-option-flag">🇷🇺</span><span class="lang-option-name">Русский</span><span class="lang-option-check">✓</span></div>
+        <div class="lang-option" data-lang="zh" onclick="pickLang('zh',event)"><span class="lang-option-flag">🇨🇳</span><span class="lang-option-name">中文</span><span class="lang-option-check">✓</span></div>
+      </div>
+    </div>
+    <a href="/" class="back-link">
+      <span class="back-arrow">←</span> <span data-i18n="back">Back</span>
+    </a>
+  </div>
 </nav>
 
 <main>
   <div class="page-header">
-    <div class="page-tag">Organiser Application</div>
-    <h1 class="page-title">Admin<br><span>Application</span></h1>
-    <p class="page-sub">Fill in your details below and we'll review your request and be in touch.</p>
+    <div class="page-tag" data-i18n="page_tag">Organiser Application</div>
+    <h1 class="page-title" data-i18n="page_title">Admin<br><span>Application</span></h1>
+    <p class="page-sub" data-i18n="page_sub">Fill in your details below and your Club ID will be generated instantly.</p>
   </div>
 
   <div style="
@@ -258,26 +323,26 @@
     font-size: 13px; font-weight: 600; line-height: 1.6;
     color: #ffd080;
     animation: fadeUp 0.5s ease both;
-  ">
+  " data-i18n="warning_box">
     ⚠️ <strong>For organisers only.</strong> This application is for people who want to <strong>create and manage tennis sessions</strong> for a club or group.<br>
     If you are a <strong>player looking to join a club</strong>, do not apply here — ask your organiser for their Club ID and enter it in the app.
   </div>
 
   <div class="card">
     <!-- Basic info -->
-    <input class="input" id="name" type="text" placeholder="Your name" autocomplete="name" />
-    <div class="field-error" id="err-name">Please enter your name.</div>
+    <input class="input" id="name" type="text" data-i18n-placeholder="ph_name" placeholder="Your name" autocomplete="name" />
+    <div class="field-error" id="err-name" data-i18n="err_name">Please enter your name.</div>
 
-    <input class="input" id="email" type="email" placeholder="Your email" autocomplete="email" />
-    <div class="field-error" id="err-email">Please enter a valid email address.</div>
+    <input class="input" id="email" type="email" data-i18n-placeholder="ph_email" placeholder="Your email" autocomplete="email" />
+    <div class="field-error" id="err-email" data-i18n="err_email">Please enter a valid email address.</div>
 
-    <input class="input" id="club-name" type="text" placeholder="Club / group name" />
-    <div class="field-error" id="err-club">Please enter your club or group name.</div>
+    <input class="input" id="club-name" type="text" data-i18n-placeholder="ph_club" placeholder="Club / group name" />
+    <div class="field-error" id="err-club" data-i18n="err_club">Please enter your club or group name.</div>
 
     <!-- Country (required) -->
     <select class="input" id="country" required>
-      <option value="" disabled selected>Country</option>
-      <optgroup label="Popular">
+      <option value="" disabled selected data-i18n="opt_country">Country</option>
+      <optgroup label="Popular" data-i18n-label="grp_popular">
         <option value="Australia">Australia</option>
         <option value="New Zealand">New Zealand</option>
         <option value="Canada">Canada</option>
@@ -285,7 +350,7 @@
         <option value="Ireland">Ireland</option>
         <option value="United States">United States</option>
       </optgroup>
-      <optgroup label="All countries">
+      <optgroup label="All countries" data-i18n-label="grp_all">
         <option value="Afghanistan">Afghanistan</option>
         <option value="Albania">Albania</option>
         <option value="Algeria">Algeria</option>
@@ -485,26 +550,26 @@
         <option value="Zimbabwe">Zimbabwe</option>
       </optgroup>
     </select>
-    <div class="field-error" id="err-country">Please select your country.</div>
+    <div class="field-error" id="err-country" data-i18n="err_country">Please select your country.</div>
 
-    <input class="input" id="location" type="text" placeholder="City / suburb (optional)" />
+    <input class="input" id="location" type="text" data-i18n-placeholder="ph_location" placeholder="City / suburb (optional)" />
 
     <hr class="divider">
 
     <!-- Notes -->
-    <div class="section-label">Anything else? <span class="section-label-opt">(optional)</span></div>
-    <textarea class="input" id="notes" placeholder="Optional note"></textarea>
+    <div class="section-label"><span data-i18n="notes_label">Anything else?</span> <span class="section-label-opt" data-i18n="optional_tag">(optional)</span></div>
+    <textarea class="input" id="notes" data-i18n-placeholder="ph_notes" placeholder="Optional note"></textarea>
 
     <!-- Cloudflare Turnstile (human verification) -->
     <div class="cf-turnstile" data-sitekey="0x4AAAAAADNt0CLwxsuWlQxh" data-theme="dark" style="margin: 16px 0;"></div>
 
     <button class="submit-btn" id="submit-btn" onclick="handleSubmit()">
-      <span id="btn-label">Submit application</span>
+      <span id="btn-label" data-i18n="btn_submit">Submit application</span>
       <span class="submit-arrow" id="btn-arrow">→</span>
       <div class="spinner" id="spinner"></div>
     </button>
 
-    <div class="toast" id="toast-success">
+    <div class="toast" id="toast-success" data-i18n="toast_success">
       ✓ Application received — Thank you. Please check your email (including your spam folder)..
     </div>
     <div class="toast error" id="toast-error"></div>
@@ -541,49 +606,365 @@
   window.addEventListener('resize', resize);
   init(); draw();
 
+  /* ── i18n ── */
+  let currentLang = 'en';
+
+  const ui = {
+    en: {
+      back: 'Back',
+      page_tag: 'Organiser Application',
+      page_title: 'Admin<br><span>Application</span>',
+      page_sub: 'Fill in your details below and your Club ID will be generated instantly.',
+      warning_box: '⚠️ <strong>For organisers only.</strong> This application is for people who want to <strong>create and manage tennis sessions</strong> for a club or group.<br>If you are a <strong>player looking to join a club</strong>, do not apply here — ask your organiser for their Club ID and enter it in the app.',
+      ph_name: 'Your name',
+      err_name: 'Please enter your name.',
+      ph_email: 'Your email',
+      err_email: 'Please enter a valid email address.',
+      ph_club: 'Club / group name',
+      err_club: 'Please enter your club or group name.',
+      opt_country: 'Country',
+      grp_popular: 'Popular',
+      grp_all: 'All countries',
+      err_country: 'Please select your country.',
+      ph_location: 'City / suburb (optional)',
+      notes_label: 'Anything else?',
+      optional_tag: '(optional)',
+      ph_notes: 'Optional note',
+      btn_submit: 'Submit application',
+      btn_loading: 'Generating your Club ID…',
+      toast_success: '✓ Application received — Thank you. Please check your email (including your spam folder)..',
+      toast_generic_error: 'Something went wrong — please try again or email us directly.',
+      toast_turnstile: 'Please complete the human verification above.',
+      toast_verify_failed: 'Verification failed. Please refresh the page and try again.',
+      toast_resend_sending: 'Sending your Club ID...',
+      toast_resend_sent: 'Your Club ID has been emailed to {{email}}.',
+      toast_resend_failed: 'Could not send — please contact us directly.',
+      success_with_id: '✓ Your Club ID is <strong style="font-size:1.2em;letter-spacing:1px;">{{id}}</strong><br><br>Download the app, tap <em>"I have a Club ID"</em> and enter it to get started.<br><span style="opacity:0.75;font-size:13px;">We\'ve also emailed it to you for safekeeping.</span>',
+      success_no_id: '✓ Application received — check your email (including spam) for your Club ID.',
+      dup_email: 'Your email is already registered as an organiser. <a href="#" onclick="resendClubId(\'{{email}}\'); return false;" style="color:#ff8080;font-weight:900;">Click here</a> if you have forgotten your Club ID and we\'ll email it to you. If you are looking to start a new club, please <a href="https://socialtennismanager.com/contact/" style="color:#ff8080;font-weight:900;">email us directly</a>.',
+    },
+    fr: {
+      back: 'Retour',
+      page_tag: 'Demande d\'organisateur',
+      page_title: 'Demande<br><span>d\'admin</span>',
+      page_sub: 'Remplissez vos informations ci-dessous et votre ID de club sera généré instantanément.',
+      warning_box: '⚠️ <strong>Pour les organisateurs uniquement.</strong> Cette demande s\'adresse aux personnes qui souhaitent <strong>créer et gérer des séances de tennis</strong> pour un club ou un groupe.<br>Si vous êtes un <strong>joueur souhaitant rejoindre un club</strong>, ne postulez pas ici — demandez l\'ID de club à votre organisateur et saisissez-le dans l\'application.',
+      ph_name: 'Votre nom',
+      err_name: 'Veuillez saisir votre nom.',
+      ph_email: 'Votre email',
+      err_email: 'Veuillez saisir une adresse email valide.',
+      ph_club: 'Nom du club / groupe',
+      err_club: 'Veuillez saisir le nom de votre club ou groupe.',
+      opt_country: 'Pays',
+      grp_popular: 'Populaires',
+      grp_all: 'Tous les pays',
+      err_country: 'Veuillez sélectionner votre pays.',
+      ph_location: 'Ville / quartier (optionnel)',
+      notes_label: 'Autre chose ?',
+      optional_tag: '(optionnel)',
+      ph_notes: 'Note facultative',
+      btn_submit: 'Envoyer la demande',
+      btn_loading: 'Génération de votre ID de club…',
+      toast_success: '✓ Demande reçue — Merci. Veuillez vérifier votre email (y compris les spams)..',
+      toast_generic_error: 'Une erreur est survenue — veuillez réessayer ou nous contacter directement par email.',
+      toast_turnstile: 'Veuillez compléter la vérification humaine ci-dessus.',
+      toast_verify_failed: 'Vérification échouée. Veuillez actualiser la page et réessayer.',
+      toast_resend_sending: 'Envoi de votre ID de club...',
+      toast_resend_sent: 'Votre ID de club a été envoyé par email à {{email}}.',
+      toast_resend_failed: 'Envoi impossible — veuillez nous contacter directement.',
+      success_with_id: '✓ Votre ID de club est <strong style="font-size:1.2em;letter-spacing:1px;">{{id}}</strong><br><br>Téléchargez l\'application, appuyez sur <em>« J\'ai un ID de club »</em> et saisissez-le pour commencer.<br><span style="opacity:0.75;font-size:13px;">Nous vous l\'avons aussi envoyé par email pour le conserver.</span>',
+      success_no_id: '✓ Demande reçue — vérifiez votre email (y compris les spams) pour votre ID de club.',
+      dup_email: 'Votre email est déjà enregistré en tant qu\'organisateur. <a href="#" onclick="resendClubId(\'{{email}}\'); return false;" style="color:#ff8080;font-weight:900;">Cliquez ici</a> si vous avez oublié votre ID de club et nous vous l\'enverrons par email. Si vous souhaitez créer un nouveau club, veuillez <a href="https://socialtennismanager.com/contact/" style="color:#ff8080;font-weight:900;">nous contacter directement</a>.',
+    },
+    it: {
+      back: 'Indietro',
+      page_tag: 'Richiesta organizzatore',
+      page_title: 'Richiesta<br><span>admin</span>',
+      page_sub: 'Compila i tuoi dati qui sotto e il tuo Club ID verrà generato all\'istante.',
+      warning_box: '⚠️ <strong>Solo per organizzatori.</strong> Questa richiesta è per chi desidera <strong>creare e gestire sessioni di tennis</strong> per un club o gruppo.<br>Se sei un <strong>giocatore che vuole entrare in un club</strong>, non candidarti qui — chiedi il Club ID al tuo organizzatore e inseriscilo nell\'app.',
+      ph_name: 'Il tuo nome',
+      err_name: 'Inserisci il tuo nome.',
+      ph_email: 'La tua email',
+      err_email: 'Inserisci un indirizzo email valido.',
+      ph_club: 'Nome del club / gruppo',
+      err_club: 'Inserisci il nome del tuo club o gruppo.',
+      opt_country: 'Paese',
+      grp_popular: 'Popolari',
+      grp_all: 'Tutti i paesi',
+      err_country: 'Seleziona il tuo paese.',
+      ph_location: 'Città / quartiere (opzionale)',
+      notes_label: 'Altro da segnalare?',
+      optional_tag: '(opzionale)',
+      ph_notes: 'Nota opzionale',
+      btn_submit: 'Invia richiesta',
+      btn_loading: 'Generazione del tuo Club ID…',
+      toast_success: '✓ Richiesta ricevuta — Grazie. Controlla la tua email (anche nello spam)..',
+      toast_generic_error: 'Qualcosa è andato storto — riprova o contattaci direttamente via email.',
+      toast_turnstile: 'Completa la verifica umana qui sopra.',
+      toast_verify_failed: 'Verifica non riuscita. Aggiorna la pagina e riprova.',
+      toast_resend_sending: 'Invio del tuo Club ID in corso...',
+      toast_resend_sent: 'Il tuo Club ID è stato inviato a {{email}}.',
+      toast_resend_failed: 'Invio non riuscito — contattaci direttamente.',
+      success_with_id: '✓ Il tuo Club ID è <strong style="font-size:1.2em;letter-spacing:1px;">{{id}}</strong><br><br>Scarica l\'app, tocca <em>"Ho un Club ID"</em> e inseriscilo per iniziare.<br><span style="opacity:0.75;font-size:13px;">Te l\'abbiamo anche inviato via email per sicurezza.</span>',
+      success_no_id: '✓ Richiesta ricevuta — controlla la tua email (anche lo spam) per il tuo Club ID.',
+      dup_email: 'La tua email è già registrata come organizzatore. <a href="#" onclick="resendClubId(\'{{email}}\'); return false;" style="color:#ff8080;font-weight:900;">Clicca qui</a> se hai dimenticato il tuo Club ID e te lo invieremo via email. Se vuoi avviare un nuovo club, <a href="https://socialtennismanager.com/contact/" style="color:#ff8080;font-weight:900;">contattaci direttamente</a>.',
+    },
+    es: {
+      back: 'Atrás',
+      page_tag: 'Solicitud de organizador',
+      page_title: 'Solicitud<br><span>de admin</span>',
+      page_sub: 'Completa tus datos a continuación y tu Club ID se generará al instante.',
+      warning_box: '⚠️ <strong>Solo para organizadores.</strong> Esta solicitud es para personas que quieren <strong>crear y gestionar sesiones de tenis</strong> para un club o grupo.<br>Si eres un <strong>jugador que quiere unirse a un club</strong>, no te postules aquí — pide el Club ID a tu organizador e introdúcelo en la app.',
+      ph_name: 'Tu nombre',
+      err_name: 'Introduce tu nombre.',
+      ph_email: 'Tu email',
+      err_email: 'Introduce una dirección de email válida.',
+      ph_club: 'Nombre del club / grupo',
+      err_club: 'Introduce el nombre de tu club o grupo.',
+      opt_country: 'País',
+      grp_popular: 'Populares',
+      grp_all: 'Todos los países',
+      err_country: 'Selecciona tu país.',
+      ph_location: 'Ciudad / barrio (opcional)',
+      notes_label: '¿Algo más?',
+      optional_tag: '(opcional)',
+      ph_notes: 'Nota opcional',
+      btn_submit: 'Enviar solicitud',
+      btn_loading: 'Generando tu Club ID…',
+      toast_success: '✓ Solicitud recibida — Gracias. Revisa tu email (incluida la carpeta de spam)..',
+      toast_generic_error: 'Algo salió mal — inténtalo de nuevo o contáctanos directamente por email.',
+      toast_turnstile: 'Completa la verificación humana de arriba.',
+      toast_verify_failed: 'Verificación fallida. Actualiza la página e inténtalo de nuevo.',
+      toast_resend_sending: 'Enviando tu Club ID...',
+      toast_resend_sent: 'Tu Club ID ha sido enviado a {{email}}.',
+      toast_resend_failed: 'No se pudo enviar — contáctanos directamente.',
+      success_with_id: '✓ Tu Club ID es <strong style="font-size:1.2em;letter-spacing:1px;">{{id}}</strong><br><br>Descarga la app, toca <em>"Tengo un Club ID"</em> e introdúcelo para empezar.<br><span style="opacity:0.75;font-size:13px;">También te lo hemos enviado por email para que lo conserves.</span>',
+      success_no_id: '✓ Solicitud recibida — revisa tu email (incluido el spam) para tu Club ID.',
+      dup_email: 'Tu email ya está registrado como organizador. <a href="#" onclick="resendClubId(\'{{email}}\'); return false;" style="color:#ff8080;font-weight:900;">Haz clic aquí</a> si has olvidado tu Club ID y te lo enviaremos por email. Si quieres crear un nuevo club, <a href="https://socialtennismanager.com/contact/" style="color:#ff8080;font-weight:900;">contáctanos directamente</a>.',
+    },
+    de: {
+      back: 'Zurück',
+      page_tag: 'Organisator-Antrag',
+      page_title: 'Admin-<br><span>Antrag</span>',
+      page_sub: 'Füllen Sie unten Ihre Daten aus und Ihre Club-ID wird sofort generiert.',
+      warning_box: '⚠️ <strong>Nur für Organisatoren.</strong> Dieser Antrag ist für Personen, die Tennis-Sessions für einen Club oder eine Gruppe <strong>erstellen und verwalten</strong> möchten.<br>Wenn Sie ein <strong>Spieler sind, der einem Club beitreten möchte</strong>, bewerben Sie sich hier nicht — bitten Sie Ihren Organisator um die Club-ID und geben Sie diese in der App ein.',
+      ph_name: 'Ihr Name',
+      err_name: 'Bitte geben Sie Ihren Namen ein.',
+      ph_email: 'Ihre E-Mail',
+      err_email: 'Bitte geben Sie eine gültige E-Mail-Adresse ein.',
+      ph_club: 'Club- / Gruppenname',
+      err_club: 'Bitte geben Sie den Namen Ihres Clubs oder Ihrer Gruppe ein.',
+      opt_country: 'Land',
+      grp_popular: 'Beliebt',
+      grp_all: 'Alle Länder',
+      err_country: 'Bitte wählen Sie Ihr Land aus.',
+      ph_location: 'Stadt / Vorort (optional)',
+      notes_label: 'Sonst noch etwas?',
+      optional_tag: '(optional)',
+      ph_notes: 'Optionale Notiz',
+      btn_submit: 'Antrag senden',
+      btn_loading: 'Ihre Club-ID wird generiert…',
+      toast_success: '✓ Antrag erhalten — Danke. Bitte überprüfen Sie Ihre E-Mails (auch den Spam-Ordner)..',
+      toast_generic_error: 'Etwas ist schiefgelaufen — bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt per E-Mail.',
+      toast_turnstile: 'Bitte schließen Sie die Verifizierung oben ab.',
+      toast_verify_failed: 'Verifizierung fehlgeschlagen. Bitte aktualisieren Sie die Seite und versuchen Sie es erneut.',
+      toast_resend_sending: 'Ihre Club-ID wird gesendet...',
+      toast_resend_sent: 'Ihre Club-ID wurde an {{email}} gesendet.',
+      toast_resend_failed: 'Senden nicht möglich — bitte kontaktieren Sie uns direkt.',
+      success_with_id: '✓ Ihre Club-ID lautet <strong style="font-size:1.2em;letter-spacing:1px;">{{id}}</strong><br><br>Laden Sie die App herunter, tippen Sie auf <em>"Ich habe eine Club-ID"</em> und geben Sie diese ein, um zu starten.<br><span style="opacity:0.75;font-size:13px;">Wir haben sie Ihnen zur Sicherheit auch per E-Mail gesendet.</span>',
+      success_no_id: '✓ Antrag erhalten — überprüfen Sie Ihre E-Mails (auch Spam) für Ihre Club-ID.',
+      dup_email: 'Ihre E-Mail ist bereits als Organisator registriert. <a href="#" onclick="resendClubId(\'{{email}}\'); return false;" style="color:#ff8080;font-weight:900;">Klicken Sie hier</a>, wenn Sie Ihre Club-ID vergessen haben, und wir senden sie Ihnen per E-Mail. Wenn Sie einen neuen Club starten möchten, <a href="https://socialtennismanager.com/contact/" style="color:#ff8080;font-weight:900;">kontaktieren Sie uns direkt</a>.',
+    },
+    pt: {
+      back: 'Voltar',
+      page_tag: 'Inscrição de Organizador',
+      page_title: 'Inscrição<br><span>de Administrador</span>',
+      page_sub: 'Preencha seus dados abaixo e seu ID do Clube será gerado instantaneamente.',
+      warning_box: '⚠️ <strong>Apenas para organizadores.</strong> Esta inscrição é para pessoas que desejam <strong>criar e gerenciar sessões de tênis</strong> para um clube ou grupo.<br>Se você for um <strong>jogador querendo entrar em um clube</strong>, não se inscreva aqui — peça o ID do Clube ao seu organizador e insira-o no aplicativo.',
+      ph_name: 'Seu nome',
+      err_name: 'Por favor, insira seu nome.',
+      ph_email: 'Seu e-mail',
+      err_email: 'Por favor, insira um endereço de e-mail válido.',
+      ph_club: 'Nome do clube / grupo',
+      err_club: 'Por favor, insira o nome do seu clube ou grupo.',
+      opt_country: 'País',
+      grp_popular: 'Populares',
+      grp_all: 'Todos os países',
+      err_country: 'Por favor, selecione seu país.',
+      ph_location: 'Cidade / bairro (opcional)',
+      notes_label: 'Mais alguma coisa?',
+      optional_tag: '(opcional)',
+      ph_notes: 'Nota opcional',
+      btn_submit: 'Enviar inscrição',
+      btn_loading: 'Gerando seu ID do Clube…',
+      toast_success: '✓ Inscrição recebida — Obrigado. Verifique seu e-mail (incluindo a pasta de spam)..',
+      toast_generic_error: 'Algo deu errado — tente novamente ou entre em contato conosco diretamente por e-mail.',
+      toast_turnstile: 'Por favor, complete a verificação humana acima.',
+      toast_verify_failed: 'Verificação falhou. Atualize a página e tente novamente.',
+      toast_resend_sending: 'Enviando seu ID do Clube...',
+      toast_resend_sent: 'Seu ID do Clube foi enviado para {{email}}.',
+      toast_resend_failed: 'Não foi possível enviar — entre em contato conosco diretamente.',
+      success_with_id: '✓ Seu ID do Clube é <strong style="font-size:1.2em;letter-spacing:1px;">{{id}}</strong><br><br>Baixe o aplicativo, toque em <em>"Tenho um ID de Clube"</em> e insira-o para começar.<br><span style="opacity:0.75;font-size:13px;">Também enviamos por e-mail para você guardar.</span>',
+      success_no_id: '✓ Inscrição recebida — verifique seu e-mail (incluindo spam) para o seu ID do Clube.',
+      dup_email: 'Seu e-mail já está registrado como organizador. <a href="#" onclick="resendClubId(\'{{email}}\'); return false;" style="color:#ff8080;font-weight:900;">Clique aqui</a> se você esqueceu seu ID do Clube e nós o enviaremos por e-mail. Se você quer começar um novo clube, <a href="https://socialtennismanager.com/contact/" style="color:#ff8080;font-weight:900;">entre em contato diretamente</a>.',
+    },
+    ru: {
+      back: 'Назад',
+      page_tag: 'Заявка организатора',
+      page_title: 'Заявка на<br><span>статус админа</span>',
+      page_sub: 'Заполните данные ниже, и ваш ID клуба будет создан мгновенно.',
+      warning_box: '⚠️ <strong>Только для организаторов.</strong> Эта заявка предназначена для людей, которые хотят <strong>создавать теннисные сессии и управлять ими</strong> для клуба или группы.<br>Если вы <strong>игрок и хотите вступить в клуб</strong>, не подавайте заявку здесь — попросите у своего организатора ID клуба и введите его в приложении.',
+      ph_name: 'Ваше имя',
+      err_name: 'Пожалуйста, введите ваше имя.',
+      ph_email: 'Ваш email',
+      err_email: 'Пожалуйста, введите корректный адрес электронной почты.',
+      ph_club: 'Название клуба / группы',
+      err_club: 'Пожалуйста, введите название вашего клуба или группы.',
+      opt_country: 'Страна',
+      grp_popular: 'Популярные',
+      grp_all: 'Все страны',
+      err_country: 'Пожалуйста, выберите страну.',
+      ph_location: 'Город / пригород (опционально)',
+      notes_label: 'Что-нибудь ещё?',
+      optional_tag: '(опционально)',
+      ph_notes: 'Примечание (опционально)',
+      btn_submit: 'Отправить заявку',
+      btn_loading: 'Создание вашего ID клуба…',
+      toast_success: '✓ Заявка получена — Спасибо. Проверьте вашу почту (включая папку со спамом)..',
+      toast_generic_error: 'Что-то пошло не так — попробуйте снова или напишите нам напрямую.',
+      toast_turnstile: 'Пожалуйста, пройдите проверку выше.',
+      toast_verify_failed: 'Проверка не удалась. Обновите страницу и попробуйте снова.',
+      toast_resend_sending: 'Отправка вашего ID клуба...',
+      toast_resend_sent: 'Ваш ID клуба был отправлен на {{email}}.',
+      toast_resend_failed: 'Не удалось отправить — пожалуйста, свяжитесь с нами напрямую.',
+      success_with_id: '✓ Ваш ID клуба: <strong style="font-size:1.2em;letter-spacing:1px;">{{id}}</strong><br><br>Скачайте приложение, нажмите <em>«У меня есть ID клуба»</em> и введите его, чтобы начать.<br><span style="opacity:0.75;font-size:13px;">Мы также отправили его вам на email для сохранности.</span>',
+      success_no_id: '✓ Заявка получена — проверьте email (включая спам), чтобы найти ваш ID клуба.',
+      dup_email: 'Ваш email уже зарегистрирован как организатор. <a href="#" onclick="resendClubId(\'{{email}}\'); return false;" style="color:#ff8080;font-weight:900;">Нажмите здесь</a>, если вы забыли свой ID клуба, и мы отправим его на email. Если вы хотите создать новый клуб, пожалуйста, <a href="https://socialtennismanager.com/contact/" style="color:#ff8080;font-weight:900;">свяжитесь с нами напрямую</a>.',
+    },
+    zh: {
+      back: '返回',
+      page_tag: '组织者申请',
+      page_title: '管理员<br><span>申请</span>',
+      page_sub: '请填写以下信息，您的俱乐部 ID 将立即生成。',
+      warning_box: '⚠️ <strong>仅限组织者。</strong> 此申请适用于希望为俱乐部或团体<strong>创建和管理网球活动</strong>的人。<br>如果您是<strong>希望加入俱乐部的球员</strong>，请不要在此申请——请向组织者索取俱乐部 ID 并在应用中输入。',
+      ph_name: '您的姓名',
+      err_name: '请输入您的姓名。',
+      ph_email: '您的邮箱',
+      err_email: '请输入有效的邮箱地址。',
+      ph_club: '俱乐部 / 团体名称',
+      err_club: '请输入您的俱乐部或团体名称。',
+      opt_country: '国家',
+      grp_popular: '热门',
+      grp_all: '所有国家',
+      err_country: '请选择您的国家。',
+      ph_location: '城市 / 区域（可选）',
+      notes_label: '还有其他信息吗？',
+      optional_tag: '（可选）',
+      ph_notes: '备注（可选）',
+      btn_submit: '提交申请',
+      btn_loading: '正在生成您的俱乐部 ID…',
+      toast_success: '✓ 申请已收到——感谢您。请查看您的邮箱（包括垃圾邮件文件夹）。',
+      toast_generic_error: '出现问题——请重试，或直接通过邮件联系我们。',
+      toast_turnstile: '请完成上方的人机验证。',
+      toast_verify_failed: '验证失败。请刷新页面并重试。',
+      toast_resend_sending: '正在发送您的俱乐部 ID...',
+      toast_resend_sent: '您的俱乐部 ID 已发送至 {{email}}。',
+      toast_resend_failed: '发送失败——请直接联系我们。',
+      success_with_id: '✓ 您的俱乐部 ID 是 <strong style="font-size:1.2em;letter-spacing:1px;">{{id}}</strong><br><br>下载应用，点击<em>"我有俱乐部 ID"</em>并输入即可开始。<br><span style="opacity:0.75;font-size:13px;">我们也已将其发送至您的邮箱以便保存。</span>',
+      success_no_id: '✓ 申请已收到——请查看您的邮箱（包括垃圾邮件）以获取您的俱乐部 ID。',
+      dup_email: '您的邮箱已注册为组织者。<a href="#" onclick="resendClubId(\'{{email}}\'); return false;" style="color:#ff8080;font-weight:900;">点击此处</a>，如果您忘记了俱乐部 ID，我们会将其发送至您的邮箱。如果您想创建新的俱乐部，请<a href="https://socialtennismanager.com/contact/" style="color:#ff8080;font-weight:900;">直接联系我们</a>。',
+    },
+  };
+
+  const langFlags  = { en:'🇦🇺', fr:'🇫🇷', it:'🇮🇹', es:'🇪🇸', de:'🇩🇪', pt:'🇵🇹', ru:'🇷🇺', zh:'🇨🇳' };
+  const langLabels = { en:'English', fr:'Français', it:'Italiano', es:'Español', de:'Deutsch', pt:'Português', ru:'Русский', zh:'中文' };
+
+  function toggleLangDropdown() {
+    document.getElementById('langSwitcher').classList.toggle('open');
+  }
+  document.addEventListener('click', e => {
+    if (!document.getElementById('langSwitcher').contains(e.target))
+      document.getElementById('langSwitcher').classList.remove('open');
+  });
+
+  function pickLang(lang, e) {
+    e.stopPropagation();
+    document.getElementById('langSwitcher').classList.remove('open');
+    document.querySelectorAll('.lang-option').forEach(el => el.classList.toggle('active', el.dataset.lang === lang));
+    document.getElementById('langFlag').textContent  = langFlags[lang]  || '🌐';
+    document.getElementById('langLabel').textContent = langLabels[lang] || lang;
+    setLang(lang);
+  }
+
+  function setLang(lang) {
+    currentLang = lang;
+    const strings = ui[lang] || ui['en'];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (strings[key]) el.innerHTML = strings[key];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (strings[key]) el.setAttribute('placeholder', strings[key]);
+    });
+    document.querySelectorAll('[data-i18n-label]').forEach(el => {
+      const key = el.getAttribute('data-i18n-label');
+      if (strings[key]) el.setAttribute('label', strings[key]);
+    });
+    document.documentElement.lang = lang;
+  }
+
+  function t(key, vars) {
+    const strings = ui[currentLang] || ui['en'];
+    let str = strings[key] || ui['en'][key] || key;
+    if (vars) {
+      Object.keys(vars).forEach(k => { str = str.replace(`{{${k}}}`, vars[k]); });
+    }
+    return str;
+  }
+
   /* ── Helpers ── */
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const cleanText = s => s.trim().replace(/\s+/g, ' ');
-  function showErr(id, msg) {
+  function showErr(id) {
     const el = document.getElementById(id);
-    el.textContent = msg || el.textContent;
     el.style.display = 'block';
   }
   function hideErr(id) { document.getElementById(id).style.display = 'none'; }
- function setLoading(on) {
-  document.getElementById('submit-btn').disabled = on;
-  document.getElementById('btn-label').textContent = on ? 'Generating your Club ID…' : 'Submit application';
-  document.getElementById('btn-label').style.display = on ? '' : '';  // always visible, text changes
-  document.getElementById('btn-arrow').style.display = on ? 'none' : '';
-  document.getElementById('spinner').style.display = on ? 'block' : 'none';
-}
+  function setLoading(on) {
+    document.getElementById('submit-btn').disabled = on;
+    document.getElementById('btn-label').textContent = on ? t('btn_loading') : t('btn_submit');
+    document.getElementById('btn-arrow').style.display = on ? 'none' : '';
+    document.getElementById('spinner').style.display = on ? 'block' : 'none';
+  }
 
   /* ── Submit ── */
   const SUPABASE_URL = 'https://sslthlozedfffhyigjgz.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNzbHRobG96ZWRmZmZoeWlnamd6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NDU0NzcsImV4cCI6MjA4NzIyMTQ3N30.NYJBTaf4R_Kqj2rsecsN1PzRqkuLK8U2W1CBkaP_W8c';
 
   async function resendClubId(email) {
-  const el = document.getElementById('toast-error');
-  el.textContent = 'Sending your Club ID...';
-  try {
-    const res = await fetch(`${SUPABASE_URL}/functions/v1/resend-club-id`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-      },
-      body: JSON.stringify({ email }),
-    });
-    const data = await res.json();
-    if (data.ok) {
-      el.textContent = `✓ Your Club ID has been emailed to ${email}.`;
-    } else {
-      el.textContent = 'Could not send — please contact us directly.';
+    const el = document.getElementById('toast-error');
+    el.textContent = t('toast_resend_sending');
+    el.style.display = 'block';
+    try {
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/resend-club-id`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        el.textContent = `✓ ${t('toast_resend_sent', { email })}`;
+      } else {
+        el.textContent = t('toast_resend_failed');
+      }
+    } catch (_) {
+      el.textContent = t('toast_resend_failed');
     }
-  } catch (_) {
-    el.textContent = 'Could not send — please contact us directly.';
   }
-}
 
   async function handleSubmit() {
     ['err-name','err-email','err-club','err-country'].forEach(hideErr);
@@ -598,10 +979,10 @@
     const notes     = cleanText(document.getElementById('notes').value);
 
     let valid = true;
-    if (!name)                              { showErr('err-name', 'Please enter your name.'); valid = false; }
-    if (!email || !EMAIL_RE.test(email))    { showErr('err-email', 'Please enter a valid email address.'); valid = false; }
-    if (!clubName)                          { showErr('err-club', 'Please enter your club or group name.'); valid = false; }
-    if (!country)                           { showErr('err-country', 'Please select your country.'); valid = false; }
+    if (!name)                              { showErr('err-name'); valid = false; }
+    if (!email || !EMAIL_RE.test(email))    { showErr('err-email'); valid = false; }
+    if (!clubName)                          { showErr('err-club'); valid = false; }
+    if (!country)                           { showErr('err-country'); valid = false; }
     if (!valid) return;
 
     setLoading(true);
@@ -617,11 +998,9 @@
           body: JSON.stringify({ email }),
         });
         const dupData = await dupRes.json().catch(() => ({}));
-       if (dupData.isDuplicate) {
+        if (dupData.isDuplicate) {
           const el = document.getElementById('toast-error');
-          el.innerHTML = `Your email is already registered as an organiser. 
-  <a href="#" onclick="resendClubId('${email}'); return false;" style="color:#ff8080;font-weight:900;">Click here</a> if you have forgotten your Club ID and we'll email it to you. 
-  If you are looking to start a new club, please <a href="https://socialtennismanager.com/contact/" style="color:#ff8080;font-weight:900;">email us directly</a>.`;
+          el.innerHTML = t('dup_email', { email });
           el.style.display = 'block';
           setLoading(false);
           return;
@@ -632,7 +1011,7 @@
       const turnstileToken = window.turnstile && window.turnstile.getResponse();
       if (!turnstileToken) {
         const el = document.getElementById('toast-error');
-        el.textContent = 'Please complete the human verification above.';
+        el.textContent = t('toast_turnstile');
         el.style.display = 'block';
         setLoading(false);
         return;
@@ -649,7 +1028,7 @@
       const verifyData = await verifyRes.json();
       if (!verifyData.ok) {
         const el = document.getElementById('toast-error');
-        el.textContent = 'Verification failed. Please refresh the page and try again.';
+        el.textContent = t('toast_verify_failed');
         el.style.display = 'block';
         setLoading(false);
         if (window.turnstile) window.turnstile.reset();
@@ -677,33 +1056,29 @@
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
       /* Await notify + provision, capture Club ID */
-let clubId = null;
-try {
-  const notifyRes = await fetch(`${SUPABASE_URL}/functions/v1/notify-admin-application`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-    },
-    body: JSON.stringify({ name, email, clubName, country, location, notes }),
-  });
-  const notifyData = await notifyRes.json().catch(() => ({}));
-  clubId = notifyData.club_code || notifyData.clubCode || null;
-} catch (_) {}
+      let clubId = null;
+      try {
+        const notifyRes = await fetch(`${SUPABASE_URL}/functions/v1/notify-admin-application`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          },
+          body: JSON.stringify({ name, email, clubName, country, location, notes }),
+        });
+        const notifyData = await notifyRes.json().catch(() => ({}));
+        clubId = notifyData.club_code || notifyData.clubCode || null;
+      } catch (_) {}
 
-/* Success */
-const successToast = document.getElementById('toast-success');
-if (clubId) {
-  successToast.innerHTML = `
-    ✓ Your Club ID is <strong style="font-size:1.2em;letter-spacing:1px;">${clubId}</strong><br><br>
-    Download the app and enter it in the ClubID to get started.<br>
-    <span style="opacity:0.75;font-size:13px;">We've also emailed it to you for safekeeping.</span>
-  `;
-} else {
-  successToast.textContent = '✓ Application received — check your email (including spam) for your Club ID.';
-}
-successToast.style.display = 'block';
-document.getElementById('submit-btn').style.display = 'none';
+      /* Success */
+      const successToast = document.getElementById('toast-success');
+      if (clubId) {
+        successToast.innerHTML = t('success_with_id', { id: clubId });
+      } else {
+        successToast.textContent = t('success_no_id');
+      }
+      successToast.style.display = 'block';
+      document.getElementById('submit-btn').style.display = 'none';
       ['name','email','club-name','location','notes'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.value = '';
@@ -711,7 +1086,7 @@ document.getElementById('submit-btn').style.display = 'none';
       document.getElementById('country').selectedIndex = 0;
     } catch(e) {
       const el = document.getElementById('toast-error');
-      el.textContent = 'Something went wrong — please try again or email us directly.';
+      el.textContent = t('toast_generic_error');
       el.style.display = 'block';
       if (window.turnstile) window.turnstile.reset();
     } finally {
