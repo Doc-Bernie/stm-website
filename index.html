@@ -34,6 +34,7 @@
       --blue-bright: #2471a3;
       --green:       #b2e51a;
       --amber:       #f39c12;
+      --purple:      #7c6ff7;
       --white:       #ffffff;
       --muted:       rgba(255,255,255,0.55);
     }
@@ -287,7 +288,21 @@
     .feature-card.amber .feature-points li::before { background: var(--amber); }
     .feature-card.amber .feature-visual { background: rgba(0,0,0,0.25); border-left: 1px solid rgba(243,156,18,0.1); padding: 40px; }
 
-    /* ── Auto Draw demo visual ── */
+    /* ── Purple (Tournaments) variant ── */
+    .feature-card.purple { background: linear-gradient(135deg, rgba(124,111,247,0.08) 0%, rgba(99,91,255,0.03) 100%); border: 1px solid rgba(124,111,247,0.25); }
+    .feature-card.purple .feature-eyebrow { background: rgba(124,111,247,0.14); border: 1px solid rgba(124,111,247,0.35); }
+    .feature-card.purple .feature-eyebrow-dot { background: var(--purple); }
+    .feature-card.purple .feature-eyebrow-text { color: var(--purple); }
+    .feature-card.purple .feature-headline span { color: var(--purple); }
+    .feature-card.purple .feature-points li::before { background: var(--purple); }
+    .feature-card.purple .feature-visual { background: rgba(0,0,0,0.25); border-left: 1px solid rgba(124,111,247,0.12); padding: 40px; }
+    .tourn-formats { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+    .tourn-format-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; }
+    .tourn-format-icon { font-size: 20px; flex-shrink: 0; width: 30px; text-align: center; }
+    .tourn-format-name { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 2px; }
+    .tourn-format-desc { font-size: 11px; font-weight: 300; color: rgba(255,255,255,0.45); line-height: 1.4; }
+
+    /* Auto Draw demo visual */
     .pro-tag {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 5px 12px; border-radius: 50px;
@@ -414,6 +429,7 @@
           <span class="frpill organiser" data-i18n="pill_org_1">📅 Create &amp; manage sessions</span>
           <span class="frpill organiser" data-i18n="pill_org_2">🎾 Build &amp; publish draws</span>
           <span class="frpill organiser" data-i18n="pill_org_3">⚡ Auto Draw</span>
+          <span class="frpill organiser" data-i18n="pill_org_9">🏆 Tournaments</span>
           <span class="frpill organiser" data-i18n="pill_org_4">💳 Stripe in-app payments</span>
           <span class="frpill organiser" data-i18n="pill_org_5">👥 Member management</span>
           <span class="frpill organiser" data-i18n="pill_org_6">💰 Member &amp; guest pricing</span>
@@ -425,6 +441,7 @@
         <div class="feature-row-label" data-i18n="players_label">👤 For Players</div>
         <div class="feature-row-pills">
           <span class="frpill player" data-i18n="pill_pl_1">✅ Join in seconds — no account needed</span>
+          <span class="frpill player" data-i18n="pill_pl_8">🏆 Join tournaments</span>
           <span class="frpill player" data-i18n="pill_pl_2">💳 Pay online via Stripe</span>
           <span class="frpill player" data-i18n="pill_pl_3">⭐ Members features &amp; credits</span>
           <span class="frpill player" data-i18n="pill_pl_4">🎾 View match draw</span>
@@ -483,6 +500,55 @@
       <div class="why-card-num">06</div>
       <div class="why-card-title" data-i18n="why_6_title">Free to start, free forever</div>
       <p class="why-card-desc" data-i18n="why_6_desc">The free version covers most of what you need to run sessions. Upgrade only if you want the extras.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Tournaments Feature Section ── -->
+<section class="feature-section">
+  <div class="feature-card purple">
+    <div class="feature-inner">
+      <div class="feature-copy">
+        <div class="feature-eyebrow">
+          <div class="feature-eyebrow-dot"></div>
+          <span class="feature-eyebrow-text" data-i18n="tournaments_eyebrow">New Feature</span>
+        </div>
+        <h2 class="feature-headline" data-i18n="tournaments_headline">Tournaments.<br><span>Three formats, zero admin.</span></h2>
+        <p class="feature-body" data-i18n="tournaments_body">Run Round Robin, Knockout, or King of the Court tournaments straight from your phone. Publish it and players join themselves — no chasing, no spreadsheets.</p>
+        <ul class="feature-points">
+          <li data-i18n="tournaments_pt_1">Round Robin — everyone plays everyone, ranked on results</li>
+          <li data-i18n="tournaments_pt_2">Knockout — single-elimination bracket, win or you're out</li>
+          <li data-i18n="tournaments_pt_3">King of the Court — winners move up, losers move down</li>
+          <li data-i18n="tournaments_pt_4">Publish and let players self-join, partners included</li>
+          <li data-i18n="tournaments_pt_5">Live draws and standings, all from your phone</li>
+        </ul>
+        <div class="pro-tag" style="background:rgba(124,111,247,0.15);border-color:rgba(124,111,247,0.3);color:var(--purple);" data-i18n="tournaments_tag">🏆 Free for every club</div>
+      </div>
+      <div class="feature-visual">
+        <div class="tourn-formats">
+          <div class="tourn-format-card">
+            <div class="tourn-format-icon">🔄</div>
+            <div>
+              <div class="tourn-format-name" data-i18n="tournaments_visual_rr_name">Round Robin</div>
+              <div class="tourn-format-desc" data-i18n="tournaments_visual_rr_desc">Everyone plays everyone — ranked by results</div>
+            </div>
+          </div>
+          <div class="tourn-format-card">
+            <div class="tourn-format-icon">🏹</div>
+            <div>
+              <div class="tourn-format-name" data-i18n="tournaments_visual_ko_name">Knockout</div>
+              <div class="tourn-format-desc" data-i18n="tournaments_visual_ko_desc">Single elimination — win or you're out</div>
+            </div>
+          </div>
+          <div class="tourn-format-card">
+            <div class="tourn-format-icon">👑</div>
+            <div>
+              <div class="tourn-format-name" data-i18n="tournaments_visual_koc_name">King of the Court</div>
+              <div class="tourn-format-desc" data-i18n="tournaments_visual_koc_desc">Win and move up, lose and move down</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -599,6 +665,7 @@
       pill_org_1: '📅 Create &amp; manage sessions',
       pill_org_2: '🎾 Build &amp; publish draws',
       pill_org_3: '⚡ Auto Draw',
+      pill_org_9: '🏆 Tournaments',
       pill_org_4: '💳 Stripe in-app payments',
       pill_org_5: '👥 Member management',
       pill_org_6: '💰 Member &amp; guest pricing',
@@ -606,6 +673,7 @@
       pill_org_8: '📍 Locations &amp; notifications',
       players_label: '👤 For Players',
       pill_pl_1: '✅ Join in seconds — no account needed',
+      pill_pl_8: '🏆 Join tournaments',
       pill_pl_2: '💳 Pay online via Stripe',
       pill_pl_3: '⭐ Members features &amp; credits',
       pill_pl_4: '🎾 View match draw',
@@ -630,6 +698,21 @@
       why_5_desc: 'Customisable session formats, member levels, pricing rules and more. Your club, your way.',
       why_6_title: 'Free to start, free forever',
       why_6_desc: 'The free version covers most of what you need to run sessions. Upgrade only if you want the extras.',
+      tournaments_eyebrow: 'New Feature',
+      tournaments_headline: 'Tournaments.<br><span>Three formats, zero admin.</span>',
+      tournaments_body: 'Run Round Robin, Knockout, or King of the Court tournaments straight from your phone. Publish it and players join themselves — no chasing, no spreadsheets.',
+      tournaments_pt_1: 'Round Robin — everyone plays everyone, ranked on results',
+      tournaments_pt_2: "Knockout — single-elimination bracket, win or you're out",
+      tournaments_pt_3: 'King of the Court — winners move up, losers move down',
+      tournaments_pt_4: 'Publish and let players self-join, partners included',
+      tournaments_pt_5: 'Live draws and standings, all from your phone',
+      tournaments_tag: '🏆 Free for every club',
+      tournaments_visual_rr_name: 'Round Robin',
+      tournaments_visual_rr_desc: 'Everyone plays everyone — ranked by results',
+      tournaments_visual_ko_name: 'Knockout',
+      tournaments_visual_ko_desc: "Single elimination — win or you're out",
+      tournaments_visual_koc_name: 'King of the Court',
+      tournaments_visual_koc_desc: 'Win and move up, lose and move down',
       autodraw_eyebrow: 'Pro Feature — New',
       autodraw_headline: 'Your draw,<br><span>done in one tap.</span>',
       autodraw_body: 'Auto Draw builds your entire match schedule instantly — grouping players by level, rotating partners and opponents across rounds, and honouring partner requests automatically.',
@@ -663,6 +746,7 @@
       pill_org_1: '📅 Créer et gérer des séances',
       pill_org_2: '🎾 Créer et publier des tableaux',
       pill_org_3: '⚡ Auto Draw',
+      pill_org_9: '🏆 Tournois',
       pill_org_4: '💳 Paiements Stripe intégrés',
       pill_org_5: '👥 Gestion des membres',
       pill_org_6: '💰 Tarifs membres et invités',
@@ -670,6 +754,7 @@
       pill_org_8: '📍 Lieux et notifications',
       players_label: '👤 Pour les joueurs',
       pill_pl_1: '✅ Rejoindre en quelques secondes — aucun compte requis',
+      pill_pl_8: '🏆 Participer aux tournois',
       pill_pl_2: '💳 Payer en ligne via Stripe',
       pill_pl_3: '⭐ Fonctions membres et crédits',
       pill_pl_4: '🎾 Voir le tableau des matchs',
@@ -694,6 +779,21 @@
       why_5_desc: 'Formats de séances personnalisables, niveaux des membres, règles de tarification et plus. Votre club, à votre façon.',
       why_6_title: 'Gratuit pour commencer, gratuit pour toujours',
       why_6_desc: 'La version gratuite couvre la plupart de vos besoins pour gérer des séances. Passez au payant seulement si vous voulez les extras.',
+      tournaments_eyebrow: 'Nouvelle fonctionnalité',
+      tournaments_headline: 'Tournois.<br><span>Trois formats, zéro administration.</span>',
+      tournaments_body: 'Organisez des tournois en Round Robin, à élimination directe ou en King of the Court directement depuis votre téléphone. Publiez et les joueurs s\'inscrivent eux-mêmes — sans relance, sans tableur.',
+      tournaments_pt_1: 'Round Robin — tout le monde joue contre tout le monde, classé sur les résultats',
+      tournaments_pt_2: 'Élimination directe — un tableau à élimination simple, on gagne ou on est éliminé',
+      tournaments_pt_3: 'King of the Court — les gagnants montent, les perdants descendent',
+      tournaments_pt_4: 'Publiez et laissez les joueurs s\'inscrire eux-mêmes, partenaires inclus',
+      tournaments_pt_5: 'Tableaux et classements en direct, depuis votre téléphone',
+      tournaments_tag: '🏆 Gratuit pour tous les clubs',
+      tournaments_visual_rr_name: 'Round Robin',
+      tournaments_visual_rr_desc: 'Tout le monde joue contre tout le monde — classé sur les résultats',
+      tournaments_visual_ko_name: 'Élimination directe',
+      tournaments_visual_ko_desc: 'Élimination simple — on gagne ou on est éliminé',
+      tournaments_visual_koc_name: 'King of the Court',
+      tournaments_visual_koc_desc: 'On gagne et on monte, on perd et on descend',
       autodraw_eyebrow: 'Fonction Pro — Nouveau',
       autodraw_headline: 'Votre tableau,<br><span>prêt en un geste.</span>',
       autodraw_body: 'Auto Draw génère instantanément tout votre calendrier de matchs — en groupant les joueurs par niveau, en alternant partenaires et adversaires entre les rounds, et en respectant automatiquement les demandes de partenaires.',
@@ -727,6 +827,7 @@
       pill_org_1: '📅 Crea e gestisci sessioni',
       pill_org_2: '🎾 Crea e pubblica tabelloni',
       pill_org_3: '⚡ Auto Draw',
+      pill_org_9: '🏆 Tornei',
       pill_org_4: '💳 Pagamenti Stripe in-app',
       pill_org_5: '👥 Gestione membri',
       pill_org_6: '💰 Prezzi membri e ospiti',
@@ -734,6 +835,7 @@
       pill_org_8: '📍 Sedi e notifiche',
       players_label: '👤 Per i giocatori',
       pill_pl_1: '✅ Iscriviti in pochi secondi — nessun account necessario',
+      pill_pl_8: '🏆 Partecipa ai tornei',
       pill_pl_2: '💳 Paga online con Stripe',
       pill_pl_3: '⭐ Funzioni membri e crediti',
       pill_pl_4: '🎾 Visualizza il tabellone',
@@ -758,6 +860,21 @@
       why_5_desc: 'Formati di sessione personalizzabili, livelli dei membri, regole tariffarie e altro. Il tuo club, come vuoi tu.',
       why_6_title: 'Gratis per iniziare, gratis per sempre',
       why_6_desc: 'La versione gratuita coperture quasi tutto ciò che ti serve per gestire le sessioni. Passa a pagamento solo se vuoi gli extra.',
+      tournaments_eyebrow: 'Nuova funzionalità',
+      tournaments_headline: 'Tornei.<br><span>Tre formati, zero amministrazione.</span>',
+      tournaments_body: 'Organizza tornei Round Robin, a eliminazione diretta o King of the Court direttamente dal telefono. Pubblica e i giocatori si iscrivono da soli — niente solleciti, niente fogli di calcolo.',
+      tournaments_pt_1: 'Round Robin — tutti giocano contro tutti, classificati sui risultati',
+      tournaments_pt_2: 'Eliminazione diretta — tabellone a eliminazione singola, si vince o si è fuori',
+      tournaments_pt_3: 'King of the Court — chi vince sale, chi perde scende',
+      tournaments_pt_4: 'Pubblica e lascia che i giocatori si iscrivano da soli, partner inclusi',
+      tournaments_pt_5: 'Tabelloni e classifiche in tempo reale, tutto dal telefono',
+      tournaments_tag: '🏆 Gratis per ogni club',
+      tournaments_visual_rr_name: 'Round Robin',
+      tournaments_visual_rr_desc: 'Tutti giocano contro tutti — classificati sui risultati',
+      tournaments_visual_ko_name: 'Eliminazione diretta',
+      tournaments_visual_ko_desc: 'Eliminazione singola — si vince o si è fuori',
+      tournaments_visual_koc_name: 'King of the Court',
+      tournaments_visual_koc_desc: 'Si vince e si sale, si perde e si scende',
       autodraw_eyebrow: 'Funzione Pro — Novità',
       autodraw_headline: 'Il tuo tabellone,<br><span>pronto in un tocco.</span>',
       autodraw_body: 'Auto Draw genera istantaneamente tutto il calendario delle partite — raggruppando i giocatori per livello, alternando partner e avversari tra i round e rispettando automaticamente le richieste di partner.',
@@ -791,6 +908,7 @@
       pill_org_1: '📅 Crear y gestionar sesiones',
       pill_org_2: '🎾 Crear y publicar cuadros',
       pill_org_3: '⚡ Auto Draw',
+      pill_org_9: '🏆 Torneos',
       pill_org_4: '💳 Pagos Stripe en la app',
       pill_org_5: '👥 Gestión de socios',
       pill_org_6: '💰 Precios para socios e invitados',
@@ -798,6 +916,7 @@
       pill_org_8: '📍 Ubicaciones y notificaciones',
       players_label: '👤 Para jugadores',
       pill_pl_1: '✅ Únete en segundos — sin cuenta necesaria',
+      pill_pl_8: '🏆 Participa en torneos',
       pill_pl_2: '💳 Paga en línea con Stripe',
       pill_pl_3: '⭐ Funciones de socios y créditos',
       pill_pl_4: '🎾 Ver el cuadro del partido',
@@ -822,6 +941,21 @@
       why_5_desc: 'Formatos de sesión personalizables, niveles de socios, reglas de precios y más. Tu club, a tu manera.',
       why_6_title: 'Gratis para empezar, gratis para siempre',
       why_6_desc: 'La versión gratuita cubre la mayor parte de lo que necesitas para gestionar sesiones. Mejora solo si quieres los extras.',
+      tournaments_eyebrow: 'Nueva función',
+      tournaments_headline: 'Torneos.<br><span>Tres formatos, cero administración.</span>',
+      tournaments_body: 'Organiza torneos de Round Robin, eliminación directa o King of the Court directamente desde tu teléfono. Publícalo y los jugadores se inscriben solos — sin perseguir a nadie, sin hojas de cálculo.',
+      tournaments_pt_1: 'Round Robin — todos juegan contra todos, clasificados por resultados',
+      tournaments_pt_2: 'Eliminación directa — cuadro de eliminación simple, ganas o quedas fuera',
+      tournaments_pt_3: 'King of the Court — quien gana sube, quien pierde baja',
+      tournaments_pt_4: 'Publica y deja que los jugadores se inscriban solos, compañeros incluidos',
+      tournaments_pt_5: 'Cuadros y clasificaciones en vivo, todo desde tu teléfono',
+      tournaments_tag: '🏆 Gratis para todos los clubes',
+      tournaments_visual_rr_name: 'Round Robin',
+      tournaments_visual_rr_desc: 'Todos juegan contra todos — clasificados por resultados',
+      tournaments_visual_ko_name: 'Eliminación directa',
+      tournaments_visual_ko_desc: 'Eliminación simple — ganas o quedas fuera',
+      tournaments_visual_koc_name: 'King of the Court',
+      tournaments_visual_koc_desc: 'Ganas y subes, pierdes y bajas',
       autodraw_eyebrow: 'Función Pro — Novedad',
       autodraw_headline: 'Tu cuadro,<br><span>listo en un toque.</span>',
       autodraw_body: 'Auto Draw genera al instante todo tu calendario de partidos — agrupando jugadores por nivel, rotando compañeros y rivales entre rondas, y respetando automáticamente las solicitudes de compañero.',
@@ -855,6 +989,7 @@
       pill_org_1: '📅 Sessions erstellen &amp; verwalten',
       pill_org_2: '🎾 Auslosungen erstellen &amp; veröffentlichen',
       pill_org_3: '⚡ Auto Draw',
+      pill_org_9: '🏆 Turniere',
       pill_org_4: '💳 Stripe-Zahlungen in der App',
       pill_org_5: '👥 Mitgliederverwaltung',
       pill_org_6: '💰 Mitglieder- &amp; Gastpreise',
@@ -862,6 +997,7 @@
       pill_org_8: '📍 Standorte &amp; Benachrichtigungen',
       players_label: '👤 Für Spieler',
       pill_pl_1: '✅ In Sekunden beitreten — kein Konto erforderlich',
+      pill_pl_8: '🏆 An Turnieren teilnehmen',
       pill_pl_2: '💳 Online bezahlen mit Stripe',
       pill_pl_3: '⭐ Mitgliederfunktionen &amp; Credits',
       pill_pl_4: '🎾 Spielplan ansehen',
@@ -886,6 +1022,21 @@
       why_5_desc: 'Anpassbare Session-Formate, Mitgliederstufen, Preisregeln und mehr. Ihr Club, auf Ihre Art.',
       why_6_title: 'Kostenlos starten, für immer kostenlos',
       why_6_desc: 'Die kostenlose Version deckt das meiste ab, was Sie für Sessions brauchen. Upgraden Sie nur, wenn Sie die Extras wollen.',
+      tournaments_eyebrow: 'Neue Funktion',
+      tournaments_headline: 'Turniere.<br><span>Drei Formate, keine Verwaltung.</span>',
+      tournaments_body: 'Führen Sie Round-Robin-, K.-o.- oder King-of-the-Court-Turniere direkt von Ihrem Handy aus durch. Veröffentlichen Sie das Turnier, und Spieler melden sich selbst an — kein Nachfragen, keine Tabellen.',
+      tournaments_pt_1: 'Round Robin — jeder spielt gegen jeden, Rangliste nach Ergebnissen',
+      tournaments_pt_2: 'K.-o.-System — Einfach-Ausscheidung, sieg oder raus',
+      tournaments_pt_3: 'King of the Court — Gewinner steigen auf, Verlierer steigen ab',
+      tournaments_pt_4: 'Veröffentlichen und Spieler sich selbst anmelden lassen, inklusive Partner',
+      tournaments_pt_5: 'Live-Auslosungen und Tabellen, alles vom Handy aus',
+      tournaments_tag: '🏆 Kostenlos für jeden Club',
+      tournaments_visual_rr_name: 'Round Robin',
+      tournaments_visual_rr_desc: 'Jeder spielt gegen jeden — Rangliste nach Ergebnissen',
+      tournaments_visual_ko_name: 'K.-o.-System',
+      tournaments_visual_ko_desc: 'Einfach-Ausscheidung — sieg oder raus',
+      tournaments_visual_koc_name: 'King of the Court',
+      tournaments_visual_koc_desc: 'Gewinnen und aufsteigen, verlieren und absteigen',
       autodraw_eyebrow: 'Pro-Funktion — Neu',
       autodraw_headline: 'Ihre Auslosung,<br><span>mit einem Tipp fertig.</span>',
       autodraw_body: 'Auto Draw erstellt sofort Ihren gesamten Spielplan — gruppiert Spieler nach Level, wechselt Partner und Gegner über Runden hinweg und berücksichtigt automatisch Partnerwünsche.',
@@ -919,6 +1070,7 @@
       pill_org_1: '📅 Criar e gerenciar sessões',
       pill_org_2: '🎾 Criar e publicar chaves',
       pill_org_3: '⚡ Chave Automática',
+      pill_org_9: '🏆 Torneios',
       pill_org_4: '💳 Pagamentos Stripe no app',
       pill_org_5: '👥 Gerenciamento de membros',
       pill_org_6: '💰 Preços para membros e convidados',
@@ -926,6 +1078,7 @@
       pill_org_8: '📍 Locais e notificações',
       players_label: '👤 Para Jogadores',
       pill_pl_1: '✅ Participe em segundos — sem necessidade de conta',
+      pill_pl_8: '🏆 Participe de torneios',
       pill_pl_2: '💳 Pague online via Stripe',
       pill_pl_3: '⭐ Recursos de membros e créditos',
       pill_pl_4: '🎾 Ver chave da partida',
@@ -950,6 +1103,21 @@
       why_5_desc: 'Formatos de sessão personalizáveis, níveis de membros, regras de preços e muito mais. Seu clube, do seu jeito.',
       why_6_title: 'Grátis para começar, grátis para sempre',
       why_6_desc: 'A versão gratuita cobre a maior parte do que você precisa para gerenciar sessões. Atualize apenas se quiser os extras.',
+      tournaments_eyebrow: 'Novo recurso',
+      tournaments_headline: 'Torneios.<br><span>Três formatos, zero burocracia.</span>',
+      tournaments_body: 'Organize torneios de Rodízio (Round Robin), Eliminatória ou King of the Court direto do seu celular. Publique e os jogadores se inscrevem sozinhos — sem cobrar ninguém, sem planilhas.',
+      tournaments_pt_1: 'Round Robin — todos jogam contra todos, ranqueados pelos resultados',
+      tournaments_pt_2: 'Eliminatória — chave de eliminação simples, vence ou está fora',
+      tournaments_pt_3: 'King of the Court — quem vence sobe, quem perde desce',
+      tournaments_pt_4: 'Publique e deixe os jogadores se inscreverem sozinhos, duplas incluídas',
+      tournaments_pt_5: 'Chaves e classificações ao vivo, tudo pelo celular',
+      tournaments_tag: '🏆 Grátis para todos os clubes',
+      tournaments_visual_rr_name: 'Round Robin',
+      tournaments_visual_rr_desc: 'Todos jogam contra todos — ranqueados pelos resultados',
+      tournaments_visual_ko_name: 'Eliminatória',
+      tournaments_visual_ko_desc: 'Eliminação simples — vence ou está fora',
+      tournaments_visual_koc_name: 'King of the Court',
+      tournaments_visual_koc_desc: 'Vence e sobe, perde e desce',
       autodraw_eyebrow: 'Recurso Pro — Novo',
       autodraw_headline: 'Sua chave,<br><span>pronta em um toque.</span>',
       autodraw_body: 'A Chave Automática cria todo o seu calendário de partidas instantaneamente — agrupando jogadores por nível, alternando parceiros e adversários entre rodadas e respeitando automaticamente os pedidos de parceiro.',
@@ -983,6 +1151,7 @@
       pill_org_1: '📅 Создание и управление сессиями',
       pill_org_2: '🎾 Создание и публикация сеток',
       pill_org_3: '⚡ Автосетка',
+      pill_org_9: '🏆 Турниры',
       pill_org_4: '💳 Платежи Stripe в приложении',
       pill_org_5: '👥 Управление участниками',
       pill_org_6: '💰 Цены для участников и гостей',
@@ -990,6 +1159,7 @@
       pill_org_8: '📍 Локации и уведомления',
       players_label: '👤 Для игроков',
       pill_pl_1: '✅ Присоединение за секунды — аккаунт не нужен',
+      pill_pl_8: '🏆 Участие в турнирах',
       pill_pl_2: '💳 Онлайн-оплата через Stripe',
       pill_pl_3: '⭐ Функции участников и кредиты',
       pill_pl_4: '🎾 Просмотр сетки матча',
@@ -1014,6 +1184,21 @@
       why_5_desc: 'Настраиваемые форматы сессий, уровни участников, правила цен и многое другое. Ваш клуб, как вам удобно.',
       why_6_title: 'Бесплатно для старта, бесплатно навсегда',
       why_6_desc: 'Бесплатная версия покрывает большинство того, что нужно для проведения сессий. Обновляйтесь только если хотите дополнительные функции.',
+      tournaments_eyebrow: 'Новая функция',
+      tournaments_headline: 'Турниры.<br><span>Три формата, без хлопот.</span>',
+      tournaments_body: 'Проводите турниры по круговой системе, на выбывание или King of the Court прямо со своего телефона. Опубликуйте — и игроки присоединятся сами, без напоминаний и таблиц.',
+      tournaments_pt_1: 'Круговая система — каждый играет с каждым, рейтинг по результатам',
+      tournaments_pt_2: 'На выбывание — сетка с одним поражением, побеждай или вылетай',
+      tournaments_pt_3: 'King of the Court — победители поднимаются, проигравшие опускаются',
+      tournaments_pt_4: 'Опубликуйте и дайте игрокам присоединиться самим, включая партнёров',
+      tournaments_pt_5: 'Живые сетки и турнирные таблицы прямо с телефона',
+      tournaments_tag: '🏆 Бесплатно для любого клуба',
+      tournaments_visual_rr_name: 'Круговая система',
+      tournaments_visual_rr_desc: 'Каждый играет с каждым — рейтинг по результатам',
+      tournaments_visual_ko_name: 'На выбывание',
+      tournaments_visual_ko_desc: 'Одно поражение — побеждай или вылетай',
+      tournaments_visual_koc_name: 'King of the Court',
+      tournaments_visual_koc_desc: 'Победил — поднялся, проиграл — опустился',
       autodraw_eyebrow: 'Функция Pro — Новинка',
       autodraw_headline: 'Ваша сетка<br><span>готова в одно касание.</span>',
       autodraw_body: 'Автосетка мгновенно создаёт весь график матчей — группируя игроков по уровню, меняя партнёров и соперников между раундами и автоматически учитывая запросы на партнёров.',
@@ -1047,6 +1232,7 @@
       pill_org_1: '📅 创建和管理活动',
       pill_org_2: '🎾 创建和发布抽签',
       pill_org_3: '⚡ 自动抽签',
+      pill_org_9: '🏆 锦标赛',
       pill_org_4: '💳 应用内 Stripe 付款',
       pill_org_5: '👥 会员管理',
       pill_org_6: '💰 会员与访客定价',
@@ -1054,6 +1240,7 @@
       pill_org_8: '📍 场地与通知',
       players_label: '👤 球员功能',
       pill_pl_1: '✅ 几秒内加入——无需账户',
+      pill_pl_8: '🏆 参加锦标赛',
       pill_pl_2: '💳 通过 Stripe 在线支付',
       pill_pl_3: '⭐ 会员功能与积分',
       pill_pl_4: '🎾 查看比赛抽签',
@@ -1078,6 +1265,21 @@
       why_5_desc: '可自定义的活动形式、会员等级、定价规则等。您的俱乐部，由您决定。',
       why_6_title: '免费开始，永久免费',
       why_6_desc: '免费版已涵盖运营活动所需的大部分功能。只有需要额外功能时才需要升级。',
+      tournaments_eyebrow: '全新功能',
+      tournaments_headline: '锦标赛。<br><span>三种赛制，零管理。</span>',
+      tournaments_body: '直接从手机举办循环赛、淘汰赛或宝座争夺赛（King of the Court）。发布后球员自行报名——无需催促，无需表格。',
+      tournaments_pt_1: '循环赛——人人对战，按战绩排名',
+      tournaments_pt_2: '淘汰赛——单败淘汰赛制，胜者晋级，败者出局',
+      tournaments_pt_3: '宝座争夺赛——获胜者升场，落败者降场',
+      tournaments_pt_4: '发布后让球员自行加入，含搭档',
+      tournaments_pt_5: '实时抽签与排名，尽在手机掌控',
+      tournaments_tag: '🏆 所有俱乐部均可免费使用',
+      tournaments_visual_rr_name: '循环赛',
+      tournaments_visual_rr_desc: '人人对战——按战绩排名',
+      tournaments_visual_ko_name: '淘汰赛',
+      tournaments_visual_ko_desc: '单败淘汰——胜者晋级，败者出局',
+      tournaments_visual_koc_name: '宝座争夺赛',
+      tournaments_visual_koc_desc: '获胜升场，落败降场',
       autodraw_eyebrow: '专业版功能——全新',
       autodraw_headline: '您的抽签，<br><span>一键完成。</span>',
       autodraw_body: '自动抽签即时生成整个比赛日程——按等级分组球员，在各轮之间轮换搭档和对手，并自动满足搭档请求。',
