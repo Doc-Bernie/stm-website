@@ -15,13 +15,13 @@
   </script>
   
   <title>Features — Social Tennis Manager</title>
-  <meta name="description" content="Everything your tennis club needs. Session booking, match draws, player rosters, membership, push notifications, payment tracking and more.">
+  <meta name="description" content="Everything your tennis club needs. Session booking, match draws, tournaments, player rosters, membership, push notifications, payment tracking and more.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --blue-deep:#0d1f4e; --blue-mid:#1a3fa0; --blue-bright:#2471a3; --green:#b2e51a; --purple:#7c6ff7; --white:#ffffff; --muted:rgba(255,255,255,0.55); }
+    :root { --blue-deep:#0d1f4e; --blue-mid:#1a3fa0; --blue-bright:#2471a3; --green:#b2e51a; --purple:#7c6ff7; --teal:#2dd4bf; --white:#ffffff; --muted:rgba(255,255,255,0.55); }
     html { scroll-behavior: smooth; }
     body { font-family:'DM Sans',sans-serif; background:var(--blue-deep); color:var(--white); min-height:100vh; overflow-x:hidden; }
     .bg-mesh { position:fixed; inset:0; z-index:0; background: radial-gradient(ellipse 80% 60% at 70% 40%,rgba(26,63,160,0.5) 0%,transparent 70%), radial-gradient(ellipse 60% 50% at 20% 80%,rgba(36,113,163,0.3) 0%,transparent 60%), linear-gradient(160deg,#0d1f4e 0%,#122060 50%,#0d1f4e 100%); pointer-events:none; }
@@ -51,6 +51,7 @@
     .feature-desc { font-size:12px; font-weight:300; color:rgba(255,255,255,0.45); line-height:1.65; }
     .feature-tag { display:inline-block; margin-top:12px; font-size:9px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--green); opacity:0.7; }
     .feature-tag.pro { color:var(--purple); opacity:1; }
+    .feature-tag.new { color:var(--teal); opacity:1; }
     .cta-bar { position:relative; z-index:1; background:rgba(178,229,26,0.06); border-top:1px solid rgba(178,229,26,0.12); border-bottom:1px solid rgba(178,229,26,0.12); padding:36px 40px; }
     .cta-inner { max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; }
     .cta-text h3 { font-family:'Bebas Neue',sans-serif; font-size:28px; letter-spacing:1.5px; color:var(--white); margin-bottom:4px; }
@@ -101,7 +102,7 @@
     <span class="t1">Built for</span><br>
     <span class="t2">Organisers.</span>
   </h1>
-  <p class="features-sub">Everything you need to run a tennis club session — from signup to draw to payment to membership — without the admin headache.</p>
+  <p class="features-sub">Everything you need to run a tennis club session — from signup to draw to tournament to payment to membership — without the admin headache.</p>
 </div>
 
 <div class="features-content">
@@ -112,6 +113,12 @@
       <span class="feature-icon">📅</span>
       <div class="feature-title">Session Booking</div>
       <div class="feature-desc">Join sessions in seconds. Enter your name, pick your level, and you're in. No account required.</div>
+    </div>
+    <div class="feature-card" style="border-color:rgba(45,212,191,0.3);background:rgba(45,212,191,0.04);">
+      <span class="feature-icon">🏆</span>
+      <div class="feature-title">Join Tournaments</div>
+      <div class="feature-desc">Find a published tournament and join yourself — Round Robin, Knockout, or King of the Court. No admin needed to get you in.</div>
+      <span class="feature-tag new">✦ New</span>
     </div>
     <div class="feature-card">
       <span class="feature-icon">🔁</span>
@@ -142,6 +149,12 @@
 
   <p class="features-section-label">For Organisers</p>
   <div class="features-grid">
+    <div class="feature-card" style="border-color:rgba(45,212,191,0.3);background:rgba(45,212,191,0.04);">
+      <span class="feature-icon">🏆</span>
+      <div class="feature-title">Tournaments</div>
+      <div class="feature-desc">Run Round Robin, Knockout, or King of the Court tournaments. Publish and let players self-join — draws, standings and results all handled for you.</div>
+      <span class="feature-tag new">✦ New — Free for every club</span>
+    </div>
     <div class="feature-card">
       <span class="feature-icon">🎾</span>
       <div class="feature-title">Match Draws</div>
@@ -271,6 +284,64 @@
 
 </div>
 
+<!-- Tournaments Feature Section -->
+<div style="position:relative;z-index:1;max-width:1100px;margin:0 auto 0;padding:0 40px 48px;">
+  <p class="features-section-label" style="margin-bottom:20px;">Tournaments — Free for every club</p>
+  <div style="background:linear-gradient(135deg,rgba(45,212,191,0.08) 0%,rgba(26,63,160,0.15) 100%);border:1px solid rgba(45,212,191,0.28);border-radius:24px;overflow:hidden;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;align-items:stretch;">
+
+      <!-- Copy -->
+      <div style="padding:44px 40px;display:flex;flex-direction:column;gap:16px;">
+        <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(45,212,191,0.14);border:1px solid rgba(45,212,191,0.35);border-radius:50px;padding:5px 14px;width:fit-content;">
+          <span style="width:6px;height:6px;border-radius:50%;background:#2dd4bf;display:block;"></span>
+          <span style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2dd4bf;">New — Live Now</span>
+        </div>
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,3.5vw,46px);line-height:1;letter-spacing:1px;color:#fff;">Tournaments. <span style="color:#2dd4bf;">Three formats, zero admin.</span></h2>
+        <p style="font-size:14px;font-weight:300;color:rgba(255,255,255,0.55);line-height:1.75;">Run a full tournament straight from your phone. Publish it and players join themselves — draws, standings, and results are all handled for you, in whichever format suits your club.</p>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:9px;">
+          <li style="display:flex;align-items:flex-start;gap:10px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.75);line-height:1.5;"><span style="width:6px;height:6px;border-radius:50%;background:#2dd4bf;flex-shrink:0;margin-top:6px;display:block;"></span>Three formats — Round Robin, Knockout, and King of the Court</li>
+          <li style="display:flex;align-items:flex-start;gap:10px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.75);line-height:1.5;"><span style="width:6px;height:6px;border-radius:50%;background:#2dd4bf;flex-shrink:0;margin-top:6px;display:block;"></span>Publish a tournament and players self-join — no manual entry</li>
+          <li style="display:flex;align-items:flex-start;gap:10px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.75);line-height:1.5;"><span style="width:6px;height:6px;border-radius:50%;background:#2dd4bf;flex-shrink:0;margin-top:6px;display:block;"></span>Partner pairing built in for doubles tournaments</li>
+          <li style="display:flex;align-items:flex-start;gap:10px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.75);line-height:1.5;"><span style="width:6px;height:6px;border-radius:50%;background:#2dd4bf;flex-shrink:0;margin-top:6px;display:block;"></span>Live draws and standings, updated as results come in</li>
+          <li style="display:flex;align-items:flex-start;gap:10px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.75);line-height:1.5;"><span style="width:6px;height:6px;border-radius:50%;background:#2dd4bf;flex-shrink:0;margin-top:6px;display:block;"></span>Free for every club — no Pro subscription required</li>
+        </ul>
+      </div>
+
+      <!-- Format cards -->
+      <div style="background:rgba(0,0,0,0.2);border-left:1px solid rgba(45,212,191,0.12);padding:36px;display:flex;align-items:center;justify-content:center;">
+        <div style="display:flex;flex-direction:column;gap:12px;width:100%;">
+
+          <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px 18px;display:flex;align-items:center;gap:14px;">
+            <div style="font-size:26px;flex-shrink:0;width:36px;text-align:center;">🔄</div>
+            <div>
+              <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:3px;">Round Robin</div>
+              <div style="font-size:12px;font-weight:300;color:rgba(255,255,255,0.5);line-height:1.5;">Everyone plays everyone in the group — ranked on results at the end.</div>
+            </div>
+          </div>
+
+          <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px 18px;display:flex;align-items:center;gap:14px;">
+            <div style="font-size:26px;flex-shrink:0;width:36px;text-align:center;">🏹</div>
+            <div>
+              <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:3px;">Knockout</div>
+              <div style="font-size:12px;font-weight:300;color:rgba(255,255,255,0.5);line-height:1.5;">Single-elimination bracket. Win your match or you're out — bracket updates itself.</div>
+            </div>
+          </div>
+
+          <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px 18px;display:flex;align-items:center;gap:14px;">
+            <div style="font-size:26px;flex-shrink:0;width:36px;text-align:center;">👑</div>
+            <div>
+              <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:3px;">King of the Court</div>
+              <div style="font-size:12px;font-weight:300;color:rgba(255,255,255,0.5);line-height:1.5;">Winners move up a court, losers move down. Crown the King at the top court.</div>
+            </div>
+          </div>
+
+          <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(45,212,191,0.7);text-align:center;margin-top:4px;">🏆 Published tournaments · players self-join</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Auto Draw Feature Section -->
 <div style="position:relative;z-index:1;max-width:1100px;margin:0 auto 0;padding:0 40px 48px;">
   <p class="features-section-label" style="margin-bottom:20px;">Auto Draw — Pro &amp; Trial</p>
@@ -378,4 +449,9 @@
   function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
   function makeBubble(){const r=60+Math.random()*180;return{x:Math.random()*W,y:Math.random()*H,r,dx:(Math.random()-0.5)*0.3,dy:(Math.random()-0.5)*0.3,color:COLORS[Math.floor(Math.random()*COLORS.length)]};}
   function init(){resize();bubbles=Array.from({length:12},makeBubble);}
-  function draw(){ctx.clearRect(0,0,W,H);bubbles.forEach(b=>{ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fillStyle=b.color;ctx.fill();b.x+=b.dx;b.y+=b.dy;if(b.x<-b.r)b.x=W+b.r;if(b.x>W+b.r)b.x=-b
+  function draw(){ctx.clearRect(0,0,W,H);bubbles.forEach(b=>{ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fillStyle=b.color;ctx.fill();b.x+=b.dx;b.y+=b.dy;if(b.x<-b.r)b.x=W+b.r;if(b.x>W+b.r)b.x=-b.r;if(b.y<-b.r)b.y=H+b.r;if(b.y>H+b.r)b.y=-b.r;});requestAnimationFrame(draw);}
+  window.addEventListener('resize',resize);
+  init();draw();
+</script>
+</body>
+</html>
