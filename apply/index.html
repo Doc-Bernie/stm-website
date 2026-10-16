@@ -1127,59 +1127,33 @@
         return;
       }
 
-      const verifyRes = await fetch(`${SUPABASE_URL}/functions/v1/verify-turnstile`, {
+      /* ── Submit via server: verifies Turnstile, saves, notifies, provisions ── */
+      const submitRes = await fetch(`${SUPABASE_URL}/functions/v1/submit-application`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({ token: turnstileToken }),
-      });
-      const verifyData = await verifyRes.json();
-      if (!verifyData.ok) {
-        const el = document.getElementById('toast-error');
-        el.textContent = t('toast_verify_failed');
-        el.style.display = 'block';
-        setLoading(false);
-        if (window.turnstile) window.turnstile.reset();
-        return;
-      }
-
-      /* ── Verified — proceed with existing flow unchanged ──────────────── */
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/club_applications`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          'Prefer': 'return=minimal',
         },
         body: JSON.stringify({
-          name, email,
-          club_name: clubName,
-          requested_club_code: clubCode,
-          country,
-          location: location || null,
-          notes: notes || null,
-          status: 'new',
+          token: turnstileToken,
+          name, email, clubName, clubCode, country, location, notes,
         }),
       });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const submitData = await submitRes.json().catch(() => ({}));
 
-      /* Await notify + provision, capture Club ID */
-      let clubId = null;
-      try {
-        const notifyRes = await fetch(`${SUPABASE_URL}/functions/v1/notify-admin-application`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          },
-          body: JSON.stringify({ name, email, clubName, clubCode, country, location, notes }),
-        });
-        const notifyData = await notifyRes.json().catch(() => ({}));
-        clubId = notifyData.club_code || notifyData.clubCode || null;
-      } catch (_) {}
+      if (!submitData.ok) {
+        if (submitData.reason === 'verification-failed') {
+          const el = document.getElementById('toast-error');
+          el.textContent = t('toast_verify_failed');
+          el.style.display = 'block';
+          setLoading(false);
+          if (window.turnstile) window.turnstile.reset();
+          return;
+        }
+        throw new Error(submitData.reason || `HTTP ${submitRes.status}`);
+      }
+
+      const clubId = submitData.club_code || null;
 
       /* Success */
       const successToast = document.getElementById('toast-success');
